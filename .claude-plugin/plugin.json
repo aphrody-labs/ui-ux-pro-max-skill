@@ -1,21 +1,15 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "ui-ux-pro-max",
-  "description": "UI/UX design intelligence. Searchable local database with 79 styles, 192 palettes, 74 font pairings, 25 charts, and 22 stacks (React, Next.js, Vue, Nuxt.js, Nuxt UI, Svelte, Astro, SwiftUI, React Native, Flutter, Tailwind, shadcn/ui, Jetpack Compose, Angular, Laravel, JavaFX, WPF, WinUI, Avalonia, Uno Platform, UWP, Three.js). Use when designing, building, or reviewing UI: pages, components, color schemes, typography, layout, accessibility, animation, or data visualization.",
+  "description": "UI/UX design intelligence on Bun: searchable local catalogs of styles, palettes, font pairings, UX guidelines, icons, GSAP presets, charts and 24 stacks, including Bun OS Material 3, rg-ui and the real Rose Griffon / Azalée / Achilléa brand themes. Use when designing, building, reviewing, or fixing UI.",
   "version": "2.15.0",
   "author": {
-    "name": "nextlevelbuilder"
+    "name": "aphrody-labs",
+    "url": "https://github.com/aphrody-labs"
   },
+  "homepage": "https://github.com/aphrody-labs/ui-ux-pro-max-skill",
+  "repository": "https://github.com/aphrody-labs/ui-ux-pro-max-skill",
   "license": "MIT",
-  "keywords": [
-    "ui",
-    "ux",
-    "design",
-    "styles",
-    "typography",
-    "color-palette",
-    "accessibility",
-    "charts",
-    "components"
-  ],
+  "keywords": ["ui", "ux", "design", "design-system", "material-3", "rg-ui", "tailwind", "nextjs", "shadcn", "accessibility", "bun"],
   "skills": "./.claude/skills/"
 }

@@ -1,0 +1,17 @@
+{
+  "name": "ui-ux-pro-max",
+  "version": "2.15.0",
+  "description": "Bun-native UI/UX design intelligence with Bun OS Material 3, rg-ui and Aphrody brand themes.",
+  "author": { "name": "aphrody-labs", "url": "https://github.com/aphrody-labs" },
+  "homepage": "https://github.com/aphrody-labs/ui-ux-pro-max-skill",
+  "repository": "https://github.com/aphrody-labs/ui-ux-pro-max-skill",
+  "license": "MIT",
+  "keywords": ["ui", "ux", "design", "material-3", "rg-ui", "bun"],
+  "interface": {
+    "displayName": "UI/UX Pro Max",
+    "shortDescription": "Design intelligence for Bun OS",
+    "developerName": "aphrody-labs",
+    "category": "Design"
+  },
+  "skills": "./.claude/skills/"
+}

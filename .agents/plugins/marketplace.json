@@ -1,0 +1,12 @@
+{
+  "name": "aphrody-ui-ux-pro-max",
+  "interface": { "displayName": "aphrody-labs/ui-ux-pro-max-skill" },
+  "plugins": [
+    {
+      "name": "ui-ux-pro-max",
+      "source": { "source": "local", "path": "./" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Design"
+    }
+  ]
+}
