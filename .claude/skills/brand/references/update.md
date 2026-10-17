@@ -46,7 +46,7 @@ Edit `docs/brand-guidelines.md`:
 
 Run the sync script:
 ```bash
-node scripts/sync-brand-to-tokens.cjs
+bun scripts/sync-brand-to-tokens.ts
 ```
 
 If the script reports an existing token source, inspect the named file before
@@ -57,7 +57,7 @@ sources. Use `--force` only when the detected source is the managed
 `assets/design-tokens.*` output from an earlier sync and replacing it is
 intentional:
 ```bash
-node scripts/sync-brand-to-tokens.cjs --force
+bun scripts/sync-brand-to-tokens.ts --force
 ```
 
 This will:
@@ -69,7 +69,7 @@ This will:
 Confirm all files are updated:
 ```bash
 # Check brand context extraction
-node scripts/inject-brand-context.cjs --json | head -30
+bun scripts/inject-brand-context.ts --json | head -30
 
 # Check CSS variables
 grep "primary" assets/design-tokens.css | head -5
@@ -125,5 +125,5 @@ If user specifies a preset name, use these defaults:
 ## Important
 
 - **Always sync all three files** - Never update just brand-guidelines.md alone
-- **Verify extraction** - Run inject-brand-context.cjs after update to confirm
+- **Verify extraction** - Run inject-brand-context.ts after update to confirm
 - **Test image generation** - Optionally generate a test image to verify brand application

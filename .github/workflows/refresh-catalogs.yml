@@ -20,20 +20,15 @@ jobs:
     env:
       CORE_VERSION: '2.1.1'
       REACT_VERSION: '2.1.10'
+      DATA_DIR: .claude/skills/ui-ux-pro-max/data
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
+      - uses: oven-sh/setup-bun@v2
         with:
-          python-version: '3.x'
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
+          bun-version: latest
 
       - name: Prepare isolated candidate workspace
         run: |
@@ -49,38 +44,24 @@ jobs:
           GOOGLE_FONTS_API_KEY: ${{ secrets.GOOGLE_FONTS_API_KEY }}
         run: |
           set +e
-          python3 - <<'PY' \
-            >"${RUNNER_TEMP}/catalog-review/reports/google-fonts-fetch.log" 2>&1
-          import json
-          import os
-          import sys
-          import urllib.parse
-          import urllib.request
-          from pathlib import Path
-
-          key = os.environ.get("GOOGLE_FONTS_API_KEY")
-          if not key:
-              print("GOOGLE_FONTS_API_KEY is not configured", file=sys.stderr)
-              raise SystemExit(2)
-          url = "https://www.googleapis.com/webfonts/v1/webfonts?" + urllib.parse.urlencode(
-              {"key": key, "capability": "VF"}
-          )
-          try:
-              with urllib.request.urlopen(url, timeout=30) as response:
-                  raw = response.read(25_000_001)
-          except Exception:
-              print("Google Fonts API request failed; credentials were not logged", file=sys.stderr)
-              raise SystemExit(2)
-          if len(raw) > 25_000_000:
-              print("Google Fonts response exceeds 25000000 bytes", file=sys.stderr)
-              raise SystemExit(2)
-          payload = json.loads(raw)
-          target = Path(os.environ["RUNNER_TEMP"]) / "catalog-review/raw/google-fonts-api.json"
-          target.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-          PY
-          fetch_status=$?
-          printf 'google_fonts_fetch=%s\n' "${fetch_status}" \
-            >"${RUNNER_TEMP}/catalog-review/reports/fetch-status.txt"
+          bun -e '
+            const key = Bun.env.GOOGLE_FONTS_API_KEY;
+            if (!key) { console.error("GOOGLE_FONTS_API_KEY is not configured"); process.exit(2); }
+            const url = "https://www.googleapis.com/webfonts/v1/webfonts?" + new URLSearchParams({ key, capability: "VF" });
+            let raw;
+            try {
+              const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
+              raw = await response.arrayBuffer();
+              if (!response.ok) throw new Error(String(response.status));
+            } catch {
+              console.error("Google Fonts API request failed; credentials were not logged");
+              process.exit(2);
+            }
+            if (raw.byteLength > 25000000) { console.error("Google Fonts response exceeds 25000000 bytes"); process.exit(2); }
+            const payload = JSON.parse(new TextDecoder().decode(raw));
+            await Bun.write(Bun.env.RUNNER_TEMP + "/catalog-review/raw/google-fonts-api.json", JSON.stringify(payload, null, 2) + "\n");
+          ' >"${RUNNER_TEMP}/catalog-review/reports/google-fonts-fetch.log" 2>&1
+          printf 'google_fonts_fetch=%s\n' "$?" >"${RUNNER_TEMP}/catalog-review/reports/fetch-status.txt"
           exit 0
 
       - name: Fetch official Google Fonts license metadata
@@ -117,39 +98,27 @@ jobs:
         working-directory: ${{ runner.temp }}/catalog-work/npm
         run: |
           set +e
-          npm init --yes >/dev/null
-          npm install --ignore-scripts --no-audit --no-fund \
+          bun init --yes >/dev/null
+          bun add --ignore-scripts \
             "@phosphor-icons/core@${CORE_VERSION}" \
             "@phosphor-icons/react@${REACT_VERSION}" \
             react@19 \
             >"${RUNNER_TEMP}/catalog-review/reports/phosphor-packages.log" 2>&1
           package_status=$?
+          extract_status=${package_status}
           if [ "${package_status}" -eq 0 ]; then
-            node --input-type=module <<'JS' \
-              >>"${RUNNER_TEMP}/catalog-review/reports/phosphor-packages.log" 2>&1
-          import { writeFile } from "node:fs/promises";
-          import { icons } from "@phosphor-icons/core";
-          import * as client from "@phosphor-icons/react";
-          import * as ssr from "@phosphor-icons/react/ssr";
-
-          const root = `${process.env.RUNNER_TEMP}/catalog-review/raw`;
-          const names = (exports) => Object.keys(exports).sort();
-          await writeFile(`${root}/phosphor-core.json`, JSON.stringify(icons, null, 2) + "\n");
-          await writeFile(
-            `${root}/phosphor-react-exports.json`,
-            JSON.stringify({ client: names(client), ssr: names(ssr) }, null, 2) + "\n",
-          );
-          JS
+            bun -e '
+              import { icons } from "@phosphor-icons/core";
+              import * as client from "@phosphor-icons/react";
+              import * as ssr from "@phosphor-icons/react/ssr";
+              const root = Bun.env.RUNNER_TEMP + "/catalog-review/raw";
+              const names = (exports) => Object.keys(exports).sort();
+              await Bun.write(root + "/phosphor-core.json", JSON.stringify(icons, null, 2) + "\n");
+              await Bun.write(root + "/phosphor-react-exports.json", JSON.stringify({ client: names(client), ssr: names(ssr) }, null, 2) + "\n");
+              await Bun.write(root + "/phosphor-core-package.json", Bun.file("node_modules/@phosphor-icons/core/package.json"));
+              await Bun.write(root + "/phosphor-react-package.json", Bun.file("node_modules/@phosphor-icons/react/package.json"));
+            ' >>"${RUNNER_TEMP}/catalog-review/reports/phosphor-packages.log" 2>&1
             extract_status=$?
-            if [ "${extract_status}" -eq 0 ]; then
-              cp node_modules/@phosphor-icons/core/package.json \
-                "${RUNNER_TEMP}/catalog-review/raw/phosphor-core-package.json"
-              cp node_modules/@phosphor-icons/react/package.json \
-                "${RUNNER_TEMP}/catalog-review/raw/phosphor-react-package.json"
-              extract_status=$?
-            fi
-          else
-            extract_status=${package_status}
           fi
           printf 'phosphor_packages=%s\nphosphor_extract=%s\n' \
             "${package_status}" "${extract_status}" \
@@ -163,10 +132,10 @@ jobs:
         run: |
           set +e
           review_date="$(date -u +%F)"
-          python3 scripts/refresh-google-fonts.py \
+          bun scripts/refresh-google-fonts.ts \
             --api-input "${REVIEW_ROOT}/raw/google-fonts-api.json" \
             --metadata-root "${RUNNER_TEMP}/catalog-work/google-fonts" \
-            --existing-csv src/ui-ux-pro-max/data/google-fonts.csv \
+            --existing-csv "${DATA_DIR}/google-fonts.csv" \
             --output-csv "${REVIEW_ROOT}/candidates/google-fonts.csv" \
             --license-output "${REVIEW_ROOT}/candidates/google-font-licenses.json" \
             --metadata-revision "$(cat "${REVIEW_ROOT}/raw/google-fonts-revision.txt")" \
@@ -175,26 +144,21 @@ jobs:
             >"${REVIEW_ROOT}/reports/google-fonts-change-report.json" \
             2>"${REVIEW_ROOT}/reports/google-fonts-error.log"
           font_status=$?
-          python3 scripts/refresh-icon-catalog.py \
+          bun scripts/refresh-icon-catalog.ts \
             --input "${REVIEW_ROOT}/raw/phosphor-core.json" \
             --package-json "${REVIEW_ROOT}/raw/phosphor-core-package.json" \
             --react-package-json "${REVIEW_ROOT}/raw/phosphor-react-package.json" \
             --react-exports-input "${REVIEW_ROOT}/raw/phosphor-react-exports.json" \
-            --curated-csv src/ui-ux-pro-max/data/icons.csv \
+            --curated-csv "${DATA_DIR}/icons.csv" \
             --output "${REVIEW_ROOT}/candidates/phosphor-icons-upstream.json" \
             --verified-at "${review_date}" \
             >"${REVIEW_ROOT}/reports/phosphor-refresh.log" \
             2>"${REVIEW_ROOT}/reports/phosphor-error.log"
           icon_status=$?
-          diff -u src/ui-ux-pro-max/data/google-fonts.csv \
-            "${REVIEW_ROOT}/candidates/google-fonts.csv" \
-            >"${REVIEW_ROOT}/reports/google-fonts.diff" 2>&1 || true
-          diff -u src/ui-ux-pro-max/data/google-font-licenses.json \
-            "${REVIEW_ROOT}/candidates/google-font-licenses.json" \
-            >"${REVIEW_ROOT}/reports/google-font-licenses.diff" 2>&1 || true
-          diff -u src/ui-ux-pro-max/data/phosphor-icons-upstream.json \
-            "${REVIEW_ROOT}/candidates/phosphor-icons-upstream.json" \
-            >"${REVIEW_ROOT}/reports/phosphor-icons-upstream.diff" 2>&1 || true
+          for name in google-fonts.csv google-font-licenses.json phosphor-icons-upstream.json; do
+            diff -u "${DATA_DIR}/${name}" "${REVIEW_ROOT}/candidates/${name}" \
+              >"${REVIEW_ROOT}/reports/${name%.*}.diff" 2>&1 || true
+          done
           printf 'google_fonts=%s\nphosphor=%s\n' "${font_status}" "${icon_status}" \
             >"${REVIEW_ROOT}/reports/refresh-status.txt"
           git status --porcelain >"${REVIEW_ROOT}/reports/checkout-status.txt"

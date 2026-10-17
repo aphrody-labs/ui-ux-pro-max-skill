@@ -13,7 +13,7 @@ body:
     id: version
     attributes:
       label: ui-ux-pro-max-cli version
-      description: Output of `npm list -g ui-ux-pro-max-cli` or `uipro --version`
+      description: Output of `uipro --version` and `bun --version`
     validations:
       required: true
   - type: input

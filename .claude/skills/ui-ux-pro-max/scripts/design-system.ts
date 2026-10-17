@@ -127,7 +127,7 @@ export function contrastRatio(first: string | null | undefined, second: string |
 }
 
 /** True when a styles.csv row describes itself as dark-first. */
-function styleIsDarkPrimary(style: Row | null | undefined): boolean {
+export function styleIsDarkPrimary(style: Row | null | undefined): boolean {
   if (!style || Object.keys(style).length === 0) return false;
   const preferred = (style["Preferred Mode"] ?? "").trim().toLowerCase();
   if (preferred === "dark" || preferred === "light") return preferred === "dark";
@@ -136,13 +136,13 @@ function styleIsDarkPrimary(style: Row | null | undefined): boolean {
   return DARK_PRIMARY_MARKERS.some((marker) => declared.includes(marker));
 }
 
-function queryWantsDark(query: string): boolean {
+export function queryWantsDark(query: string): boolean {
   const lowered = (query || "").toLowerCase();
   return DARK_QUERY_MARKERS.some((marker) => lowered.includes(marker));
 }
 
 /** Resolve the mode the rest of the output has to agree with. */
-function resolveColorMode(query: string, style: Row): "dark" | "light" {
+export function resolveColorMode(query: string, style: Row): "dark" | "light" {
   return queryWantsDark(query) || styleIsDarkPrimary(style) ? "dark" : "light";
 }
 
@@ -169,7 +169,7 @@ function deriveDarkPalette(palette: Row): Row {
  * Pick the highest-ranked palette matching the resolved mode. Only the dark
  * case filters; falls back to the top hit when the data has no matching ramp.
  */
-function selectPaletteForMode(palettes: Row[], mode: string, category: string | null = null): Row {
+export function selectPaletteForMode(palettes: Row[], mode: string, category: string | null = null): Row {
   if (palettes.length === 0) return {};
   const categoryPalette = palettes.find((palette) => palette["Product Type"] === category);
   if (categoryPalette) {
@@ -184,7 +184,7 @@ function selectPaletteForMode(palettes: Row[], mode: string, category: string | 
 }
 
 /** Drop "avoid dark mode" advice once dark mode is the resolved answer. */
-function filterAntiPatternsForMode(antiPatterns: string, mode: string): string {
+export function filterAntiPatternsForMode(antiPatterns: string, mode: string): string {
   if (mode !== "dark" || !antiPatterns) return antiPatterns;
   return antiPatterns
     .split("+")
@@ -195,7 +195,7 @@ function filterAntiPatternsForMode(antiPatterns: string, mode: string): string {
 }
 
 /** Light/dark support labels that agree with the product's anti-patterns. */
-function modeSupportLabels(style: DesignSystem["style"], antiPatterns: string): [string, string] {
+export function modeSupportLabels(style: DesignSystem["style"], antiPatterns: string): [string, string] {
   const light = style.light_mode ?? "";
   let dark = style.dark_mode ?? "";
   const avoidsDark = DARK_ANTI_PATTERN_MARKERS.some((marker) => (antiPatterns || "").toLowerCase().includes(marker));
@@ -597,7 +597,7 @@ function pythonDictRepr(row: Row): string {
 }
 
 // ============ OUTPUT FORMATTERS ============
-const BOX_WIDTH = 90;
+export const BOX_WIDTH = 90;
 
 function pyLen(text: string): number {
   let length = 0;

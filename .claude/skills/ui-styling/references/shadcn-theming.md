@@ -8,7 +8,7 @@ Theme configuration, CSS variables, dark mode, and component customization.
 
 **1. Install next-themes:**
 ```bash
-npm install next-themes
+bun add next-themes
 ```
 
 **2. Create theme provider:**
@@ -94,106 +94,89 @@ if (localStorage.theme === 'dark' ||
 
 ## CSS Variable System
 
-shadcn/ui uses CSS variables for theming. Variables defined in `globals.css`:
+shadcn/ui (Tailwind v4) uses CSS variables holding complete colors, defined in `globals.css` next to `@import "tailwindcss"` (current shadcn releases write `oklch()` values; any CSS color works):
 
 ```css
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --background: hsl(0 0% 100%);
+    --foreground: hsl(222.2 84% 4.9%);
+    --primary: hsl(222.2 47.4% 11.2%);
+    --primary-foreground: hsl(210 40% 98%);
+    --secondary: hsl(210 40% 96.1%);
+    --secondary-foreground: hsl(222.2 47.4% 11.2%);
+    --muted: hsl(210 40% 96.1%);
+    --muted-foreground: hsl(215.4 16.3% 46.9%);
+    --accent: hsl(210 40% 96.1%);
+    --accent-foreground: hsl(222.2 47.4% 11.2%);
+    --destructive: hsl(0 84.2% 60.2%);
+    --destructive-foreground: hsl(210 40% 98%);
+    --border: hsl(214.3 31.8% 91.4%);
+    --input: hsl(214.3 31.8% 91.4%);
+    --ring: hsl(222.2 84% 4.9%);
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --background: hsl(222.2 84% 4.9%);
+    --foreground: hsl(210 40% 98%);
+    --primary: hsl(210 40% 98%);
+    --primary-foreground: hsl(222.2 47.4% 11.2%);
+    --secondary: hsl(217.2 32.6% 17.5%);
+    --secondary-foreground: hsl(210 40% 98%);
+    --muted: hsl(217.2 32.6% 17.5%);
+    --muted-foreground: hsl(215 20.2% 65.1%);
+    --accent: hsl(217.2 32.6% 17.5%);
+    --accent-foreground: hsl(210 40% 98%);
+    --destructive: hsl(0 62.8% 30.6%);
+    --destructive-foreground: hsl(210 40% 98%);
+    --border: hsl(217.2 32.6% 17.5%);
+    --input: hsl(217.2 32.6% 17.5%);
+    --ring: hsl(212.7 26.8% 83.9%);
   }
 }
 ```
 
 ### Color Format
 
-Values use HSL format without `hsl()` wrapper for better opacity control:
+Variables hold complete colors, so Tailwind v4 opacity modifiers (`bg-primary/50`)
+work through `color-mix()`:
 ```css
---primary: 222.2 47.4% 11.2%;  /* H S L */
-```
-
-Usage in Tailwind:
-```css
-background: hsl(var(--primary));
-background: hsl(var(--primary) / 0.5);  /* 50% opacity */
+--primary: hsl(222.2 47.4% 11.2%);
+--primary: oklch(0.205 0 0);   /* format written by current shadcn releases */
 ```
 
 ## Tailwind Configuration
 
-Map CSS variables to Tailwind utilities:
+Map CSS variables to Tailwind utilities in CSS with `@theme inline` (no
+`tailwind.config.ts`; Bun builds process the stylesheet with a Tailwind Bun
+plugin such as `@aphrody/bun-plugin-tailwind`):
 
-```ts
-// tailwind.config.ts
-export default {
-  darkMode: ["class"],
-  theme: {
-    extend: {
-      colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
-    },
-  },
+```css
+@theme inline {
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
 }
 ```
 
@@ -205,13 +188,13 @@ Change colors by modifying CSS variables in `globals.css`:
 
 ```css
 :root {
-  --primary: 262.1 83.3% 57.8%;  /* Purple */
-  --primary-foreground: 210 20% 98%;
+  --primary: hsl(262.1 83.3% 57.8%);  /* Purple */
+  --primary-foreground: hsl(210 20% 98%);
 }
 
 .dark {
-  --primary: 263.4 70% 50.4%;  /* Darker purple */
-  --primary-foreground: 210 20% 98%;
+  --primary: hsl(263.4 70% 50.4%);  /* Darker purple */
+  --primary-foreground: hsl(210 20% 98%);
 }
 ```
 
@@ -227,13 +210,13 @@ Create theme variants with data attributes:
 
 ```css
 [data-theme="violet"] {
-  --primary: 262.1 83.3% 57.8%;
-  --primary-foreground: 210 20% 98%;
+  --primary: hsl(262.1 83.3% 57.8%);
+  --primary-foreground: hsl(210 20% 98%);
 }
 
 [data-theme="rose"] {
-  --primary: 346.8 77.2% 49.8%;
-  --primary-foreground: 355.7 100% 97.3%;
+  --primary: hsl(346.8 77.2% 49.8%);
+  --primary-foreground: hsl(355.7 100% 97.3%);
 }
 ```
 
@@ -359,7 +342,7 @@ Control border radius globally:
 
 Components use radius variable:
 ```tsx
-className="rounded-lg"  /* Uses var(--radius) */
+className="rounded-lg"  /* Uses --radius-lg, mapped to var(--radius) */
 ```
 
 ## Best Practices

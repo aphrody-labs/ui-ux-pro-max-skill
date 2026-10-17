@@ -1,0 +1,60 @@
+{
+  "name": "@aphrody/ui-ux-pro-max",
+  "version": "2.15.0",
+  "description": "UI/UX design intelligence skill for AI coding assistants, running on Bun (Aphrody / Bun OS fork of nextlevelbuilder/ui-ux-pro-max-skill)",
+  "type": "module",
+  "license": "MIT",
+  "author": "NextLevelBuilder (upstream), aphrody-labs (Bun OS fork)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aphrody-labs/ui-ux-pro-max-skill.git"
+  },
+  "homepage": "https://github.com/aphrody-labs/ui-ux-pro-max-skill",
+  "bin": {
+    "uipro": "cli/src/index.ts"
+  },
+  "engines": {
+    "bun": ">=1.4.4"
+  },
+  "files": [
+    "cli/src",
+    "cli/templates",
+    ".claude/skills",
+    ".claude-plugin",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "search": "bun .claude/skills/ui-ux-pro-max/scripts/search.ts",
+    "uipro": "bun cli/src/index.ts",
+    "validate:csv": "bun scripts/validate-csv.ts",
+    "validate:data": "bun .claude/skills/ui-ux-pro-max/scripts/validate-data.ts",
+    "validate:agent-guide": "bun scripts/validate-agent-guide.ts",
+    "validate:catalog-summary": "bun scripts/generate-catalog-summary.ts --check",
+    "catalog-summary": "bun scripts/generate-catalog-summary.ts",
+    "evaluate:relevance": "bun scripts/evaluate-relevance.ts",
+    "evaluate:relevance:calibration": "bun scripts/evaluate-relevance.ts --split calibration",
+    "evaluate:relevance:held-out": "bun scripts/evaluate-relevance.ts --split held_out",
+    "smoke:domains": "bun scripts/smoke-domains.ts",
+    "smoke:stacks": "bun scripts/smoke-stacks.ts",
+    "test": "bun test ./tests ./.claude/skills",
+    "check": "bun check",
+    "verify": "bun run validate:csv && bun run validate:data && bun run validate:agent-guide && bun run validate:catalog-summary && bun run test && bun run evaluate:relevance && bun run smoke:domains && bun run smoke:stacks"
+  },
+  "keywords": [
+    "ui",
+    "ux",
+    "design",
+    "design-system",
+    "material-3",
+    "tailwind",
+    "shadcn",
+    "claude",
+    "codex",
+    "skill",
+    "bun"
+  ],
+  "devDependencies": {
+    "@types/bun": "^1.4.3"
+  }
+}

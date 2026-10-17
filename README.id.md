@@ -1,5 +1,8 @@
 # [UI UX Pro Max](https://uupm.cc)
 
+> **Catatan fork:** fork Bun OS dari [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) (MIT). Semua skrip dijalankan dengan Bun; lihat [README.md](README.md) untuk dokumentasi lengkap dan stack Bun OS (`m3`, `rg-ui`, domain `brand`).
+
+
 <p align="center">
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/README.id.md">🇮🇩 Bahasa Indonesia</a> |
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/README.ko.md">🇰🇷 한국어</a> |
@@ -12,13 +15,11 @@
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/releases"><img src="https://img.shields.io/github/v/release/nextlevelbuilder/ui-ux-pro-max-skill?style=for-the-badge&color=blue" alt="Rilis GitHub"></a>
   <img src="https://img.shields.io/badge/reasoning_rules-192-green?style=for-the-badge" alt="192 aturan penalaran">
   <img src="https://img.shields.io/badge/UI_styles-79_searchable-purple?style=for-the-badge" alt="79 gaya UI yang dapat dicari">
-  <img src="https://img.shields.io/badge/python-3.x-yellow?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.x">
+  <img src="https://img.shields.io/badge/bun-1.4.4%2B-f9f1e1?style=for-the-badge&logo=bun&logoColor=black" alt="Bun 1.4.4+">
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/LICENSE"><img src="https://img.shields.io/github/license/nextlevelbuilder/ui-ux-pro-max-skill?style=for-the-badge&color=green" alt="Lisensi"></a>
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/ui-ux-pro-max-cli"><img src="https://img.shields.io/npm/v/ui-ux-pro-max-cli?style=flat-square&logo=npm&label=CLI" alt="npm"></a>
-  <a href="https://www.npmjs.com/package/ui-ux-pro-max-cli"><img src="https://img.shields.io/npm/dm/ui-ux-pro-max-cli?style=flat-square&label=downloads" alt="unduhan npm"></a>
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/stargazers"><img src="https://img.shields.io/github/stars/nextlevelbuilder/ui-ux-pro-max-skill?style=flat-square&logo=github" alt="bintang GitHub"></a>
   <a href="https://paypal.me/uiuxpromax"><img src="https://img.shields.io/badge/PayPal-Support%20Development-00457C?style=flat-square&logo=paypal&logoColor=white" alt="PayPal"></a>
 </p>
@@ -164,7 +165,7 @@ Setiap aturan mencakup:
 - **74 Pasangan Font** - Kombinasi tipografi pilihan dengan import Google Fonts
 - **25 Jenis Chart** - Rekomendasi untuk dashboard dan analitik
 - **22 Tech Stack** - React, Next.js, Astro, Vue, Nuxt.js, Nuxt UI, Svelte, SwiftUI, React Native, Flutter, HTML+Tailwind, shadcn/ui, Jetpack Compose, Angular, Laravel, Three.js, JavaFX, WPF, WinUI 3, UWP, Avalonia, Uno Platform
-- **119 Panduan UX** - Best practice, anti-pattern, aturan aksesibilitas, layout teks yang tangguh, label ringkas, dan interaksi yang dapat dibatalkan
+- **123 Panduan UX** - Best practice, anti-pattern, aturan aksesibilitas, layout teks yang tangguh, label ringkas, dan interaksi yang dapat dibatalkan
 - **192 Aturan Penalaran** - Pembuatan design system khusus industri (BARU di v2.0)
 
 ### Teks Tangguh dan UI Ringkas
@@ -198,7 +199,7 @@ Katalog berisi **79 gaya yang dapat dicari** dengan dukungan ID dan alias yang s
 
 Set aktif mencakup 43 keluarga visual umum, 2 gaya khusus mobile, 3 platform/design system resmi, 1 material platform, dan 1 gaya analitik inti. Sistem resmi saat ini mencakup Fluent 2, Shopify Polaris, dan Adobe Spectrum; Liquid Glass dikategorikan sebagai material platform Apple, Material 3 Expressive tetap menjadi varian Material mobile, dan Spectrum 2 bersifat tambahan. Struktur landing page berada dalam dataset terpisah yang berisi 34 pola landing, sehingga tidak bersaing dengan gaya visual dalam ranking BM25.
 
-Lihat [`styles.csv`](src/ui-ux-pro-max/data/styles.csv) untuk taksonomi lengkap dan metadata yang menyertakan provenance.
+Lihat [`styles.csv`](.claude/skills/ui-ux-pro-max/data/styles.csv) untuk taksonomi lengkap dan metadata yang menyertakan provenance.
 
 ## 💎 Perbandingan Versi Basic vs. Premium
 
@@ -226,15 +227,15 @@ Banyak pengguna bertanya mengenai perbedaan antara versi open-source dan premium
 Instal langsung di Claude Code dengan dua perintah:
 
 ```
-/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill
-/plugin install ui-ux-pro-max@ui-ux-pro-max-skill
+/plugin marketplace add aphrody-labs/ui-ux-pro-max-skill
+/plugin install ui-ux-pro-max@aphrody-ui-ux-pro-max
 ```
 
 ### Menggunakan CLI (Direkomendasikan)
 
 ```bash
 # Install CLI globally
-npm install -g ui-ux-pro-max-cli
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill
 
 # Go to your project
 cd /path/to/your/project
@@ -288,15 +289,15 @@ uipro uninstall --global    # Remove from global install
 
 ## Prasyarat
 
-Python 3.x diperlukan untuk script pencarian (hanya standard library — script tidak menginstal apa pun dan tidak melakukan network call).
+Bun 1.4.4+ diperlukan untuk script pencarian (hanya standard library — script tidak menginstal apa pun dan tidak melakukan network call).
 
-Periksa apakah Python sudah terinstal:
+Periksa apakah Bun sudah terinstal:
 
 ```bash
-python3 --version
+bun --version
 ```
 
-Jika belum ada, instal sendiri dari [python.org](https://www.python.org/downloads/) atau melalui package manager OS Anda (Homebrew, apt, winget). Langkah instalasi ini ditujukan untuk **Anda sebagai pengguna manusia** — agent AI yang menggunakan skill ini tidak boleh menginstal software di mesin Anda; agent diperintahkan untuk meminta Anda melakukannya.
+Jika belum ada, instal sendiri dari [bun.sh](https://bun.sh) atau melalui package manager OS Anda (Homebrew, apt, winget). Langkah instalasi ini ditujukan untuk **Anda sebagai pengguna manusia** — agent AI yang menggunakan skill ini tidak boleh menginstal software di mesin Anda; agent diperintahkan untuk meminta Anda melakukannya.
 
 ## Penggunaan
 
@@ -371,29 +372,29 @@ Untuk mengakses design system generator secara langsung:
 
 ```bash
 # Generate design system with ASCII output
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "beauty spa wellness" --design-system -p "Serenity Spa"
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "beauty spa wellness" --design-system -p "Serenity Spa"
 
 # Generate with Markdown output
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "fintech banking" --design-system -f markdown
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "fintech banking" --design-system -f markdown
 
 # Domain-specific search
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "glassmorphism" --domain style
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "elegant serif" --domain typography
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "dashboard" --domain chart
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "error summary validation" --domain ux
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "decorative icon aria hidden" --domain icons
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "icon button accessible label" --domain icons
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "orphan heading line balance" --domain ux
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "badge chip label wraps to second line" --domain ux
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "rapid chip animation interrupted" --domain ux
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "glassmorphism" --domain style
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "elegant serif" --domain typography
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "dashboard" --domain chart
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "error summary validation" --domain ux
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "decorative icon aria hidden" --domain icons
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "icon button accessible label" --domain icons
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "orphan heading line balance" --domain ux
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "badge chip label wraps to second line" --domain ux
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "rapid chip animation interrupted" --domain ux
 
 # Stack-specific guidelines
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "form validation" --stack react
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "responsive layout" --stack html-tailwind
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "chip badge overflow nowrap" --stack html-tailwind
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "tableview binding" --stack javafx
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "atlantafx primer enterprise theme" --stack javafx
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "enterprise tableview density permission" --stack javafx
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "form validation" --stack react
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "responsive layout" --stack html-tailwind
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "chip badge overflow nowrap" --stack html-tailwind
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "tableview binding" --stack javafx
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "atlantafx primer enterprise theme" --stack javafx
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "enterprise tableview density permission" --stack javafx
 ```
 
 Pencarian web-stack memahami versi. Query tanpa major version lama akan mengembalikan panduan yang aktif dan terkini. Istilah legacy atau major version lama yang eksplisit (misalnya, `Svelte 4` atau `Next.js 15`) hanya mengembalikan row legacy yang sudah dikurasi, dengan label `Status` dan `Applies To`; jika tidak ada panduan legacy yang sesuai, pencarian tidak mengembalikan hasil alih-alih mencampur generasi framework.
@@ -404,10 +405,10 @@ Simpan design system ke file untuk **hierarchical retrieval lintas sesi**:
 
 ```bash
 # Generate and persist to design-system/MASTER.md
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "SaaS dashboard" --design-system --persist -p "MyApp"
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "SaaS dashboard" --design-system --persist -p "MyApp"
 
 # Also create a page-specific override file
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "SaaS dashboard" --design-system --persist -p "MyApp" --page "dashboard"
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "SaaS dashboard" --design-system --persist -p "MyApp" --page "dashboard"
 ```
 
 Ini membuat struktur folder `design-system/`:
@@ -442,7 +443,7 @@ Codebase telah direstrukturisasi menggunakan **sistem pembuatan berbasis templat
 **Selalu gunakan CLI untuk menginstal:**
 
 ```bash
-npm install -g ui-ux-pro-max-cli
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill
 uipro init --ai <platform>
 ```
 
@@ -454,31 +455,26 @@ Jika Anda ingin berkontribusi pada proyek ini:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git
+git clone https://github.com/aphrody-labs/ui-ux-pro-max-skill.git
 cd ui-ux-pro-max-skill
 
 # 2. Understand the structure
-src/ui-ux-pro-max/           # Source of truth (data, scripts, templates)
+.claude/skills/ui-ux-pro-max/           # Source of truth (data, scripts, templates)
 cli/                         # CLI installer (generates files from templates)
 .claude/                     # Local dev/test for Claude Code skill
 .factory/                    # Local dev/test for Droid (Factory) skill
 
-# 3. Make changes in src/ui-ux-pro-max/
+# 3. Make changes in .claude/skills/ui-ux-pro-max/
 # - data/*.csv              → Database files
-# - scripts/*.py            → Search engine & design system
+# - scripts/*.ts            → Search engine & design system
 # - templates/              → Platform-specific templates
 
 # 4. Sync to CLI and test locally
 cd cli
-npm run sync:assets
-npm run check:assets
-npm run verify:data
-npm run typecheck
+bun run verify
 
 # 5. Build and test CLI
-# `npm run build` uses Bun when available and falls back to TypeScript compiler output after `npm ci`.
-npm run build
-node dist/index.js init --ai claude --offline  # Test in a temp folder
+bun cli/src/index.ts init --ai claude --offline  # Test in a temp folder
 
 # 6. Create PR (never push directly to main)
 git checkout -b feat/your-feature
@@ -501,9 +497,9 @@ Development biasa dan CI pull request tidak bergantung pada jaringan. Jalankan g
 offline lengkap, termasuk hash snapshot dan validasi jumlah hasil generate, dengan:
 
 ```bash
-npm --prefix cli run verify:data
+bun run verify
 # Or check only the generated catalog summary:
-npm --prefix cli run validate:catalog-summary
+bun run validate:catalog-summary
 ```
 
 Normalisasi refresh juga dapat diuji sepenuhnya secara offline menggunakan
@@ -512,21 +508,21 @@ menggantikan data canonical:
 
 ```bash
 candidate_dir="$(mktemp -d)"
-python3 scripts/refresh-google-fonts.py \
-  --api-input src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-api.json \
-  --metadata-input src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-metadata.json \
-  --existing-csv src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-existing.csv \
-  --overrides src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-overrides.json \
+bun scripts/refresh-google-fonts.ts \
+  --api-input tests/fixtures/catalogs/google-api.json \
+  --metadata-input tests/fixtures/catalogs/google-metadata.json \
+  --existing-csv tests/fixtures/catalogs/google-existing.csv \
+  --overrides tests/fixtures/catalogs/google-overrides.json \
   --output-csv "$candidate_dir/google-fonts.csv" \
   --license-output "$candidate_dir/google-font-licenses.json" \
   --metadata-revision fixture-catalogs-v1 \
   --verified-at 2026-08-13 --expected-count 2 --approve-changes
-python3 scripts/refresh-icon-catalog.py \
-  --input src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-core.json \
-  --package-json src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-package.json \
-  --react-package-json src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-react-package.json \
-  --react-exports-input src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-react-exports.json \
-  --curated-csv src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/icons-curated.csv \
+bun scripts/refresh-icon-catalog.ts \
+  --input tests/fixtures/catalogs/phosphor-core.json \
+  --package-json tests/fixtures/catalogs/phosphor-package.json \
+  --react-package-json tests/fixtures/catalogs/phosphor-react-package.json \
+  --react-exports-input tests/fixtures/catalogs/phosphor-react-exports.json \
+  --curated-csv tests/fixtures/catalogs/icons-curated.csv \
   --output "$candidate_dir/phosphor-icons-upstream.json" \
   --verified-at 2026-08-13 --expected-count 2
 ```
@@ -547,7 +543,7 @@ Workflow membaca Google Fonts Developer API dan package resmi Phosphor yang di-p
 menulis kandidat serta unified diff ke artifact, dan hanya memiliki izin read-only
 pada repository. Workflow tidak pernah melakukan commit, push, membuka PR, atau merge. Tinjau
 laporan perubahan, pengecualian, lisensi, relevance metrics, dan offline gate
-sebelum secara manual mempromosikan file kandidat ke `src/ui-ux-pro-max/data/`.
+sebelum secara manual mempromosikan file kandidat ke `.claude/skills/ui-ux-pro-max/data/`.
 
 
 ## Rilis Otomatis
@@ -574,7 +570,7 @@ Workflow rilis menggunakan `GITHUB_TOKEN` default untuk rilis GitHub dan secret 
 Versi `ui-ux-pro-max-cli` yang terinstal sudah usang. Perbarui lalu coba lagi:
 
 ```bash
-npm install -g ui-ux-pro-max-cli@latest
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill
 uipro uninstall
 ```
 
@@ -604,14 +600,14 @@ Jangan upload ZIP repository GitHub secara penuh. Itu adalah checkout developmen
 Untuk Claude Code, instal melalui Marketplace:
 
 ```bash
-/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill
-/plugin install ui-ux-pro-max@ui-ux-pro-max-skill
+/plugin marketplace add aphrody-labs/ui-ux-pro-max-skill
+/plugin install ui-ux-pro-max@aphrody-ui-ux-pro-max
 ```
 
 Atau gunakan installer CLI:
 
 ```bash
-npx ui-ux-pro-max-cli init --ai claude
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill && uipro init --ai claude
 ```
 
 ### Instalasi Claude Marketplace gagal dengan "Zip file contains a symbolic link"
@@ -619,31 +615,30 @@ npx ui-ux-pro-max-cli init --ai claude
 Ini adalah masalah yang diketahui pada versi sebelum v2.5.1. Repository sebelumnya menggunakan symlink secara internal yang tidak dapat ditangani oleh sebagian tool instalasi. **Perbaikan:** gunakan installer CLI sebagai gantinya:
 
 ```bash
-npm install -g ui-ux-pro-max-cli
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill
 uipro init --ai claude
 ```
 
 Atau tunggu rilis berikutnya yang menyelesaikan masalah ini.
 
-### `npm install -g ui-ux-pro-max-cli` gagal karena permission error
+### `bun install -g github:aphrody-labs/ui-ux-pro-max-skill` gagal karena permission error
 
 Gunakan Node version manager (direkomendasikan), atau lewati instalasi global sepenuhnya:
 
 ```bash
-# npx without installing globally
-npx ui-ux-pro-max-cli init --ai claude
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill && uipro init --ai claude
 ```
 
-### Python tidak ditemukan saat menjalankan command design system
+### Bun tidak ditemukan saat menjalankan command design system
 
-Script pencarian memerlukan Python 3.x. Instal secara manual dari [python.org](https://www.python.org/downloads/) atau melalui package manager OS Anda (Homebrew, apt, winget). Agent AI tidak boleh menginstalnya untuk Anda — agent diperintahkan untuk meminta Anda melakukannya.
+Script pencarian memerlukan Bun 1.4.4+. Instal secara manual dari [bun.sh](https://bun.sh) atau melalui package manager OS Anda (Homebrew, apt, winget). Agent AI tidak boleh menginstalnya untuk Anda — agent diperintahkan untuk meminta Anda melakukannya.
 
 ### Output design system terpotong / field ter-truncate
 
 Output yang mudah dibaca manusia memotong field panjang pada 300 karakter. Gunakan `--json` untuk mendapatkan data lengkap tanpa pemotongan:
 
 ```bash
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "SaaS" --domain style --json
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "SaaS" --domain style --json
 ```
 
 ---

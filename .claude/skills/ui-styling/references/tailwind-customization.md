@@ -278,18 +278,17 @@ Extract repeated utility patterns:
 ### Official Plugins
 
 ```bash
-npm install -D @tailwindcss/typography @tailwindcss/forms @tailwindcss/container-queries
+bun add -d @tailwindcss/typography @tailwindcss/forms
 ```
 
-```javascript
-// tailwind.config.js
-export default {
-  plugins: [
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/container-queries'),
-  ],
-}
+Tailwind v4 registers JavaScript plugins from CSS with `@plugin` (container
+queries are built in: `@container`, `@sm:`, `@lg:`):
+
+```css
+/* src/index.css */
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/forms";
 ```
 
 **Typography plugin:**
@@ -308,118 +307,110 @@ export default {
 <textarea></textarea>
 ```
 
-### Custom Plugin
+### Custom Utilities and Components (no plugin needed)
 
-```javascript
-// tailwind.config.js
-const plugin = require('tailwindcss/plugin')
+```css
+@utility text-shadow {
+  text-shadow: 2px 2px 4px rgb(0 0 0 / 0.1);
+}
 
-export default {
-  plugins: [
-    plugin(function({ addUtilities, addComponents, theme }) {
-      // Add utilities
-      addUtilities({
-        '.text-shadow': {
-          textShadow: '2px 2px 4px rgba(0, 0, 0, 0.1)',
-        },
-        '.text-shadow-lg': {
-          textShadow: '4px 4px 8px rgba(0, 0, 0, 0.2)',
-        },
-      })
+@utility text-shadow-lg {
+  text-shadow: 4px 4px 8px rgb(0 0 0 / 0.2);
+}
 
-      // Add components
-      addComponents({
-        '.card-custom': {
-          backgroundColor: theme('colors.white'),
-          borderRadius: theme('borderRadius.lg'),
-          padding: theme('spacing.6'),
-          boxShadow: theme('boxShadow.md'),
-        },
-      })
-    }),
-  ],
+@layer components {
+  .card-custom {
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: --spacing(6);
+    box-shadow: var(--shadow-md);
+  }
 }
 ```
 
 ## Configuration Examples
 
-### Complete Tailwind Config
+### Complete CSS-first Configuration
 
-```javascript
-// tailwind.config.ts
-import type { Config } from 'tailwindcss'
+```css
+/* app/globals.css */
+@import "tailwindcss" source("..");
+@import "tw-animate-css";            /* replaces tailwindcss-animate in v4 */
+@plugin "@tailwindcss/typography";
+@source "../../packages/ui/src";      /* workspace packages outside the app */
 
-const config: Config = {
-  darkMode: ["class"],
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-  ],
-  theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
-    extend: {
-      colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        brand: {
-          50: '#f0f9ff',
-          500: '#3b82f6',
-          900: '#1e3a8a',
-        },
-      },
-      fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Playfair Display', 'serif'],
-      },
-      spacing: {
-        '18': '4.5rem',
-        '88': '22rem',
-        '128': '32rem',
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
-      keyframes: {
-        "slide-in": {
-          "0%": { transform: "translateX(-100%)" },
-          "100%": { transform: "translateX(0)" },
-        },
-      },
-      animation: {
-        "slide-in": "slide-in 0.5s ease-out",
-      },
-    },
-  },
-  plugins: [require("tailwindcss-animate")],
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
 }
 
-export default config
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+@theme {
+  --color-brand-50: #f0f9ff;
+  --color-brand-500: #3b82f6;
+  --color-brand-900: #1e3a8a;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Playfair Display", serif;
+  --spacing-18: 4.5rem;
+  --spacing-88: 22rem;
+  --breakpoint-3xl: 1920px;
+  --animate-slide-in: slide-in 0.5s ease-out;
+
+  @keyframes slide-in {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(0); }
+  }
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  max-width: 1400px;
+}
 ```
+
+Generate a starting point with `bun scripts/tailwind-config-gen.ts --framework nextjs --plugins`.
+Bun builds (`bun build`, `Bun.serve` HTML imports) process this entry with a Tailwind Bun
+plugin; the Aphrody / Bun OS workspace uses `@aphrody/bun-plugin-tailwind`.
 
 ## Dark Mode Configuration
 
-```javascript
-// tailwind.config.js
-export default {
-  darkMode: ["class"],  // or "media" for automatic
-  // ...
-}
+Tailwind v4 uses `prefers-color-scheme` by default. For a class toggle, declare the variant in CSS:
+
+```css
+@custom-variant dark (&:where(.dark, .dark *));
+```
+
+Also set `color-scheme` so native controls and scrollbars follow the theme:
+
+```css
+:root { color-scheme: light; }
+.dark { color-scheme: dark; }
 ```
 
 **Usage:**
@@ -431,7 +422,7 @@ export default {
   </div>
 </html>
 
-<!-- Media query-based -->
+<!-- Media query-based (default, no @custom-variant) -->
 <div class="bg-white dark:bg-gray-900">
   Responds to system preference automatically
 </div>
@@ -439,36 +430,21 @@ export default {
 
 ## Content Configuration
 
-Specify files to scan for classes:
+Tailwind v4 detects sources automatically (ignoring `.gitignore`d files and
+`node_modules`). Set the base with `source()` and add paths it cannot see:
 
-```javascript
-// tailwind.config.js
-export default {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-    "./app/**/*.{js,jsx,ts,tsx}",
-    "./components/**/*.{js,jsx,ts,tsx}",
-    "./pages/**/*.{js,jsx,ts,tsx}",
-  ],
-  // ...
-}
+```css
+@import "tailwindcss" source("..");          /* scan from the project root */
+@source "../../packages/rg-ui/src";           /* a workspace package */
+@source not "../legacy";                      /* exclude a directory */
 ```
 
 ### Safelist
 
-Preserve dynamic classes:
+Preserve dynamic classes with an inline source:
 
-```javascript
-export default {
-  safelist: [
-    'bg-red-500',
-    'bg-green-500',
-    'bg-blue-500',
-    {
-      pattern: /bg-(red|green|blue)-(100|500|900)/,
-    },
-  ],
-}
+```css
+@source inline("bg-{red,green,blue}-{100,500,900}");
 ```
 
 ## Best Practices

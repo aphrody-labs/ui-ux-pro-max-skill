@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "test": "tsc -p tsconfig.test.json && node --test .test-dist/lib/parseStyles.test.js .test-dist/components/metadata-badges.test.js",
-    "start": "next start"
+    "dev": "bun --bun next dev",
+    "build": "bun --bun next build",
+    "test": "bun test lib components",
+    "start": "bun --bun next start"
   },
   "dependencies": {
     "next": "^14.2.0",

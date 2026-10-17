@@ -56,12 +56,12 @@ Script paths in this skill and its `references/` are relative to the directory t
 
 **Generate tokens:**
 ```bash
-node scripts/generate-tokens.cjs --config tokens.json -o tokens.css
+bun scripts/generate-tokens.ts --config tokens.json -o tokens.css
 ```
 
 **Validate usage:**
 ```bash
-node scripts/validate-tokens.cjs --dir src/
+bun scripts/validate-tokens.ts --dir src/
 ```
 
 ## References
@@ -89,11 +89,13 @@ node scripts/validate-tokens.cjs --dir src/
 
 | Script | Purpose |
 |--------|---------|
-| `generate-tokens.cjs` | Generate CSS from JSON token config |
-| `validate-tokens.cjs` | Check for hardcoded values in code |
-| `search-slides.py` | BM25 search + contextual recommendations |
-| `slide-token-validator.py` | Validate slide HTML for token compliance |
-| `fetch-background.py` | Fetch images from Pexels/Unsplash |
+| `generate-tokens.ts` | Generate CSS from JSON token config |
+| `validate-tokens.ts` | Check for hardcoded values in code |
+| `search-slides.ts` | BM25 search + contextual recommendations |
+| `html-token-validator.ts` | Validate slide/infographic HTML for token compliance (`--type slides`) |
+| `generate-slide.ts` | Generate token-compliant HTML decks (`--demo`, `--json`) |
+| `embed-tokens.ts` | Inline design-tokens.css into standalone HTML |
+| `fetch-background.ts` | Fetch images from Pexels/Unsplash |
 
 ## Templates
 
@@ -126,15 +128,15 @@ Brand-compliant presentations using design tokens + Chart.js + contextual decisi
 
 ```bash
 # Basic search (auto-detect domain)
-python scripts/search-slides.py "investor pitch"
+bun scripts/search-slides.ts "investor pitch"
 
 # Domain-specific search
-python scripts/search-slides.py "problem agitation" -d copy
-python scripts/search-slides.py "revenue growth" -d chart
+bun scripts/search-slides.ts "problem agitation" -d copy
+bun scripts/search-slides.ts "revenue growth" -d chart
 
 # Contextual search (Premium System)
-python scripts/search-slides.py "problem slide" --context --position 2 --total 9
-python scripts/search-slides.py "cta" --context --position 9 --prev-emotion frustration
+bun scripts/search-slides.ts "problem slide" --context --position 2 --total 9
+bun scripts/search-slides.ts "cta" --context --position 9 --prev-emotion frustration
 ```
 
 ### Decision System CSVs
@@ -166,7 +168,7 @@ python scripts/search-slides.py "cta" --context --position 9 --prev-emotion frus
         ↓
 4. Generate HTML with design tokens
         ↓
-5. Validate with slide-token-validator.py
+5. Validate with `bun scripts/html-token-validator.ts --type slides`
 ```
 
 ### Pattern Breaking (Duarte Sparkline)

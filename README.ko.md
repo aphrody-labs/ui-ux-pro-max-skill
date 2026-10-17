@@ -1,5 +1,8 @@
 # [UI UX Pro Max](https://uupm.cc)
 
+> **포크 안내:** [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)(MIT)의 Bun OS 포크입니다. 모든 스크립트는 Bun으로 실행됩니다. 전체 문서와 Bun OS 스택(`m3`, `rg-ui`, `brand` 도메인)은 [README.md](README.md)를 참고하세요.
+
+
 <p align="center">
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/README.id.md">🇮🇩 Bahasa Indonesia</a> |
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/README.ko.md">🇰🇷 한국어</a> |
@@ -12,13 +15,11 @@
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/releases"><img src="https://img.shields.io/github/v/release/nextlevelbuilder/ui-ux-pro-max-skill?style=for-the-badge&color=blue" alt="GitHub 릴리스"></a>
   <img src="https://img.shields.io/badge/reasoning_rules-192-green?style=for-the-badge" alt="추론 규칙 192개">
   <img src="https://img.shields.io/badge/UI_styles-79_searchable-purple?style=for-the-badge" alt="검색 가능한 UI 스타일 79개">
-  <img src="https://img.shields.io/badge/python-3.x-yellow?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.x">
+  <img src="https://img.shields.io/badge/bun-1.4.4%2B-f9f1e1?style=for-the-badge&logo=bun&logoColor=black" alt="Bun 1.4.4+">
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/LICENSE"><img src="https://img.shields.io/github/license/nextlevelbuilder/ui-ux-pro-max-skill?style=for-the-badge&color=green" alt="라이선스"></a>
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/ui-ux-pro-max-cli"><img src="https://img.shields.io/npm/v/ui-ux-pro-max-cli?style=flat-square&logo=npm&label=CLI" alt="npm"></a>
-  <a href="https://www.npmjs.com/package/ui-ux-pro-max-cli"><img src="https://img.shields.io/npm/dm/ui-ux-pro-max-cli?style=flat-square&label=downloads" alt="npm 다운로드 수"></a>
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/stargazers"><img src="https://img.shields.io/github/stars/nextlevelbuilder/ui-ux-pro-max-skill?style=flat-square&logo=github" alt="GitHub 스타 수"></a>
   <a href="https://paypal.me/uiuxpromax"><img src="https://img.shields.io/badge/PayPal-Support%20Development-00457C?style=flat-square&logo=paypal&logoColor=white" alt="PayPal"></a>
 </p>
@@ -180,7 +181,7 @@ v2.0의 핵심 기능은 **디자인 시스템 생성기**입니다. AI 기반 �
 
 활성 세트는 일반 시각 스타일군 43개, 모바일 전용 스타일 2개, 공식 플랫폼/디자인 시스템 3개, 플랫폼 소재 1개, 핵심 분석 스타일 1개를 포함합니다. 현재 공식 시스템에는 Fluent 2, Shopify Polaris, Adobe Spectrum이 포함됩니다. Liquid Glass는 Apple 플랫폼 소재로 한정되고, Material 3 Expressive는 모바일 Material 변형으로 유지되며, Spectrum 2는 보조 스타일입니다. 랜딩 페이지 구조는 BM25 순위에서 시각 스타일과 경쟁하지 않고 별도의 34개 패턴 랜딩 데이터셋에 포함됩니다.
 
-전체 분류 체계와 출처 인식 메타데이터는 [`styles.csv`](src/ui-ux-pro-max/data/styles.csv)를 참고하세요.
+전체 분류 체계와 출처 인식 메타데이터는 [`styles.csv`](.claude/skills/ui-ux-pro-max/data/styles.csv)를 참고하세요.
 
 ## 💎 기본 버전과 프리미엄 버전 비교
 
@@ -208,15 +209,15 @@ v2.0의 핵심 기능은 **디자인 시스템 생성기**입니다. AI 기반 �
 Claude Code에서 다음 두 명령어로 바로 설치할 수 있습니다.
 
 ```
-/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill
-/plugin install ui-ux-pro-max@ui-ux-pro-max-skill
+/plugin marketplace add aphrody-labs/ui-ux-pro-max-skill
+/plugin install ui-ux-pro-max@aphrody-ui-ux-pro-max
 ```
 
 ### CLI 사용(권장)
 
 ```bash
 # CLI 전역 설치
-npm install -g ui-ux-pro-max-cli
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill
 
 # 프로젝트로 이동
 cd /path/to/your/project
@@ -270,15 +271,15 @@ uipro uninstall --global    # Remove from global install
 
 ## 사전 요구 사항
 
-검색 스크립트를 실행하려면 Python 3.x가 필요합니다. 표준 라이브러리만 사용하며, 스크립트는 아무것도 설치하지 않고 네트워크 요청도 보내지 않습니다.
+검색 스크립트를 실행하려면 Bun 1.4.4+가 필요합니다. 표준 라이브러리만 사용하며, 스크립트는 아무것도 설치하지 않고 네트워크 요청도 보내지 않습니다.
 
-Python 설치 여부를 확인하세요.
+Bun 설치 여부를 확인하세요.
 
 ```bash
-python3 --version
+bun --version
 ```
 
-설치되어 있지 않다면 [python.org](https://www.python.org/downloads/) 또는 운영체제의 패키지 관리자(Homebrew, apt, winget)를 사용해 직접 설치하세요. 이 설치 단계는 **사람인 사용자**가 수행해야 합니다. 이 스킬을 사용하는 AI 에이전트는 사용자 컴퓨터에 소프트웨어를 직접 설치하지 않고, 사용자에게 설치를 요청하도록 지시되어 있습니다.
+설치되어 있지 않다면 [bun.sh](https://bun.sh) 또는 운영체제의 패키지 관리자(Homebrew, apt, winget)를 사용해 직접 설치하세요. 이 설치 단계는 **사람인 사용자**가 수행해야 합니다. 이 스킬을 사용하는 AI 에이전트는 사용자 컴퓨터에 소프트웨어를 직접 설치하지 않고, 사용자에게 설치를 요청하도록 지시되어 있습니다.
 
 ## 사용법
 
@@ -353,29 +354,29 @@ UI/UX 작업을 요청하면 스킬이 자동으로 활성화됩니다. 자연�
 
 ```bash
 # ASCII 출력으로 디자인 시스템 생성
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "beauty spa wellness" --design-system -p "Serenity Spa"
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "beauty spa wellness" --design-system -p "Serenity Spa"
 
 # Markdown 출력으로 생성
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "fintech banking" --design-system -f markdown
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "fintech banking" --design-system -f markdown
 
 # 도메인별 검색
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "glassmorphism" --domain style
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "elegant serif" --domain typography
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "dashboard" --domain chart
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "error summary validation" --domain ux
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "decorative icon aria hidden" --domain icons
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "icon button accessible label" --domain icons
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "orphan heading line balance" --domain ux
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "badge chip label wraps to second line" --domain ux
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "rapid chip animation interrupted" --domain ux
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "glassmorphism" --domain style
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "elegant serif" --domain typography
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "dashboard" --domain chart
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "error summary validation" --domain ux
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "decorative icon aria hidden" --domain icons
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "icon button accessible label" --domain icons
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "orphan heading line balance" --domain ux
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "badge chip label wraps to second line" --domain ux
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "rapid chip animation interrupted" --domain ux
 
 # 스택별 가이드라인
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "form validation" --stack react
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "responsive layout" --stack html-tailwind
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "chip badge overflow nowrap" --stack html-tailwind
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "tableview binding" --stack javafx
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "atlantafx primer enterprise theme" --stack javafx
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "enterprise tableview density permission" --stack javafx
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "form validation" --stack react
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "responsive layout" --stack html-tailwind
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "chip badge overflow nowrap" --stack html-tailwind
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "tableview binding" --stack javafx
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "atlantafx primer enterprise theme" --stack javafx
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "enterprise tableview density permission" --stack javafx
 ```
 
 웹 스택 검색은 버전을 인식합니다. 이전 메이저 버전을 지정하지 않은 쿼리는 현재 활성 가이드라인을 반환합니다. 명시적인 레거시 용어나 이전 메이저 버전(예: `Svelte 4`, `Next.js 15`)을 지정하면 `Status`와 `Applies To`가 표시된 엄선된 레거시 행만 반환합니다. 일치하는 레거시 가이드라인이 없다면 프레임워크 세대를 섞지 않고 결과를 반환하지 않습니다.
@@ -386,10 +387,10 @@ python3 .claude/skills/ui-ux-pro-max/scripts/search.py "enterprise tableview den
 
 ```bash
 # 디자인 시스템을 생성하여 design-system/myapp/MASTER.md에 저장
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "SaaS dashboard" --design-system --persist -p "MyApp"
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "SaaS dashboard" --design-system --persist -p "MyApp"
 
 # 페이지별 오버라이드 파일도 생성
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "SaaS dashboard" --design-system --persist -p "MyApp" --page "dashboard"
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "SaaS dashboard" --design-system --persist -p "MyApp" --page "dashboard"
 ```
 
 다음과 같은 `design-system/` 폴더 구조가 생성됩니다.
@@ -425,7 +426,7 @@ design-system/[project-slug]/pages/[page-name].md 파일이 있는지도 확인�
 **항상 CLI를 사용해 설치하세요.**
 
 ```bash
-npm install -g ui-ux-pro-max-cli
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill
 uipro init --ai <platform>
 ```
 
@@ -437,31 +438,26 @@ uipro init --ai <platform>
 
 ```bash
 # 1. 저장소 복제
-git clone https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git
+git clone https://github.com/aphrody-labs/ui-ux-pro-max-skill.git
 cd ui-ux-pro-max-skill
 
 # 2. 구조 이해
-src/ui-ux-pro-max/           # 단일 정보 출처(데이터, 스크립트, 템플릿)
+.claude/skills/ui-ux-pro-max/           # 단일 정보 출처(데이터, 스크립트, 템플릿)
 cli/                         # CLI 설치 도구(템플릿에서 파일 생성)
 .claude/                     # Claude Code 스킬 로컬 개발/테스트
 .factory/                    # Droid(Factory) 스킬 로컬 개발/테스트
 
-# 3. src/ui-ux-pro-max/에서 변경
+# 3. .claude/skills/ui-ux-pro-max/에서 변경
 # - data/*.csv              → 데이터베이스 파일
-# - scripts/*.py            → 검색 엔진 및 디자인 시스템
+# - scripts/*.ts            → 검색 엔진 및 디자인 시스템
 # - templates/              → 플랫폼별 템플릿
 
 # 4. CLI에 동기화하고 로컬 테스트
 cd cli
-npm run sync:assets
-npm run check:assets
-npm run verify:data
-npm run typecheck
+bun run verify
 
 # 5. CLI 빌드 및 테스트
-# `npm run build`는 Bun이 있으면 사용하고, 없으면 `npm ci` 후 TypeScript 컴파일러 출력을 사용합니다.
-npm run build
-node dist/index.js init --ai claude --offline  # Test in a temp folder
+bun cli/src/index.ts init --ai claude --offline  # Test in a temp folder
 
 # 6. PR 생성(main에 직접 푸시하지 않음)
 git checkout -b feat/your-feature
@@ -479,30 +475,30 @@ gh pr create
 일반 개발 및 풀 리퀘스트 CI는 네트워크에 의존하지 않습니다. 스냅샷 해시와 생성 개수 검증을 포함한 전체 오프라인 게이트를 실행하려면 다음 명령어를 사용하세요.
 
 ```bash
-npm --prefix cli run verify:data
+bun run verify
 # 또는 생성된 카탈로그 요약만 검사:
-npm --prefix cli run validate:catalog-summary
+bun run validate:catalog-summary
 ```
 
 갱신 정규화도 커밋된 픽스처를 사용해 완전히 오프라인으로 실행할 수 있습니다. 출력은 임시 후보 디렉터리에 저장되며 표준 데이터를 대체하지 않습니다.
 
 ```bash
 candidate_dir="$(mktemp -d)"
-python3 scripts/refresh-google-fonts.py \
-  --api-input src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-api.json \
-  --metadata-input src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-metadata.json \
-  --existing-csv src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-existing.csv \
-  --overrides src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-overrides.json \
+bun scripts/refresh-google-fonts.ts \
+  --api-input tests/fixtures/catalogs/google-api.json \
+  --metadata-input tests/fixtures/catalogs/google-metadata.json \
+  --existing-csv tests/fixtures/catalogs/google-existing.csv \
+  --overrides tests/fixtures/catalogs/google-overrides.json \
   --output-csv "$candidate_dir/google-fonts.csv" \
   --license-output "$candidate_dir/google-font-licenses.json" \
   --metadata-revision fixture-catalogs-v1 \
   --verified-at 2026-08-13 --expected-count 2 --approve-changes
-python3 scripts/refresh-icon-catalog.py \
-  --input src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-core.json \
-  --package-json src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-package.json \
-  --react-package-json src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-react-package.json \
-  --react-exports-input src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-react-exports.json \
-  --curated-csv src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/icons-curated.csv \
+bun scripts/refresh-icon-catalog.ts \
+  --input tests/fixtures/catalogs/phosphor-core.json \
+  --package-json tests/fixtures/catalogs/phosphor-package.json \
+  --react-package-json tests/fixtures/catalogs/phosphor-react-package.json \
+  --react-exports-input tests/fixtures/catalogs/phosphor-react-exports.json \
+  --curated-csv tests/fixtures/catalogs/icons-curated.csv \
   --output "$candidate_dir/phosphor-icons-upstream.json" \
   --verified-at 2026-08-13 --expected-count 2
 ```
@@ -516,7 +512,7 @@ gh run watch "$run_id"
 gh run download "$run_id" --name "catalog-refresh-review-$run_id"
 ```
 
-이 워크플로는 Google Fonts Developer API와 버전이 고정된 공식 Phosphor 패키지를 읽고, 후보 파일과 통합 diff를 아티팩트에 기록하며, 저장소 읽기 전용 권한만 가집니다. 커밋, 푸시, PR 생성, 병합은 수행하지 않습니다. 후보 파일을 `src/ui-ux-pro-max/data/`에 수동으로 반영하기 전에 변경 보고서, 제외 항목, 라이선스, 관련성 지표, 오프라인 게이트를 검토하세요.
+이 워크플로는 Google Fonts Developer API와 버전이 고정된 공식 Phosphor 패키지를 읽고, 후보 파일과 통합 diff를 아티팩트에 기록하며, 저장소 읽기 전용 권한만 가집니다. 커밋, 푸시, PR 생성, 병합은 수행하지 않습니다. 후보 파일을 `.claude/skills/ui-ux-pro-max/data/`에 수동으로 반영하기 전에 변경 보고서, 제외 항목, 라이선스, 관련성 지표, 오프라인 게이트를 검토하세요.
 
 
 ## 자동 릴리스
@@ -543,7 +539,7 @@ gh run download "$run_id" --name "catalog-refresh-review-$run_id"
 설치된 `ui-ux-pro-max-cli` 버전이 오래되었습니다. 업데이트한 후 다시 시도하세요.
 
 ```bash
-npm install -g ui-ux-pro-max-cli@latest
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill
 uipro uninstall
 ```
 
@@ -573,14 +569,14 @@ GitHub 저장소 전체 ZIP을 업로드하지 마세요. 이 ZIP은 소스 코�
 Claude Code에서는 Marketplace를 통해 설치하세요.
 
 ```bash
-/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill
-/plugin install ui-ux-pro-max@ui-ux-pro-max-skill
+/plugin marketplace add aphrody-labs/ui-ux-pro-max-skill
+/plugin install ui-ux-pro-max@aphrody-ui-ux-pro-max
 ```
 
 또는 CLI 설치 도구를 사용하세요.
 
 ```bash
-npx ui-ux-pro-max-cli init --ai claude
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill && uipro init --ai claude
 ```
 
 ### Claude Marketplace 설치가 "Zip file contains a symbolic link" 오류로 실패하는 경우
@@ -588,31 +584,30 @@ npx ui-ux-pro-max-cli init --ai claude
 v2.5.1 이전 버전에서 알려진 문제입니다. 저장소 내부에서 일부 설치 도구가 처리할 수 없는 심볼릭 링크를 사용했습니다. **해결 방법:** CLI 설치 도구를 사용하세요.
 
 ```bash
-npm install -g ui-ux-pro-max-cli
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill
 uipro init --ai claude
 ```
 
 또는 이 문제가 해결된 다음 릴리스를 기다리세요.
 
-### `npm install -g ui-ux-pro-max-cli` 명령이 권한 오류로 실패하는 경우
+### `bun install -g github:aphrody-labs/ui-ux-pro-max-skill` 명령이 권한 오류로 실패하는 경우
 
 Node 버전 관리자를 사용하거나(권장) 전역 설치를 생략하세요.
 
 ```bash
-# 전역 설치 없이 npx 사용
-npx ui-ux-pro-max-cli init --ai claude
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill && uipro init --ai claude
 ```
 
-### 디자인 시스템 명령어 실행 시 Python을 찾을 수 없는 경우
+### 디자인 시스템 명령어 실행 시 Bun을 찾을 수 없는 경우
 
-검색 스크립트에는 Python 3.x가 필요합니다. [python.org](https://www.python.org/downloads/) 또는 운영체제의 패키지 관리자(Homebrew, apt, winget)를 사용해 직접 설치하세요. AI 에이전트는 대신 설치하지 않으며 사용자에게 설치를 요청하도록 지시되어 있습니다.
+검색 스크립트에는 Bun 1.4.4+가 필요합니다. [bun.sh](https://bun.sh) 또는 운영체제의 패키지 관리자(Homebrew, apt, winget)를 사용해 직접 설치하세요. AI 에이전트는 대신 설치하지 않으며 사용자에게 설치를 요청하도록 지시되어 있습니다.
 
 ### 디자인 시스템 출력 또는 필드가 잘리는 경우
 
 사람이 읽기 쉬운 출력에서는 긴 필드가 300자로 잘립니다. 잘리지 않은 전체 데이터를 받으려면 `--json`을 사용하세요.
 
 ```bash
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "SaaS" --domain style --json
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "SaaS" --domain style --json
 ```
 
 ---

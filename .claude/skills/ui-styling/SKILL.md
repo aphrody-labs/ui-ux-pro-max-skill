@@ -63,14 +63,14 @@ Script paths in this skill and its `references/` are relative to the directory t
 
 **Install shadcn/ui with Tailwind:**
 ```bash
-npx shadcn@latest init
+bunx --bun shadcn@latest init
 ```
 
 CLI prompts for framework, TypeScript, paths, and theme preferences. This configures both shadcn/ui and Tailwind CSS.
 
 **Add components:**
 ```bash
-npx shadcn@latest add button card dialog form
+bunx --bun shadcn@latest add button card dialog form
 ```
 
 **Use components with utility styling:**
@@ -101,7 +101,7 @@ export function Dashboard() {
 
 **Vite projects:**
 ```bash
-npm install -D tailwindcss @tailwindcss/vite
+bun add -d tailwindcss @tailwindcss/vite
 ```
 
 ```javascript
@@ -112,8 +112,11 @@ export default { plugins: [tailwindcss()] }
 
 ```css
 /* src/index.css */
-@import "tailwindcss";
+@import "tailwindcss" source("..");
+@source "../../packages/ui/src"; /* extra sources outside the project, e.g. workspace UI packages */
 ```
+
+**Bun builds** (`bun build`, `Bun.serve` HTML imports): register a Tailwind Bun plugin instead of the Vite plugin. In the Aphrody / Bun OS workspace that is `@aphrody/bun-plugin-tailwind`; Tailwind v4 is configured in CSS (`@theme`, `@source`, `@plugin`), not in `tailwind.config.js`.
 
 ## Component Library Guide
 
@@ -214,26 +217,31 @@ Covers:
 
 ## Utility Scripts
 
-**Python automation for component installation and configuration generation.**
+**Bun scripts (`bun scripts/<file>.ts`) for component installation and theme generation; no package install needed.**
 
-### shadcn_add.py
-Add shadcn/ui components with dependency handling:
+### shadcn-add.ts
+Add shadcn/ui components through `bunx --bun shadcn@<version>` (the version pinned in package.json, else `latest`), refusing to replace existing components without `--overwrite`:
 ```bash
-python scripts/shadcn_add.py button card dialog
+bun scripts/shadcn-add.ts button card dialog
+bun scripts/shadcn-add.ts button --dry-run   # print the bunx command
+bun scripts/shadcn-add.ts --list
 ```
 
-### tailwind_config_gen.py
-Generate tailwind.config.js with custom theme:
+### tailwind-config-gen.ts
+Generate a Tailwind v4 CSS-first entry (`@import "tailwindcss" source("..")`, `@source`, `@plugin`, `@custom-variant dark`, `@theme { --color-*, --font-*, --spacing-*, --breakpoint-* }`). Default entry: `app/globals.css` (nextjs), `src/index.css` (react), `src/style.css` (vue), `src/app.css` (svelte):
 ```bash
-python scripts/tailwind_config_gen.py --colors brand:blue --fonts display:Inter
+bun scripts/tailwind-config-gen.ts --framework nextjs --colors brand:#3b82f6 --fonts display:"Playfair Display,serif"
+bun scripts/tailwind-config-gen.ts --palette brand:#3b82f6          # 50-950 shades via color-mix(in oklch, ...)
+bun scripts/tailwind-config-gen.ts --source ../../packages/ui/src --plugins
+bun scripts/tailwind-config-gen.ts --validate-only                   # print without writing
 ```
 
-The generator refuses to create or replace a config when any sibling
-`tailwind.config.js`, `.cjs`, `.mjs`, or `.ts` file already exists. Review the
-reported config first, then pass `--force` only when the competing output is
-intentional:
+The generator refuses to overwrite an existing entry stylesheet, and refuses to
+write next to a legacy `tailwind.config.js`, `.cjs`, `.mjs`, or `.ts` (Tailwind v4
+ignores it unless an `@config` directive loads it): migrate its theme into `@theme`
+first, then pass `--force` only when the second entry is intentional:
 ```bash
-python scripts/tailwind_config_gen.py --colors brand:blue --force
+bun scripts/tailwind-config-gen.ts --colors brand:#3b82f6 --force
 ```
 
 ## Best Practices
@@ -265,8 +273,8 @@ python scripts/tailwind_config_gen.py --colors brand:blue --force
 - `references/canvas-design-system.md` - Design philosophy and canvas workflows
 
 **Automation**
-- `scripts/shadcn_add.py` - Component installation
-- `scripts/tailwind_config_gen.py` - Config generation
+- `scripts/shadcn-add.ts` - Component installation
+- `scripts/tailwind-config-gen.ts` - Tailwind v4 `@theme` entry generation
 
 ## Common Patterns
 

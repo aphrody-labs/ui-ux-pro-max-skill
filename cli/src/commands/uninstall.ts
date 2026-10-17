@@ -1,23 +1,16 @@
-import { rm, stat } from 'node:fs/promises';
-import { join, dirname } from 'node:path';
-import { homedir } from 'node:os';
-import chalk from 'chalk';
-import ora from 'ora';
-import prompts from 'prompts';
-import type { AIType, ConcreteAIType } from '../types/index.js';
-import { AI_TYPES, AI_FOLDERS } from '../types/index.js';
-import { detectAIType, getAITypeDescription } from '../utils/detect.js';
-import {
-  listBundledSubSkills,
-  loadPlatformConfig,
-  platformRoot,
-  removeLegacyInstall,
-} from '../utils/template.js';
-import { logger } from '../utils/logger.js';
+import { rm, stat } from "node:fs/promises";
+import { homedir } from "node:os";
+import { dirname, join } from "node:path";
+import type { AIType, ConcreteAIType } from "../types/index.ts";
+import { AI_FOLDERS } from "../types/index.ts";
+import { detectAIType, getAITypeDescription } from "../utils/detect.ts";
+import { listBundledSubSkills, loadPlatformConfig, platformRoot, removeLegacyInstall } from "../utils/template.ts";
+import { color, confirmPrompt, logger, select, Spinner } from "../utils/ui.ts";
 
-interface UninstallOptions {
+export interface UninstallOptions {
   ai?: AIType;
   global?: boolean;
+  yes?: boolean;
 }
 
 /**
@@ -68,7 +61,7 @@ export async function removeSkillDir(
       removed.push(skillFile.replaceAll('\\', '/'));
     } catch (err: unknown) {
       // Skip non-existent files; re-throw permission or other errors
-      if ((err as NodeJS.ErrnoException).code !== 'ENOENT') throw err;
+      if ((err as { code?: string }).code !== 'ENOENT') throw err;
     }
   }
 
@@ -81,7 +74,7 @@ export async function removeSkillDir(
         removed.push(`${parent.replaceAll('\\', '/')}/${name}`);
       } catch (err: unknown) {
         // Skip non-existent dirs; re-throw permission or other errors
-        if ((err as NodeJS.ErrnoException).code !== 'ENOENT') throw err;
+        if ((err as { code?: string }).code !== 'ENOENT') throw err;
       }
     }
   }
@@ -111,7 +104,7 @@ export async function uninstallCommand(options: UninstallOptions): Promise<void>
       return;
     }
 
-    logger.info(`Detected installations: ${detected.map(t => chalk.cyan(t)).join(', ')}`);
+    logger.info(`Detected installations: ${detected.map(t => color.cyan(t)).join(', ')}`);
 
     const choices = [
       ...detected.map(type => ({
@@ -121,35 +114,22 @@ export async function uninstallCommand(options: UninstallOptions): Promise<void>
       { title: 'All detected', value: 'all' as AIType },
     ];
 
-    const response = await prompts({
-      type: 'select',
-      name: 'aiType',
-      message: 'Select which AI skill to uninstall:',
-      choices,
-    });
-
-    if (!response.aiType) {
-      logger.warn('Uninstall cancelled');
+    aiType = select("Select which AI skill to uninstall:", choices);
+    if (!aiType) {
+      logger.warn("Uninstall cancelled");
       return;
     }
-
-    aiType = response.aiType as AIType;
   }
 
   // Confirm before removing
-  const { confirmed } = await prompts({
-    type: 'confirm',
-    name: 'confirmed',
-    message: `Remove UI/UX Pro Max skill for ${chalk.cyan(getAITypeDescription(aiType))} from ${locationLabel}?`,
-    initial: false,
-  });
+  const confirmed = options.yes || confirmPrompt(`Remove UI/UX Pro Max skill for ${color.cyan(getAITypeDescription(aiType))} from ${locationLabel}?`);
 
   if (!confirmed) {
     logger.warn('Uninstall cancelled');
     return;
   }
 
-  const spinner = ora('Removing skill files...').start();
+  const spinner = new Spinner("Removing skill files...").start();
 
   try {
     const allRemoved: string[] = [];
@@ -175,7 +155,7 @@ export async function uninstallCommand(options: UninstallOptions): Promise<void>
     console.log();
     logger.info('Removed:');
     allRemoved.forEach(folder => {
-      console.log(`  ${chalk.red('-')} ${folder}`);
+      console.log(`  ${color.red('-')} ${folder}`);
     });
 
     console.log();

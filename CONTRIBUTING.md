@@ -22,10 +22,10 @@ This guide will help you get started quickly.
 
 ### Prerequisites
 
-- **Node.js** 18+ and **npm**
-- **Python 3.x**
-- **Bun** (for building the CLI)
+- **Bun** 1.4.4+ (the Aphrody runtime, aphrody-labs/bun, is the reference runtime)
 - **Git**
+
+No other runtime or package is needed: every script, the CLI and the tests use Bun built-ins.
 
 ### Fork & Clone
 
@@ -34,11 +34,9 @@ This guide will help you get started quickly.
 git clone https://github.com/YOUR_USERNAME/ui-ux-pro-max-skill.git
 cd ui-ux-pro-max-skill
 
-# 2. Add the upstream remote
+# 2. Add the fork and the original project as remotes
+git remote add aphrody https://github.com/aphrody-labs/ui-ux-pro-max-skill.git
 git remote add upstream https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git
-
-# 3. Install CLI dependencies
-cd cli && npm install && cd ..
 ```
 
 ---
@@ -47,18 +45,17 @@ cd cli && npm install && cd ..
 
 ```
 ui-ux-pro-max-skill/
-├── src/ui-ux-pro-max/          # Source of truth — edit here, not in .claude/
-│   ├── data/                   # CSV databases (styles, colors, typography, rules)
-│   ├── scripts/                # Python search engine & design system generator
-│   └── templates/              # Platform-specific skill templates
-├── cli/                        # npm CLI installer (ui-ux-pro-max-cli)
-├── .claude/                    # Local dev/test files for Claude Code
-├── .factory/                   # Local dev/test files for Droid (Factory)
-├── docs/                       # Documentation
-└── preview/                    # Preview screenshots and demos
+├── .claude/skills/ui-ux-pro-max/   # Canonical core skill — edit here (SKILL.md, data/, scripts/*.ts, references/)
+├── .claude/skills/<sub-skill>/     # brand, design, design-system, slides, ui-styling, banner-design
+├── cli/src/                        # uipro CLI (Bun, no dependencies)
+├── cli/templates/                  # Platform templates rendered by `uipro init`
+├── scripts/                        # Catalog refresh, validation, relevance gate (Bun)
+├── tests/                          # bun:test suites and fixtures
+├── docs/                           # Documentation
+└── preview/                        # Preview screenshots and demos
 ```
 
-> **Important:** Always make data/script changes in `src/ui-ux-pro-max/`, then sync to the CLI (see below). Do not edit `.claude/` or `.factory/` directly for permanent changes.
+> **Important:** there are no mirrored copies. The CLI and the Claude Code / Codex plugins read the skill tree directly, so edit `.claude/skills/` and `cli/templates/` in place.
 
 ---
 
@@ -68,17 +65,17 @@ ui-ux-pro-max-skill/
 Check the [Issues tab](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/issues) for bugs labeled `bug`. Comment on the issue before starting so we don't duplicate work.
 
 ### ✨ New UI Styles
-Add a new entry to `src/ui-ux-pro-max/data/styles.csv`. Each row needs:
+Add a new entry to `.claude/skills/ui-ux-pro-max/data/styles.csv`. Each row needs:
 - Style name
 - Description
 - Best for (use cases)
 - Key CSS properties/effects
 
 ### 🎨 New Color Palettes
-Add entries to `src/ui-ux-pro-max/data/colors.csv`. Match the existing format (primary, secondary, CTA, background, text, notes).
+Add entries to `.claude/skills/ui-ux-pro-max/data/colors.csv`. Match the existing format (primary, secondary, CTA, background, text, notes).
 
 ### 🏭 New Industry Reasoning Rules
-Add rules to `src/ui-ux-pro-max/data/rules.csv`. Each rule needs a product type, recommended pattern, style priority, color mood, typography mood, key effects, and anti-patterns.
+Add rules to `.claude/skills/ui-ux-pro-max/data/ui-reasoning.csv`. Each rule needs a product type, recommended pattern, style priority, color mood, typography mood, key effects, and anti-patterns.
 
 ### 🌍 Translations
 Translate `README.md` into your language and save it as `README.[lang].md` (e.g., `README.zh.md`, `README.es.md`).
@@ -87,7 +84,10 @@ Translate `README.md` into your language and save it as `README.[lang].md` (e.g.
 Fix typos, clarify confusing sections, or add missing examples in `README.md` or `docs/`.
 
 ### 🔧 CLI Improvements
-Improvements to the `cli/` installer. Run `cd cli && bun run build` to test locally.
+Improvements to the `cli/` installer. Run `bun cli/src/index.ts init --ai claude --dry-run` from a scratch project to try it.
+
+### 🧩 Bun OS catalogs
+The `m3`, `rg-ui` stacks and `brands.csv` describe the Bun OS monorepo. Brand tokens must be copied from the real CSS custom properties (convert colors with `Bun.color(value, "hex")`), never invented.
 
 ---
 
@@ -97,21 +97,17 @@ Improvements to the `cli/` installer. Run `cd cli && bun run build` to test loca
 # 1. Create a feature branch from main
 git checkout -b feat/your-feature-name
 
-# 2. Make your changes in src/ui-ux-pro-max/
+# 2. Make your changes in .claude/skills/ and cli/templates/
 
-# 3. Sync changes to CLI assets and the Claude Code skill
-cd cli && npm run sync:assets && cd ..
+# 3. Run the full offline gate (CSV, data contracts, agent guide, catalog summary,
+#    bun tests, relevance gate, smoke tests)
+bun run verify
 
-# 4. Build and test the CLI locally
-cd cli && bun run build
-mkdir /tmp/test-project && cd /tmp/test-project
-node /path/to/cli/dist/index.js init --ai claude --offline
+# 4. Try the search script and the CLI
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "your query" --design-system
+bun cli/src/index.ts init --ai claude --dry-run
 
-# 5. Test the Python search script
-cd /path/to/repo
-python3 src/ui-ux-pro-max/scripts/search.py "your query" --design-system
-
-# 6. Push your branch
+# 5. Push your branch
 git push -u origin feat/your-feature-name
 ```
 

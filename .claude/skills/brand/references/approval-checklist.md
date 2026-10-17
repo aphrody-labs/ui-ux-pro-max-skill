@@ -150,14 +150,14 @@ Before detailed review, verify:
 
 ## Automation Support
 
-The `validate-asset.cjs` script can auto-check:
+The `validate-asset.ts` script can auto-check:
 - Color palette compliance
 - Minimum dimensions
 - File format/size
 - Naming convention
 - Basic metadata
 
-Run: `node scripts/validate-asset.cjs <asset-path>`
+Run: `bun scripts/validate-asset.ts <asset-path>`
 
 ## Archival
 

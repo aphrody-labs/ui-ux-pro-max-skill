@@ -2,17 +2,6 @@
 .DS_Store
 Thumbs.db
 
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-.Python
-*.so
-.venv/
-venv/
-ENV/
-
 # IDE
 .idea/
 .vscode/
@@ -55,5 +44,5 @@ ui-ux-pro-max-website/*
 /repomix-output.xml
 /test-results/
 
-cli/playwright-report/
-cli/test-results/
+tests/.tmp/
+.tmp-*

@@ -5,15 +5,15 @@
   "description": "A ready-to-use Claude Code stack that makes the agent good at website design: knowledge (ui-ux-pro-max) + taste (frontend-design) + visual feedback (Playwright/Chrome DevTools MCP) + automated design review.",
   "type": "module",
   "scripts": {
-    "setup": "bash scripts/setup.sh",
-    "audit": "node scripts/design-audit.mjs",
-    "audit:file": "node scripts/design-audit.mjs --file ./index.html"
+    "setup": "bun scripts/setup.ts",
+    "audit": "bun scripts/design-audit.ts",
+    "audit:file": "bun scripts/design-audit.ts --file ./index.html"
   },
   "devDependencies": {
     "playwright": "^1.49.0"
   },
   "engines": {
-    "node": ">=18"
+    "bun": ">=1.4.4"
   },
   "license": "MIT"
 }

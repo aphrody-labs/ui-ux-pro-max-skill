@@ -4,17 +4,15 @@
 {{QUICK_REFERENCE}}
 # Prerequisites
 
-The bundled scripts require Python 3 (standard library only — no third-party packages, no network access). Check if it is available:
+The bundled scripts run with [Bun](https://bun.sh) 1.4.4 or newer (the Aphrody runtime, aphrody-labs/bun, is the reference runtime). They use only Bun built-ins — no npm packages, no network access. Check that it is available:
 
 ```bash
-python3 --version || python --version
+bun --version
 ```
 
-If Python is not installed, **do not install it yourself**. Stop and ask the user to install Python 3 using their preferred method (e.g. from [python.org](https://www.python.org/downloads/) or their OS package manager), then continue once it is available. Never run package-manager or system-modifying commands (`sudo`, `brew`, `apt`, `winget`, etc.) on the user's machine for this skill.
+If Bun is not installed, **do not install it yourself**. Stop and ask the user to install it (Aphrody runtime: `powershell -c "irm aphrody.app/install.ps1|iex"` on Windows, `curl -fsSL https://aphrody.app/install | bash` elsewhere), then continue once it is available. Never run package-manager or system-modifying commands (`sudo`, `brew`, `apt`, `winget`, etc.) on the user's machine for this skill.
 
-If the user prefers not to install Python, skip the CLI searches and {{#QR}}rely on the Quick Reference sections above{{/QR}}{{#NOQR}}use the Search Reference, Common Rules, and Pre-Delivery Checklist in this skill{{/NOQR}}.
-
-> **Note:** On Windows, use `python` instead of `python3` to run scripts (e.g., `python scripts/search.py` instead of `python3 scripts/search.py`).
+If the user prefers not to install Bun, skip the CLI searches and {{#QR}}rely on the Quick Reference sections above{{/QR}}{{#NOQR}}use the Search Reference, Common Rules, and Pre-Delivery Checklist in this skill{{/NOQR}}.
 
 ---
 
@@ -73,7 +71,7 @@ Extract key information from user request:
 Use `--design-system` when the task needs a coherent product-wide visual direction:
 
 ```bash
-python3 {{SCRIPT_PATH}} "<product_type> <industry> <keywords>" --design-system [-p "Project Name"]
+bun {{SCRIPT_PATH}} "<product_type> <industry> <keywords>" --design-system [-p "Project Name"]
 ```
 
 This command:
@@ -84,7 +82,7 @@ This command:
 
 **Example:**
 ```bash
-python3 {{SCRIPT_PATH}} "beauty spa wellness service" --design-system -p "Serenity Spa"
+bun {{SCRIPT_PATH}} "beauty spa wellness service" --design-system -p "Serenity Spa"
 ```
 
 ### Step 2b: Persist Design System (Master + Overrides Pattern)
@@ -92,7 +90,7 @@ python3 {{SCRIPT_PATH}} "beauty spa wellness service" --design-system -p "Sereni
 After verifying the design system, save it for **hierarchical retrieval across sessions** with `--persist` and an explicit project root:
 
 ```bash
-python3 {{SCRIPT_PATH}} "<query>" --design-system --persist -p "Project Name" --output-dir "<project-root>"
+bun {{SCRIPT_PATH}} "<query>" --design-system --persist -p "Project Name" --output-dir "<project-root>"
 ```
 
 This creates:
@@ -101,7 +99,7 @@ This creates:
 
 **With page-specific override:**
 ```bash
-python3 {{SCRIPT_PATH}} "<query>" --design-system --persist -p "Project Name" --page "dashboard" --output-dir "<project-root>"
+bun {{SCRIPT_PATH}} "<query>" --design-system --persist -p "Project Name" --page "dashboard" --output-dir "<project-root>"
 ```
 
 This also creates:
@@ -128,7 +126,7 @@ Now, generate the code...
 Three optional 1-10 sliders that tune `--design-system` output without changing your query. Add any combination of them to the same command:
 
 ```bash
-python3 {{SCRIPT_PATH}} "<query>" --design-system --variance <1-10> --motion <1-10> --density <1-10>
+bun {{SCRIPT_PATH}} "<query>" --design-system --variance <1-10> --motion <1-10> --density <1-10>
 ```
 
 | Dial | Low (1-3) | Mid (4-7) | High (8-10) |
@@ -143,7 +141,7 @@ python3 {{SCRIPT_PATH}} "<query>" --design-system --variance <1-10> --motion <1-
 
 **Example:**
 ```bash
-python3 {{SCRIPT_PATH}} "internal analytics dashboard" --design-system --variance 8 --motion 7 --density 8 -p "Ops Console"
+bun {{SCRIPT_PATH}} "internal analytics dashboard" --design-system --variance 8 --motion 7 --density 8 -p "Ops Console"
 ```
 
 ### Step 3: Supplement with Detailed Searches (as needed)
@@ -151,7 +149,7 @@ python3 {{SCRIPT_PATH}} "internal analytics dashboard" --design-system --varianc
 After getting the design system, use domain searches to get additional details:
 
 ```bash
-python3 {{SCRIPT_PATH}} "<keyword>" --domain <domain> [-n <max_results>]
+bun {{SCRIPT_PATH}} "<keyword>" --domain <domain> [-n <max_results>]
 ```
 
 **When to use detailed searches:**
@@ -170,19 +168,20 @@ python3 {{SCRIPT_PATH}} "<keyword>" --domain <domain> [-n <max_results>]
 | Icon suggestions | `icons` | `"decorative icon aria hidden" --domain icons` |
 | Individual Google Fonts | `google-fonts` | `"variable sans serif" --domain google-fonts` |
 | GSAP animation snippets | `gsap` | `"scroll reveal stagger" --domain gsap` |
+| Aphrody brand tokens | `brand` | `"rose griffon roy" --domain brand` |
 
 ### Step 4: Stack Guidelines
 
 Get implementation-specific best practices for the user's stack:
 
 ```bash
-python3 {{SCRIPT_PATH}} "<keyword>" --stack <stack>
+bun {{SCRIPT_PATH}} "<keyword>" --stack <stack>
 ```
 
 Example for a known React Native implementation concern:
 
 ```bash
-python3 {{SCRIPT_PATH}} "virtualized list" --stack react-native
+bun {{SCRIPT_PATH}} "virtualized list" --stack react-native
 ```
 
 ---
@@ -205,16 +204,19 @@ python3 {{SCRIPT_PATH}} "virtualized list" --stack react-native
 | `web` | App interface guidelines (iOS/Android/React Native) | accessibilityLabel, touch targets, safe areas, Dynamic Type |
 | `icons` | Icon recommendations with import code | arrow, navigation, lucide, phosphor |
 | `google-fonts` | Individual Google Fonts lookup | sans serif, monospace, japanese, variable font, popular |
+| `brand` | Aphrody brand themes extracted from the real rg-ui / M3 CSS | rose griffon roy, gaelle, azalee dark, achillea, m3 baseline |
 
 ### Available Stacks
 
-`react`, `nextjs`, `vue`, `svelte`, `astro`, `swiftui`, `react-native`, `flutter`, `nuxtjs`, `nuxt-ui`, `html-tailwind`, `shadcn`, `jetpack-compose`, `threejs`, `angular`, `laravel`, `javafx`, `wpf`, `winui`, `avalonia`, `uno`, `uwp`
+`react`, `nextjs`, `vue`, `svelte`, `astro`, `swiftui`, `react-native`, `flutter`, `nuxtjs`, `nuxt-ui`, `html-tailwind`, `shadcn`, `jetpack-compose`, `threejs`, `angular`, `laravel`, `javafx`, `wpf`, `winui`, `avalonia`, `uno`, `uwp`, `m3`, `rg-ui`
+
+**Bun OS / Aphrody stacks:** `m3` covers Material 3 in the Bun OS monorepo (`@aphrody/m3-tokens`, the `m3*` packages, material-web, the `m3` theme of `@aphrody/bun-plugin-tailwind`); `rg-ui` covers rg-ui / rg-app-shell (Rose Griffon `roy` and `gaelle`, `azalee-light`/`azalee-dark`, `achillea`; shadcn components on Base UI; app-shell sidebar). For the exact brand tokens use the `brand` domain or `--design-system --brand <brand-id>`.
 
 **JavaFX enterprise examples:**
 
 ```bash
-python3 {{SCRIPT_PATH}} "atlantafx primer enterprise theme" --stack javafx
-python3 {{SCRIPT_PATH}} "enterprise tableview density permission" --stack javafx
+bun {{SCRIPT_PATH}} "atlantafx primer enterprise theme" --stack javafx
+bun {{SCRIPT_PATH}} "enterprise tableview density permission" --stack javafx
 ```
 
 ---
@@ -232,7 +234,7 @@ python3 {{SCRIPT_PATH}} "enterprise tableview density permission" --stack javafx
 ### Step 2: Generate Design System
 
 ```bash
-python3 {{SCRIPT_PATH}} "AI search tool modern minimal" --design-system -p "AI Search"
+bun {{SCRIPT_PATH}} "AI search tool modern minimal" --design-system -p "AI Search"
 ```
 
 **Output:** Complete design system with pattern, style, colors, typography, effects, and anti-patterns.
@@ -241,16 +243,16 @@ python3 {{SCRIPT_PATH}} "AI search tool modern minimal" --design-system -p "AI S
 
 ```bash
 # Get style options for a modern tool product
-python3 {{SCRIPT_PATH}} "minimalism dark mode" --domain style
+bun {{SCRIPT_PATH}} "minimalism dark mode" --domain style
 
 # Get UX best practices for search interaction and loading
-python3 {{SCRIPT_PATH}} "search loading animation" --domain ux
+bun {{SCRIPT_PATH}} "search loading animation" --domain ux
 ```
 
 ### Step 4: Stack Guidelines
 
 ```bash
-python3 {{SCRIPT_PATH}} "streaming suspense" --stack nextjs
+bun {{SCRIPT_PATH}} "streaming suspense" --stack nextjs
 ```
 
 **Then:** Synthesize design system + detailed searches and implement the design.
@@ -263,10 +265,10 @@ The `--design-system` flag supports two output formats:
 
 ```bash
 # ASCII box (default) - best for terminal display
-python3 {{SCRIPT_PATH}} "fintech crypto" --design-system
+bun {{SCRIPT_PATH}} "fintech crypto" --design-system
 
 # Markdown - best for documentation
-python3 {{SCRIPT_PATH}} "fintech crypto" --design-system -f markdown
+bun {{SCRIPT_PATH}} "fintech crypto" --design-system -f markdown
 ```
 
 ---
@@ -312,7 +314,7 @@ Scope notice: The rules below are for App UI (iOS/Android/React Native/Flutter),
 
 ### Icons & Visual Elements
 
-- 默认图标库使用 **Phosphor (`@phosphor-icons/react`)**。`src/ui-ux-pro-max/data/icons.csv` 中列出的只是常用推荐图标，不是完整集合。
+- 默认图标库使用 **Phosphor (`@phosphor-icons/react`)**。`data/icons.csv` 中列出的只是常用推荐图标，不是完整集合。
 - 当推荐表中找不到合适的图标时：
   - **优先继续从 Phosphor 的完整图标集中选择任何语义更贴切的图标**；
   - 如果 Phosphor 也没有理想选项，可以使用 **Heroicons (`@heroicons/react`)** 作为备选，注意保持风格一致（线性/填充、笔画粗细、圆角风格）。

@@ -4,7 +4,8 @@ import { parseStylesCSV } from "@/lib/parseStyles";
 import { GalleryGrid } from "@/components/GalleryGrid";
 
 export default function Home() {
-  const csvPath = path.join(process.cwd(), "data", "styles.csv");
+  // The gallery renders the canonical skill catalog (no copy in this folder).
+  const csvPath = path.join(process.cwd(), "..", ".claude", "skills", "ui-ux-pro-max", "data", "styles.csv");
   const csvContent = fs.readFileSync(csvPath, "utf-8");
   const styles = parseStylesCSV(csvContent);
 

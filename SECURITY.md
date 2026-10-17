@@ -26,10 +26,10 @@ We aim to acknowledge reports within 5 business days and to provide a fix or mit
 
 ## Scope
 
-This project is a design-system generation skill: a Python search/CLI tool and static data (CSV/JSON) consumed by AI coding assistants. In-scope concerns include:
+This project is a design-system generation skill: a Bun (TypeScript) search/CLI tool and static data (CSV/JSON) consumed by AI coding assistants. In-scope concerns include:
 
 - Arbitrary code execution via the CLI installer or search scripts
 - Path traversal or unsafe file writes when running `uipro init` / `uipro uninstall`
-- Supply-chain issues in the `ui-ux-pro-max-cli` npm package or its release pipeline
+- Supply-chain issues in the `uipro` CLI installed from this repository with `bun install -g` or in the plugin marketplace manifests
 
 Out of scope: the design output itself (colors, fonts, UI recommendations) is not a security surface.

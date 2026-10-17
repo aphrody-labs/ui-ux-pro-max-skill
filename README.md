@@ -1,24 +1,37 @@
-# [UI UX Pro Max](https://uupm.cc)
+# [UI UX Pro Max](https://uupm.cc) — Bun OS edition
+
+> **Fork notice.** This is the [aphrody-labs](https://github.com/aphrody-labs) fork of
+> [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
+> (MIT, © NextLevelBuilder — see [LICENSE](LICENSE)). It keeps the upstream catalogs, reasoning
+> rules and search behaviour, and re-targets the toolkit to the Aphrody runtime / Bun OS:
+>
+> - every script runs with **Bun** (`bun` 1.4.4+, Bun built-ins only — no Python, Node or npm packages);
+> - the search engine (BM25 + identity routing, design-system reasoning) is a TypeScript port with
+>   result parity against upstream on the upstream catalogs;
+> - new Bun OS stacks **`m3`** (Material 3: `@aphrody/m3-tokens`, the `m3*` packages, material-web,
+>   the `m3` theme of `@aphrody/bun-plugin-tailwind`) and **`rg-ui`** (rg-ui / rg-app-shell themes,
+>   shadcn on Base UI, app-shell sidebar), refreshed Next 16 / Tailwind v4 / shadcn guidance;
+> - a **`brand`** domain and `--design-system --brand <id>` with the Rose Griffon, Azalée and Achilléa
+>   tokens extracted from the real Bun OS CSS;
+> - one canonical skill tree (`.claude/skills/`), no mirrored copies; the `uipro` CLI installs from it.
 
 <p align="center">
-  <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/README.id.md">🇮🇩 Bahasa Indonesia</a> |
-  <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/README.ko.md">🇰🇷 한국어</a> |
-  <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/README.vi.md">🇻🇳 Tiếng Việt</a> |
-  <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/README.zh.md">🇨🇳 简体中文</a> |
-  <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/README.md">🇺🇸 English</a>
+  <a href="README.id.md">🇮🇩 Bahasa Indonesia</a> |
+  <a href="README.ko.md">🇰🇷 한국어</a> |
+  <a href="README.vi.md">🇻🇳 Tiếng Việt</a> |
+  <a href="README.zh.md">🇨🇳 简体中文</a> |
+  <a href="README.md">🇺🇸 English</a>
 </p>
 
 <p align="center">
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/releases"><img src="https://img.shields.io/github/v/release/nextlevelbuilder/ui-ux-pro-max-skill?style=for-the-badge&color=blue" alt="GitHub Release"></a>
   <img src="https://img.shields.io/badge/reasoning_rules-192-green?style=for-the-badge" alt="192 Reasoning Rules">
   <img src="https://img.shields.io/badge/UI_styles-79_searchable-purple?style=for-the-badge" alt="79 searchable UI styles">
-  <img src="https://img.shields.io/badge/python-3.x-yellow?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.x">
+  <img src="https://img.shields.io/badge/bun-1.4.4%2B-f9f1e1?style=for-the-badge&logo=bun&logoColor=black" alt="Bun 1.4.4+">
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/LICENSE"><img src="https://img.shields.io/github/license/nextlevelbuilder/ui-ux-pro-max-skill?style=for-the-badge&color=green" alt="License"></a>
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/ui-ux-pro-max-cli"><img src="https://img.shields.io/npm/v/ui-ux-pro-max-cli?style=flat-square&logo=npm&label=CLI" alt="npm"></a>
-  <a href="https://www.npmjs.com/package/ui-ux-pro-max-cli"><img src="https://img.shields.io/npm/dm/ui-ux-pro-max-cli?style=flat-square&label=downloads" alt="npm downloads"></a>
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/stargazers"><img src="https://img.shields.io/github/stars/nextlevelbuilder/ui-ux-pro-max-skill?style=flat-square&logo=github" alt="GitHub stars"></a>
   <a href="https://paypal.me/uiuxpromax"><img src="https://img.shields.io/badge/PayPal-Support%20Development-00457C?style=flat-square&logo=paypal&logoColor=white" alt="PayPal"></a>
 </p>
@@ -192,8 +205,9 @@ Each rule includes:
 - **192 Color Palettes** - Industry-specific palettes aligned 1:1 with the 192 product types
 - **74 Font Pairings** - Curated typography combinations with Google Fonts imports
 - **25 Chart Types** - Recommendations for dashboards and analytics
-- **22 Tech Stacks** - React, Next.js, Astro, Vue, Nuxt.js, Nuxt UI, Svelte, SwiftUI, React Native, Flutter, HTML+Tailwind, shadcn/ui, Jetpack Compose, Angular, Laravel, Three.js, JavaFX, WPF, WinUI 3, UWP, Avalonia, Uno Platform
-- **119 UX Guidelines** - Best practices, anti-patterns, accessibility rules, resilient text layout, compact labels, and cancellable interactions
+- **24 Tech Stacks** - React, Next.js, Astro, Vue, Nuxt.js, Nuxt UI, Svelte, SwiftUI, React Native, Flutter, HTML+Tailwind, shadcn/ui, Material 3 (Bun OS `m3`), rg-ui (Bun OS), Jetpack Compose, Angular, Laravel, Three.js, JavaFX, WPF, WinUI 3, UWP, Avalonia, Uno Platform
+- **9 Aphrody brand themes** - Rose Griffon, Azalée, Achilléa and Material 3 baseline tokens extracted verbatim from the Bun OS CSS (`--domain brand`, `--design-system --brand <id>`)
+- **123 UX Guidelines** - Best practices, anti-patterns, accessibility rules, resilient text layout, compact labels, and cancellable interactions
 - **192 Reasoning Rules** - Industry-specific design system generation (NEW in v2.0)
 
 ### Resilient Text and Compact UI
@@ -227,7 +241,7 @@ The catalog contains **79 searchable styles** backed by stable IDs and aliases:
 
 The active set covers 43 general visual families, 2 mobile-specific styles, 3 official platform/design systems, 1 platform material, and 1 core analytics style. Current official systems include Fluent 2, Shopify Polaris, and Adobe Spectrum; Liquid Glass is scoped as an Apple platform material, Material 3 Expressive remains a mobile Material variant, and Spectrum 2 is supplemental. Landing-page structures live in the separate 34-pattern landing dataset rather than competing with visual styles in BM25 ranking.
 
-See [`styles.csv`](src/ui-ux-pro-max/data/styles.csv) for the full taxonomy and provenance-aware metadata.
+See [`styles.csv`](.claude/skills/ui-ux-pro-max/data/styles.csv) for the full taxonomy and provenance-aware metadata.
 
 ## 💎 Basic vs. Premium Version Comparison
 
@@ -237,7 +251,7 @@ Many users ask about the differences between the open-source and premium version
 * **Fully Open Source:** Perfect for individual developers, hobbyists, and standard projects.
 * **Core UI/UX Intelligence:** Full access to 79 searchable UI styles (50 active), 192 product types, color palettes, and curated font pairings.
 * **Smart Recommendations:** Built-in BM25 search engine for highly accurate design matching.
-* **Cross-Platform Support:** Stack-specific guidelines supporting 22 major frameworks (React, Vue, Tailwind, iOS, Android, etc.).
+* **Cross-Platform Support:** Stack-specific guidelines supporting 24 major frameworks (React, Vue, Tailwind, iOS, Android, etc.).
 * **Design System Generation:** Instantly generate tailored UI rules, patterns, and logic via CLI.
 
 ### 🟡 Premium Version
@@ -250,20 +264,22 @@ Many users ask about the differences between the open-source and premium version
 
 ## Installation
 
-### Using Claude Marketplace (Claude Code)
-
-Install directly in Claude Code with two commands:
+### Using the Claude Code plugin marketplace
 
 ```
-/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill
-/plugin install ui-ux-pro-max@ui-ux-pro-max-skill
+/plugin marketplace add aphrody-labs/ui-ux-pro-max-skill
+/plugin install ui-ux-pro-max@aphrody-ui-ux-pro-max
 ```
+
+From a terminal: `claude plugin marketplace add aphrody-labs/ui-ux-pro-max-skill` then
+`claude plugin install ui-ux-pro-max@aphrody-ui-ux-pro-max`. Codex reads the same skills through
+`.agents/plugins/marketplace.json` / `.codex-plugin/plugin.json` (the Bun OS agent-plugin layout).
 
 ### Using CLI (Recommended)
 
 ```bash
-# Install CLI globally
-npm install -g ui-ux-pro-max-cli
+# Install the CLI globally with Bun (it runs from the repository tree, no build step)
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill
 
 # Go to your project
 cd /path/to/your/project
@@ -295,7 +311,7 @@ uipro init --ai universal   # Universal / Agent Standard (.agents/skills/)
 uipro init --ai all         # All assistants
 ```
 
-The npm package is `ui-ux-pro-max-cli`; it still installs the `uipro` command. Older `uipro-cli` releases are stale and should not be used for current assets.
+The CLI ships with the repository (`cli/src/index.ts`, run by Bun); there is no separate npm package for this fork.
 
 ### Global Install (Available for All Projects)
 
@@ -309,27 +325,24 @@ uipro init --ai universal --global # Install to ~/.agents/skills/
 ### Other CLI Commands
 
 ```bash
-uipro versions              # List available versions
-uipro update                # Refresh skill files from installed CLI package
-uipro update --global       # Refresh global skill files from installed CLI package
-uipro init --offline        # Compatibility flag; installs bundled templates
+uipro versions              # List available versions (fork releases/tags)
+uipro update --ai claude    # Reinstall the CLI from GitHub with bun, then refresh skill files
+uipro update --global       # Same, for the global install
 uipro init --dry-run        # Preview install actions without writing files
-uipro uninstall             # Remove skill (auto-detect platform)
+uipro uninstall             # Remove skill (auto-detect platform; --yes skips the prompt)
 uipro uninstall --ai claude # Remove specific platform
 uipro uninstall --global    # Remove from global install
 ```
 
 ## Prerequisites
 
-Python 3.x is required for the search script (standard library only — the scripts install nothing and make no network calls).
-
-Check if Python is installed:
+[Bun](https://bun.sh) 1.4.4 or newer — the Aphrody runtime (aphrody-labs/bun) is the reference runtime. The scripts use only Bun built-ins: they install nothing and make no network calls.
 
 ```bash
-python3 --version
+bun --version
 ```
 
-If it is missing, install it yourself from [python.org](https://www.python.org/downloads/) or with your OS package manager (Homebrew, apt, winget). These install steps are for **you, the human user** — AI agents using this skill should never install software on your machine; they are instructed to ask you instead.
+If it is missing, install the Aphrody runtime yourself (`powershell -c "irm aphrody.app/install.ps1|iex"` on Windows, `curl -fsSL https://aphrody.app/install | bash` elsewhere) or upstream Bun from [bun.sh](https://bun.sh). These install steps are for **you, the human user** — AI agents using this skill should never install software on your machine; they are instructed to ask you instead.
 
 ## Usage
 
@@ -385,6 +398,7 @@ The skill provides stack-specific guidelines for:
 |----------|--------|
 | **Web (HTML)** | HTML + Tailwind (default) |
 | **React Ecosystem** | React, Next.js, shadcn/ui |
+| **Bun OS** | Material 3 (`m3`), rg-ui / rg-app-shell (`rg-ui`) |
 | **Vue Ecosystem** | Vue, Nuxt.js, Nuxt UI |
 | **Angular** | Angular |
 | **PHP** | Laravel (Blade, Livewire, Inertia.js) |
@@ -400,7 +414,7 @@ Just mention your preferred stack in the prompt, or let it default to HTML + Tai
 
 ### Before/after: ops dashboard
 
-A plain ops dashboard ([before](https://skill-fixture-before.theroost.dev)) restyled using only the design system UI UX Pro Max generated for it ([after](https://ui-ux-pro-max-after.theroost.dev)), from `search.py "internal operations dashboard" --design-system --density 8 --motion 3 --variance 4`.
+A plain ops dashboard ([before](https://skill-fixture-before.theroost.dev)) restyled using only the design system UI UX Pro Max generated for it ([after](https://ui-ux-pro-max-after.theroost.dev)), from `search.ts "internal operations dashboard" --design-system --density 8 --motion 3 --variance 4`.
 
 *Illustrative, community-contributed example; not an official demo, benchmark, or runtime test of the skill.*
 
@@ -412,29 +426,35 @@ For direct access to the design system generator:
 
 ```bash
 # Generate design system with ASCII output
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "beauty spa wellness" --design-system -p "Serenity Spa"
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "beauty spa wellness" --design-system -p "Serenity Spa"
 
 # Generate with Markdown output
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "fintech banking" --design-system -f markdown
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "fintech banking" --design-system -f markdown
 
 # Domain-specific search
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "glassmorphism" --domain style
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "elegant serif" --domain typography
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "dashboard" --domain chart
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "error summary validation" --domain ux
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "decorative icon aria hidden" --domain icons
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "icon button accessible label" --domain icons
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "orphan heading line balance" --domain ux
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "badge chip label wraps to second line" --domain ux
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "rapid chip animation interrupted" --domain ux
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "glassmorphism" --domain style
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "elegant serif" --domain typography
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "dashboard" --domain chart
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "error summary validation" --domain ux
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "decorative icon aria hidden" --domain icons
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "icon button accessible label" --domain icons
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "orphan heading line balance" --domain ux
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "badge chip label wraps to second line" --domain ux
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "rapid chip animation interrupted" --domain ux
+
+# Aphrody brand tokens and Bun OS stacks
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "rose griffon roy" --domain brand
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "personal portfolio" --design-system --brand rose-griffon-roy -p "Rose Griffon"
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "state layer ripple feedback" --stack m3
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "sidebar app shell" --stack rg-ui
 
 # Stack-specific guidelines
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "form validation" --stack react
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "responsive layout" --stack html-tailwind
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "chip badge overflow nowrap" --stack html-tailwind
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "tableview binding" --stack javafx
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "atlantafx primer enterprise theme" --stack javafx
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "enterprise tableview density permission" --stack javafx
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "form validation" --stack react
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "responsive layout" --stack html-tailwind
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "chip badge overflow nowrap" --stack html-tailwind
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "tableview binding" --stack javafx
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "atlantafx primer enterprise theme" --stack javafx
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "enterprise tableview density permission" --stack javafx
 ```
 
 Web-stack search is version-aware. Queries without an older major return current,
@@ -449,10 +469,10 @@ Save your design system to files for **hierarchical retrieval across sessions**:
 
 ```bash
 # Generate and persist to design-system/myapp/MASTER.md
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "SaaS dashboard" --design-system --persist -p "MyApp"
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "SaaS dashboard" --design-system --persist -p "MyApp"
 
 # Also create a page-specific override file
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "SaaS dashboard" --design-system --persist -p "MyApp" --page "dashboard"
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "SaaS dashboard" --design-system --persist -p "MyApp" --page "dashboard"
 ```
 
 This creates a `design-system/` folder structure:
@@ -488,11 +508,11 @@ The codebase has been restructured to use a **template-based generation system**
 **Always use the CLI to install:**
 
 ```bash
-npm install -g ui-ux-pro-max-cli
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill
 uipro init --ai <platform>
 ```
 
-This ensures you get the latest templates bundled with the installed CLI package and the correct file structure for your AI assistant. Update the npm package first when a new release is published.
+The CLI renders the platform files from `cli/templates/` and copies the canonical skills from `.claude/skills/` of the checkout it runs from, so reinstalling the CLI is the only update step.
 
 ### For Contributors
 
@@ -500,34 +520,25 @@ If you want to contribute to this project:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git
+git clone https://github.com/aphrody-labs/ui-ux-pro-max-skill.git
 cd ui-ux-pro-max-skill
 
 # 2. Understand the structure
-src/ui-ux-pro-max/           # Source of truth (data, scripts, templates)
-cli/                         # CLI installer (generates files from templates)
-.claude/                     # Local dev/test for Claude Code skill
-.factory/                    # Local dev/test for Droid (Factory) skill
+.claude/skills/ui-ux-pro-max/   # Canonical core skill: SKILL.md, data/, scripts/*.ts, references/
+.claude/skills/<sub-skill>/     # brand, design, design-system, slides, ui-styling, banner-design
+cli/src/                        # uipro CLI (Bun, no dependencies)
+cli/templates/                  # Platform templates rendered by `uipro init`
+scripts/                        # Catalog refresh, validation, relevance gate (Bun)
+tests/                          # bun:test suites and fixtures
 
-# 3. Make changes in src/ui-ux-pro-max/
-# - data/*.csv              → Database files
-# - scripts/*.py            → Search engine & design system
-# - templates/              → Platform-specific templates
+# 3. Verify everything (CSV structure, semantic data contracts, agent guide,
+#    catalog summary, bun tests, relevance gate, domain/stack smoke tests)
+bun run verify
 
-# 4. Sync to CLI and test locally
-cd cli
-npm run sync:assets
-npm run check:assets
-npm run verify:data
-npm run typecheck
+# 4. Try the CLI from the checkout
+bun cli/src/index.ts init --ai claude --dry-run   # Preview install actions (no writes)
 
-# 5. Build and test CLI
-# `npm run build` uses Bun when available and falls back to TypeScript compiler output after `npm ci`.
-npm run build
-node dist/index.js init --ai claude --offline  # Test in a temp folder
-node dist/index.js init --ai claude --dry-run  # Preview install actions (no writes)
-
-# 6. Create PR (never push directly to main)
+# 5. Commit on a branch and open a PR
 git checkout -b feat/your-feature
 git commit -m "feat: description"
 git push -u origin feat/your-feature
@@ -550,9 +561,9 @@ Ordinary development and pull-request CI are network-independent. Run the full
 offline gate, including snapshot hashes and generated count validation, with:
 
 ```bash
-npm --prefix cli run verify:data
+bun run verify
 # Or check only the generated catalog summary:
-npm --prefix cli run validate:catalog-summary
+bun run validate:catalog-summary
 ```
 
 Refresh normalization can also be exercised entirely offline against the
@@ -561,21 +572,21 @@ replace canonical data:
 
 ```bash
 candidate_dir="$(mktemp -d)"
-python3 scripts/refresh-google-fonts.py \
-  --api-input src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-api.json \
-  --metadata-input src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-metadata.json \
-  --existing-csv src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-existing.csv \
-  --overrides src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-overrides.json \
+bun scripts/refresh-google-fonts.ts \
+  --api-input tests/fixtures/catalogs/google-api.json \
+  --metadata-input tests/fixtures/catalogs/google-metadata.json \
+  --existing-csv tests/fixtures/catalogs/google-existing.csv \
+  --overrides tests/fixtures/catalogs/google-overrides.json \
   --output-csv "$candidate_dir/google-fonts.csv" \
   --license-output "$candidate_dir/google-font-licenses.json" \
   --metadata-revision fixture-catalogs-v1 \
   --verified-at 2026-08-13 --expected-count 2 --approve-changes
-python3 scripts/refresh-icon-catalog.py \
-  --input src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-core.json \
-  --package-json src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-package.json \
-  --react-package-json src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-react-package.json \
-  --react-exports-input src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-react-exports.json \
-  --curated-csv src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/icons-curated.csv \
+bun scripts/refresh-icon-catalog.ts \
+  --input tests/fixtures/catalogs/phosphor-core.json \
+  --package-json tests/fixtures/catalogs/phosphor-package.json \
+  --react-package-json tests/fixtures/catalogs/phosphor-react-package.json \
+  --react-exports-input tests/fixtures/catalogs/phosphor-react-exports.json \
+  --curated-csv tests/fixtures/catalogs/icons-curated.csv \
   --output "$candidate_dir/phosphor-icons-upstream.json" \
   --verified-at 2026-08-13 --expected-count 2
 ```
@@ -596,25 +607,12 @@ The workflow reads the Google Fonts Developer API and pinned official Phosphor
 packages, writes candidates and unified diffs to an artifact, and has read-only
 repository permissions. It never commits, pushes, opens a PR, or merges. Review
 the change reports, exclusions, licenses, relevance metrics, and offline gate
-before manually promoting candidate files into `src/ui-ux-pro-max/data/`.
+before manually promoting candidate files into `.claude/skills/ui-ux-pro-max/data/`.
 
 
-## Automated Releases
+## Releases
 
-This repository uses semantic-release with Conventional Commits to create GitHub releases automatically:
-
-- `dev` branch creates beta GitHub prereleases such as `2.6.0-beta.1`.
-- `main` branch creates official stable GitHub releases such as `2.6.0`.
-
-Release notes and `CHANGELOG.md` are generated from Conventional Commit messages. Version numbers are synchronized across `skill.json`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `cli/package.json`, and `cli/package-lock.json` during release preparation.
-
-Use these commit types for correct version bumps:
-
-- `fix:` -> patch release
-- `feat:` -> minor release
-- `feat!:` or `BREAKING CHANGE:` -> major release
-
-The release workflow uses the default `GITHUB_TOKEN` for GitHub releases and the repository `NPM_TOKEN` secret to publish `ui-ux-pro-max-cli` to npm.
+Versions are kept in step with `bun scripts/sync-release-version.ts <version>` (package.json, skill.json, `.claude-plugin/*.json`, `.codex-plugin/plugin.json`). Tags on the fork are what `uipro versions` lists; installs track the default branch otherwise.
 
 ## Troubleshooting
 
@@ -638,12 +636,12 @@ claude
 
 Shell environment changes only apply to programs launched from that shell, so restart Claude Code after setting the variable. Claude Code clamps values above the active model's output limit; model and provider caps vary. Increasing this value can also increase latency and usage, and reduces the effective context available before auto-compaction. See the official [Claude Code environment-variable reference](https://code.claude.com/docs/en/env-vars#variables).
 
-### `uipro: unknown command 'uninstall'` or `unknown command 'update'`
+### `uipro: unknown command`
 
-Your installed version of `ui-ux-pro-max-cli` is outdated. Update it and retry:
+Your installed CLI is outdated. Reinstall it from the fork and retry:
 
 ```bash
-npm install -g ui-ux-pro-max-cli@latest
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill
 uipro uninstall
 ```
 
@@ -673,46 +671,26 @@ Do not upload the full GitHub repository ZIP. It is a development checkout that 
 For Claude Code, install through the Marketplace:
 
 ```bash
-/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill
-/plugin install ui-ux-pro-max@ui-ux-pro-max-skill
+/plugin marketplace add aphrody-labs/ui-ux-pro-max-skill
+/plugin install ui-ux-pro-max@aphrody-ui-ux-pro-max
 ```
 
 Or use the CLI installer:
 
 ```bash
-npx ui-ux-pro-max-cli init --ai claude
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill && uipro init --ai claude
 ```
 
-### Claude Marketplace install fails with "Zip file contains a symbolic link"
+### Bun not found when running design system commands
 
-This is a known issue with versions prior to v2.5.1. The repository used symlinks internally which some installation tools can't handle. **Fix:** use the CLI installer instead:
-
-```bash
-npm install -g ui-ux-pro-max-cli
-uipro init --ai claude
-```
-
-Or wait for the next release where this is resolved.
-
-### `npm install -g ui-ux-pro-max-cli` fails with permission error
-
-Use a Node version manager (recommended), or skip the global install entirely:
-
-```bash
-# npx without installing globally
-npx ui-ux-pro-max-cli init --ai claude
-```
-
-### Python not found when running design system commands
-
-The search scripts require Python 3.x. Install it manually from [python.org](https://www.python.org/downloads/) or with your OS package manager (Homebrew, apt, winget). AI agents should not install it for you — they are instructed to ask you instead.
+The search scripts require Bun 1.4.4+. Install it manually (see Prerequisites). AI agents should not install it for you — they are instructed to ask you instead.
 
 ### Design system output is cut off / fields truncated
 
 Human-readable output truncates long fields at 300 characters. Use `--json` to get the full, untruncated data:
 
 ```bash
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "SaaS" --domain style --json
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "SaaS" --domain style --json
 ```
 
 ---

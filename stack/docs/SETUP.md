@@ -2,13 +2,13 @@
 
 ## Prerequisites
 
-- **Node 18+** and **Python 3.x**
+- **Bun 1.4.4+**
 - **Claude Code** with plugins enabled (run `/plugin` once to enable)
 
 ## 1. One-shot setup
 
 ```bash
-./scripts/setup.sh
+./scripts/setup.ts
 ```
 
 This installs the audit dependencies (Playwright + Chromium) and the `ui-ux-pro-max` skill,
@@ -42,8 +42,8 @@ ranked findings.
 ## Standalone audit (no Claude needed)
 
 ```bash
-npm run audit -- --url http://localhost:3000
-npm run audit -- --file ./index.html
+bun run audit --url http://localhost:3000
+bun run audit --file ./index.html
 ```
 
 Outputs `audit-output/report.md` + per-viewport screenshots. Exit code is non-zero when there
@@ -67,7 +67,7 @@ Guide: <https://help.figma.com/hc/en-us/articles/39888612464151-Claude-Code-and-
 Generates React components from a prompt. Get an API key at <https://21st.dev>, then add:
 
 ```json
-"magic": { "command": "npx", "args": ["-y", "@21st-dev/magic@latest"], "env": { "API_KEY": "<your-key>" } }
+"magic": { "command": "bunx", "args": ["@21st-dev/magic@latest"], "env": { "API_KEY": "<your-key>" } }
 ```
 
 Keep keys out of git — prefer `.claude/settings.local.json` or your shell env, both gitignored.
@@ -75,8 +75,8 @@ Keep keys out of git — prefer `.claude/settings.local.json` or your shell env,
 ## Troubleshooting
 
 - **`/mcp` shows a server failed** — run its command manually to see the error, e.g.
-  `npx -y @playwright/mcp@latest`. Usually a Node version or network/proxy issue.
-- **Audit can't find Chromium** — run `npx playwright install chromium`, or set
+  `bunx @playwright/mcp@latest`. Usually a Node version or network/proxy issue.
+- **Audit can't find Chromium** — run `bunx playwright install chromium`, or set
   `PW_EXECUTABLE_PATH` to your Chromium binary.
-- **ui-ux-pro-max command not found** — re-run `npx ui-ux-pro-max-cli init --ai claude` and
-  check the printed skill path; use that path in the `python3 …/search.py` commands.
+- **ui-ux-pro-max command not found** — re-run `bun install -g github:aphrody-labs/ui-ux-pro-max-skill && uipro init --ai claude` and
+  check the printed skill path; use that path in the `bun …/search.ts` commands.

@@ -8,19 +8,6 @@ export interface Release {
   name: string;
   published_at: string;
   html_url: string;
-  assets: Asset[];
-}
-
-export interface Asset {
-  name: string;
-  browser_download_url: string;
-  size: number;
-}
-
-export interface InstallConfig {
-  aiType: AIType;
-  version?: string;
-  force?: boolean;
 }
 
 export interface PlatformConfig {
@@ -46,9 +33,7 @@ export interface PlatformConfig {
 
 export const AI_TYPES: AIType[] = ['claude', 'cursor', 'windsurf', 'antigravity', 'copilot', 'roocode', 'kiro', 'codex', 'qoder', 'gemini', 'trae', 'opencode', 'continue', 'codebuddy', 'droid', 'kilocode', 'warp', 'augment', 'codewhale', 'zcode', 'amazonq', 'openclaw', 'universal', 'all'];
 
-// Legacy folder mapping for backward compatibility with ZIP-based installs.
-// Note: .shared is included for platforms that used ZIP installs. Post-ZIP platforms
-// (kilocode, warp, augment) include .shared as a no-op for consistent uninstall behavior.
+// Folders that earlier installs used per platform; uninstall also cleans their skills/ dirs.
 export const AI_FOLDERS: Record<ConcreteAIType, string[]> = {
   claude: ['.claude'],
   cursor: ['.cursor', '.shared'],

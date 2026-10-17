@@ -24,7 +24,7 @@ observed behavior are your primary evidence.
 
 - A **URL** (preferred, e.g. `http://localhost:3000/pricing`) or a **file path** to open.
 - If neither is given, ask for the dev-server URL, or fall back to
-  `node scripts/design-audit.mjs` against the file/URL for a heuristic-only pass.
+  `bun scripts/design-audit.ts` against the file/URL for a heuristic-only pass.
 
 ## The 7-phase review
 

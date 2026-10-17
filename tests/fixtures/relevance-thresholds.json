@@ -1,0 +1,247 @@
+{
+  "schemaVersion": 1,
+  "status": "provisional-baseline-regression-gate",
+  "baselineRevision": "97eb2a2",
+  "runtimeFingerprint": "1d028fd37d3c751f2ac9a14e5f5edc883765c904ae02dab7d2e6e0e05b1a645d",
+  "oracleFingerprint": "e86c284448a5940cf2706ab44f926abcce62b93b57ec719e1b1bf15350a6b26a",
+  "approvingMaintainer": "aphrody-labs fork: provisional regression gate re-bound to the Bun runtime (core.ts/design-system.ts) and the Bun OS catalogs (brand, m3, rg-ui); floors kept from upstream Phase 1",
+  "units": "All metrics are ratios in [0,1]. Precision treats missing ranks as non-relevant. Negative abstention is measured across the hard-negative by domain/stack cross-product.",
+  "splitPolicy": {
+    "calibration": "May be inspected while tuning retrieval.",
+    "held_out": "Must not be inspected to tune ranking weights; used for final confirmation.",
+    "varianceAndConfidence": "Corpus is deterministic and has no sampling variance. Report exact ratios and sample counts; do not claim population confidence intervals from this curated set."
+  },
+  "tolerancePolicy": "A 1e-12 numeric tolerance permits floating-point representation only. Current known failures remain visible in relevance-baseline.json; the gate prevents regressions and does not claim final quality targets are met. precisionAt3 floors were re-measured when the four single-judgment Bun OS cases (brand, m3, rg-ui) were added: on the original 90 cases the ported runtime reproduces the upstream floors exactly.",
+  "metrics": {
+    "routingAccuracy": {
+      "floor": 0.875,
+      "tolerance": 1e-12
+    },
+    "precisionAt1": {
+      "floor": 0.7631578947368421,
+      "tolerance": 1e-12
+    },
+    "precisionAt3": {
+      "floor": 0.3791666666666661,
+      "tolerance": 1e-12
+    },
+    "mrrAt3": {
+      "floor": 0.8355263157894737,
+      "tolerance": 1e-12
+    },
+    "ndcgAt3": {
+      "floor": 0.8366350964266653,
+      "tolerance": 1e-12
+    },
+    "negativeAbstention": {
+      "floor": 0.9117647058823529,
+      "tolerance": 1e-12
+    },
+    "typoRecoveryAt3": {
+      "floor": 1,
+      "tolerance": 1e-12
+    },
+    "designSystemCoherence": {
+      "floor": 0.71875,
+      "tolerance": 1e-12
+    }
+  },
+  "sampleMinimums": {
+    "cases": 94,
+    "retrieval": 80,
+    "routing": 8,
+    "negativeChecks": 222,
+    "typo": 5,
+    "designSystem": 8,
+    "domain:style": 2,
+    "domain:color": 2,
+    "domain:chart": 2,
+    "domain:landing": 2,
+    "domain:product": 2,
+    "domain:ux": 2,
+    "domain:typography": 2,
+    "domain:icons": 2,
+    "domain:gsap": 2,
+    "domain:react": 2,
+    "domain:web": 2,
+    "domain:google-fonts": 2,
+    "domain:brand": 2
+  },
+  "splits": {
+    "calibration": {
+      "metrics": {
+        "routingAccuracy": {
+          "floor": 0.8,
+          "tolerance": 1e-12
+        },
+        "precisionAt1": {
+          "floor": 0.8974358974358975,
+          "tolerance": 1e-12
+        },
+        "precisionAt3": {
+          "floor": 0.3983739837398376,
+          "tolerance": 1e-12
+        },
+        "mrrAt3": {
+          "floor": 0.9230769230769231,
+          "tolerance": 1e-12
+        },
+        "ndcgAt3": {
+          "floor": 0.9103072109232644,
+          "tolerance": 1e-12
+        },
+        "negativeAbstention": {
+          "floor": 0.9411764705882353,
+          "tolerance": 1e-12
+        },
+        "typoRecoveryAt3": {
+          "floor": 0,
+          "tolerance": 1e-12
+        },
+        "designSystemCoherence": {
+          "floor": 0.6875,
+          "tolerance": 1e-12
+        }
+      },
+      "sampleMinimums": {
+        "cases": 48,
+        "retrieval": 41,
+        "routing": 5,
+        "negativeChecks": 111,
+        "typo": 0,
+        "designSystem": 4
+      }
+    },
+    "held_out": {
+      "metrics": {
+        "routingAccuracy": {
+          "floor": 1,
+          "tolerance": 1e-12
+        },
+        "precisionAt1": {
+          "floor": 0.6216216216216216,
+          "tolerance": 1e-12
+        },
+        "precisionAt3": {
+          "floor": 0.3589743589743592,
+          "tolerance": 1e-12
+        },
+        "mrrAt3": {
+          "floor": 0.7432432432432432,
+          "tolerance": 1e-12
+        },
+        "ndcgAt3": {
+          "floor": 0.7589807054707906,
+          "tolerance": 1e-12
+        },
+        "negativeAbstention": {
+          "floor": 0.8823529411764706,
+          "tolerance": 1e-12
+        },
+        "typoRecoveryAt3": {
+          "floor": 1,
+          "tolerance": 1e-12
+        },
+        "designSystemCoherence": {
+          "floor": 0.75,
+          "tolerance": 1e-12
+        }
+      },
+      "sampleMinimums": {
+        "cases": 46,
+        "retrieval": 39,
+        "routing": 3,
+        "negativeChecks": 111,
+        "typo": 5,
+        "designSystem": 4
+      }
+    }
+  },
+  "lockedCases": {
+    "domain-style-glassmorphism": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "domain-color-spa": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "domain-chart-time-series": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "domain-landing-pricing": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "domain-product-spa": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "domain-ux-keyboard-focus": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "domain-typography-luxury": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "domain-icons-search": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "domain-gsap-scroll-reveal": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "domain-react-parallel-promises": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "domain-web-icon-label": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "domain-google-fonts-inter": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "stack-swiftui-navigation": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "stack-threejs-orbitcontrols": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "stack-uwp-migration": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "stack-winui-dispatcherqueue": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "domain-brand-rose-griffon-roy": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "stack-m3-state-layers": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    },
+    "stack-rg-ui-app-shell": {
+      "withinTop": 1,
+      "minimumGrade": 2
+    }
+  },
+  "proposedFinalTargets": {
+    "routingAccuracy": 0.93,
+    "precisionAt1": 0.8,
+    "mrrAt3": 0.88,
+    "ndcgAt3": 0.92,
+    "negativeAbstention": 0.95,
+    "typoRecoveryAt3": 0.85,
+    "designSystemCoherence": 0.9
+  }
+}

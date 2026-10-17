@@ -11,8 +11,8 @@ layer (what to build), a *taste* layer (making it distinctive), and a *feedback*
 1. **PLAN with data — `ui-ux-pro-max`.** Before writing markup, get a concrete design
    system. Run the generator, then pull specifics per surface:
    ```bash
-   python3 <skill>/scripts/search.py "<product> <industry> <keywords>" --design-system -p "Project"
-   python3 <skill>/scripts/search.py "<query>" --domain style|color|typography|ux|landing|web-vitals
+   bun <skill>/scripts/search.ts "<product> <industry> <keywords>" --design-system -p "Project"
+   bun <skill>/scripts/search.ts "<query>" --domain style|color|typography|ux|landing|web-vitals
    ```
    Use it for: product-type patterns, color tokens, font pairings, UX anti-patterns,
    landing structure, and Core Web Vitals budgets. Treat its output as the source of truth
@@ -54,12 +54,12 @@ layer (what to build), a *taste* layer (making it distinctive), and a *feedback*
 
 | Layer | Tool | Where |
 |-------|------|-------|
-| Knowledge | `ui-ux-pro-max` skill | installed via `scripts/setup.sh` (plugin) |
-| Taste | `frontend-design` skill | installed via `scripts/setup.sh` (plugin) |
+| Knowledge | `ui-ux-pro-max` skill | installed via `scripts/setup.ts` (plugin) |
+| Taste | `frontend-design` skill | installed via `scripts/setup.ts` (plugin) |
 | Component gen | `shadcn` MCP | `.mcp.json` |
 | Visual feedback | `@playwright/mcp` + `chrome-devtools-mcp` | `.mcp.json` |
 | Automated review | `design-review` subagent + `/design-review` command | `.claude/agents`, `.claude/commands` |
-| Standalone audit | `scripts/design-audit.mjs` (multi-viewport screenshots) | `scripts/`, CI in `.github/workflows` |
+| Standalone audit | `scripts/design-audit.ts` (multi-viewport screenshots) | `scripts/`, CI in `.github/workflows` |
 
 See `docs/STACK.md` for why each tool is here, `docs/SETUP.md` to install, and
 `docs/WORKFLOW.md` for a worked end-to-end example.

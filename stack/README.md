@@ -27,7 +27,7 @@ git clone https://github.com/YMungerDev/claude-website-design-stack
 cd claude-website-design-stack
 
 # 2. Install the skills/plugins + Playwright browser
-./scripts/setup.sh
+./scripts/setup.ts
 
 # 3. Open Claude Code — the MCP servers and CLAUDE.md workflow load automatically
 claude
@@ -56,8 +56,8 @@ iterate** → run `/design-review`. See `docs/WORKFLOW.md` for a full walkthroug
 │       ├── design-review.md      # /design-review — audit a URL/page
 │       └── design-plan.md        # /design-plan — generate a design system first
 ├── scripts/
-│   ├── setup.sh                  # Installs skills/plugins + Playwright chromium
-│   └── design-audit.mjs          # Standalone multi-viewport screenshot + heuristic audit
+│   ├── setup.ts                  # Installs skills/plugins + Playwright chromium
+│   └── design-audit.ts          # Standalone multi-viewport screenshot + heuristic audit
 ├── .github/workflows/
 │   └── design-review.yml         # Runs the audit on every PR that touches UI
 ├── docs/
@@ -72,9 +72,9 @@ iterate** → run `/design-review`. See `docs/WORKFLOW.md` for a full walkthroug
 The same checks are available as a plain script for local runs and CI:
 
 ```bash
-node scripts/design-audit.mjs --url http://localhost:3000 --out audit-output
+bun scripts/design-audit.ts --url http://localhost:3000 --out audit-output
 # or audit a static file
-node scripts/design-audit.mjs --file ./index.html
+bun scripts/design-audit.ts --file ./index.html
 ```
 
 It screenshots 7 viewport tiers (360 → 1920 px) and reports heuristic findings
@@ -83,7 +83,7 @@ See `examples/juniper-audit/` for a real report.
 
 ## Requirements
 
-- Node 18+ and Python 3.x
+- Bun 1.4.4+
 - Claude Code with plugins enabled (`/plugin`)
 
 ## License

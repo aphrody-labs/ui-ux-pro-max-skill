@@ -64,13 +64,13 @@ and actually verified.
 Point the tools at what's already deployed:
 
 ```
-> npm run audit -- --url https://your-site.com        # fast heuristic pass + screenshots
+> bun run audit --url https://your-site.com        # fast heuristic pass + screenshots
 > /design-review https://your-site.com/pricing         # full review with taste + flows
 ```
 
 ## A worked audit on a production site
 
-`examples/juniper-audit/` contains a real run of `scripts/design-audit.mjs` against a live
+`examples/juniper-audit/` contains a real run of `scripts/design-audit.ts` against a live
 marketing site — the generated `report.md`, the per-viewport screenshots, and notes on how to
 read the output. It's the fastest way to see what the heuristic layer catches before you wire
 the stack into your own project.

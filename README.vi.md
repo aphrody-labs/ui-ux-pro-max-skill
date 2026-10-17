@@ -1,5 +1,8 @@
 # [UI UX Pro Max](https://uupm.cc)
 
+> **Ghi chú fork:** bản fork Bun OS của [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) (MIT). Mọi script chạy bằng Bun; xem [README.md](README.md) để biết tài liệu đầy đủ và các stack Bun OS (`m3`, `rg-ui`, domain `brand`).
+
+
 <p align="center">
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/README.id.md">🇮🇩 Bahasa Indonesia</a> |
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/README.ko.md">🇰🇷 한국어</a> |
@@ -12,13 +15,11 @@
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/releases"><img src="https://img.shields.io/github/v/release/nextlevelbuilder/ui-ux-pro-max-skill?style=for-the-badge&color=blue" alt="Bản phát hành GitHub"></a>
   <img src="https://img.shields.io/badge/reasoning_rules-192-green?style=for-the-badge" alt="192 quy tắc suy luận">
   <img src="https://img.shields.io/badge/UI_styles-79_searchable-purple?style=for-the-badge" alt="79 phong cách UI có thể tìm kiếm">
-  <img src="https://img.shields.io/badge/python-3.x-yellow?style=for-the-badge&logo=python&logoColor=white" alt="Python 3.x">
+  <img src="https://img.shields.io/badge/bun-1.4.4%2B-f9f1e1?style=for-the-badge&logo=bun&logoColor=black" alt="Bun 1.4.4+">
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/LICENSE"><img src="https://img.shields.io/github/license/nextlevelbuilder/ui-ux-pro-max-skill?style=for-the-badge&color=green" alt="Giấy phép"></a>
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/ui-ux-pro-max-cli"><img src="https://img.shields.io/npm/v/ui-ux-pro-max-cli?style=flat-square&logo=npm&label=CLI" alt="npm"></a>
-  <a href="https://www.npmjs.com/package/ui-ux-pro-max-cli"><img src="https://img.shields.io/npm/dm/ui-ux-pro-max-cli?style=flat-square&label=downloads" alt="Lượt tải npm"></a>
   <a href="https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/stargazers"><img src="https://img.shields.io/github/stars/nextlevelbuilder/ui-ux-pro-max-skill?style=flat-square&logo=github" alt="Lượt sao GitHub"></a>
   <a href="https://paypal.me/uiuxpromax"><img src="https://img.shields.io/badge/PayPal-Support%20Development-00457C?style=flat-square&logo=paypal&logoColor=white" alt="Hỗ trợ qua PayPal"></a>
 </p>
@@ -165,7 +166,7 @@ Mỗi quy tắc bao gồm:
 - **74 cặp phông chữ** — Các tổ hợp kiểu chữ được tuyển chọn, kèm câu lệnh import Google Fonts
 - **25 loại biểu đồ** — Đề xuất cho dashboard và phân tích dữ liệu
 - **22 tech stack** — React, Next.js, Astro, Vue, Nuxt.js, Nuxt UI, Svelte, SwiftUI, React Native, Flutter, HTML+Tailwind, shadcn/ui, Jetpack Compose, Angular, Laravel, Three.js, JavaFX, WPF, WinUI 3, UWP, Avalonia, Uno Platform
-- **119 hướng dẫn UX** — Thực hành tốt, anti-pattern, quy tắc khả năng tiếp cận, bố cục văn bản bền vững, nhãn gọn và tương tác có thể hủy
+- **123 hướng dẫn UX** — Thực hành tốt, anti-pattern, quy tắc khả năng tiếp cận, bố cục văn bản bền vững, nhãn gọn và tương tác có thể hủy
 - **192 quy tắc suy luận** — Tạo hệ thống thiết kế dành riêng cho từng ngành (MỚI trong v2.0)
 
 ### Văn bản bền vững và UI nhỏ gọn
@@ -190,7 +191,7 @@ Danh mục chứa **79 phong cách có thể tìm kiếm**, được hỗ trợ 
 
 Nhóm đang hoạt động bao gồm 43 họ phong cách trực quan phổ biến, 2 phong cách riêng cho thiết bị di động, 3 nền tảng/hệ thống thiết kế chính thức, 1 vật liệu nền tảng và 1 phong cách phân tích cốt lõi. Các hệ thống chính thức hiện tại gồm Fluent 2, Shopify Polaris và Adobe Spectrum; Liquid Glass được giới hạn trong phạm vi vật liệu nền tảng Apple, Material 3 Expressive vẫn là một biến thể Material dành cho thiết bị di động, còn Spectrum 2 thuộc nhóm bổ sung. Cấu trúc landing page nằm trong tập dữ liệu riêng gồm 34 mẫu thay vì cạnh tranh với phong cách trực quan trong xếp hạng BM25.
 
-Xem [`styles.csv`](src/ui-ux-pro-max/data/styles.csv) để biết toàn bộ hệ thống phân loại và siêu dữ liệu có thông tin nguồn gốc.
+Xem [`styles.csv`](.claude/skills/ui-ux-pro-max/data/styles.csv) để biết toàn bộ hệ thống phân loại và siêu dữ liệu có thông tin nguồn gốc.
 
 ## 💎 So sánh phiên bản Cơ bản và Cao cấp
 
@@ -220,15 +221,15 @@ Nhiều người dùng hỏi về sự khác biệt giữa phiên bản mã ngu�
 Cài đặt trực tiếp trong Claude Code bằng hai lệnh:
 
 ```
-/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill
-/plugin install ui-ux-pro-max@ui-ux-pro-max-skill
+/plugin marketplace add aphrody-labs/ui-ux-pro-max-skill
+/plugin install ui-ux-pro-max@aphrody-ui-ux-pro-max
 ```
 
 ### Sử dụng CLI (khuyến nghị)
 
 ```bash
 # Cài đặt CLI trên toàn hệ thống
-npm install -g ui-ux-pro-max-cli
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill
 
 # Đi đến dự án của bạn
 cd /path/to/your/project
@@ -281,15 +282,15 @@ uipro uninstall --global    # Gỡ bản cài đặt toàn hệ thống
 
 ## Điều kiện tiên quyết
 
-Python 3.x là bắt buộc để chạy script tìm kiếm (chỉ sử dụng thư viện chuẩn — các script không cài đặt gì và không thực hiện yêu cầu mạng).
+Bun 1.4.4+ là bắt buộc để chạy script tìm kiếm (chỉ sử dụng thư viện chuẩn — các script không cài đặt gì và không thực hiện yêu cầu mạng).
 
-Kiểm tra Python đã được cài đặt hay chưa:
+Kiểm tra Bun đã được cài đặt hay chưa:
 
 ```bash
-python3 --version
+bun --version
 ```
 
-Nếu chưa có, hãy tự cài đặt từ [python.org](https://www.python.org/downloads/) hoặc bằng trình quản lý gói của hệ điều hành (Homebrew, apt, winget). Các bước cài đặt này dành cho **bạn, người dùng trực tiếp** — các AI agent sử dụng kỹ năng này không bao giờ được tự ý cài phần mềm trên máy của bạn; chúng được hướng dẫn phải hỏi bạn trước.
+Nếu chưa có, hãy tự cài đặt từ [bun.sh](https://bun.sh) hoặc bằng trình quản lý gói của hệ điều hành (Homebrew, apt, winget). Các bước cài đặt này dành cho **bạn, người dùng trực tiếp** — các AI agent sử dụng kỹ năng này không bao giờ được tự ý cài phần mềm trên máy của bạn; chúng được hướng dẫn phải hỏi bạn trước.
 
 ## Cách sử dụng
 
@@ -364,29 +365,29 @@ Chỉ cần nêu stack bạn muốn trong prompt, hoặc để hệ thống dùn
 
 ```bash
 # Tạo hệ thống thiết kế với đầu ra ASCII
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "beauty spa wellness" --design-system -p "Serenity Spa"
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "beauty spa wellness" --design-system -p "Serenity Spa"
 
 # Tạo đầu ra Markdown
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "fintech banking" --design-system -f markdown
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "fintech banking" --design-system -f markdown
 
 # Tìm kiếm theo miền
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "glassmorphism" --domain style
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "elegant serif" --domain typography
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "dashboard" --domain chart
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "error summary validation" --domain ux
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "decorative icon aria hidden" --domain icons
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "icon button accessible label" --domain icons
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "orphan heading line balance" --domain ux
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "badge chip label wraps to second line" --domain ux
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "rapid chip animation interrupted" --domain ux
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "glassmorphism" --domain style
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "elegant serif" --domain typography
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "dashboard" --domain chart
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "error summary validation" --domain ux
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "decorative icon aria hidden" --domain icons
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "icon button accessible label" --domain icons
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "orphan heading line balance" --domain ux
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "badge chip label wraps to second line" --domain ux
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "rapid chip animation interrupted" --domain ux
 
 # Hướng dẫn riêng cho từng stack
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "form validation" --stack react
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "responsive layout" --stack html-tailwind
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "chip badge overflow nowrap" --stack html-tailwind
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "tableview binding" --stack javafx
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "atlantafx primer enterprise theme" --stack javafx
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "enterprise tableview density permission" --stack javafx
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "form validation" --stack react
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "responsive layout" --stack html-tailwind
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "chip badge overflow nowrap" --stack html-tailwind
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "tableview binding" --stack javafx
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "atlantafx primer enterprise theme" --stack javafx
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "enterprise tableview density permission" --stack javafx
 ```
 
 Tìm kiếm cho web stack có nhận biết phiên bản. Truy vấn không nêu phiên bản chính cũ sẽ trả về hướng dẫn hiện hành, đang được áp dụng. Các thuật ngữ cũ hoặc phiên bản chính cũ được nêu rõ (ví dụ `Svelte 4` hoặc `Next.js 15`) chỉ trả về những dòng hướng dẫn cũ đã được tuyển chọn, có nhãn `Status` và `Applies To`; nếu chưa có hướng dẫn cũ phù hợp, tìm kiếm sẽ không trả về kết quả thay vì trộn lẫn các thế hệ framework.
@@ -397,10 +398,10 @@ Lưu hệ thống thiết kế vào tệp để **truy xuất phân cấp giữa
 
 ```bash
 # Tạo và lưu vào design-system/myapp/MASTER.md
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "SaaS dashboard" --design-system --persist -p "MyApp"
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "SaaS dashboard" --design-system --persist -p "MyApp"
 
 # Đồng thời tạo tệp ghi đè riêng cho một trang
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "SaaS dashboard" --design-system --persist -p "MyApp" --page "dashboard"
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "SaaS dashboard" --design-system --persist -p "MyApp" --page "dashboard"
 ```
 
 Lệnh trên tạo cấu trúc thư mục `design-system/`:
@@ -438,7 +439,7 @@ Mã nguồn đã được tái cấu trúc để sử dụng **hệ thống tạ
 **Luôn cài đặt bằng CLI:**
 
 ```bash
-npm install -g ui-ux-pro-max-cli
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill
 uipro init --ai <platform>
 ```
 
@@ -450,31 +451,26 @@ Nếu bạn muốn đóng góp cho dự án:
 
 ```bash
 # 1. Clone repository
-git clone https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git
+git clone https://github.com/aphrody-labs/ui-ux-pro-max-skill.git
 cd ui-ux-pro-max-skill
 
 # 2. Tìm hiểu cấu trúc
-src/ui-ux-pro-max/           # Nguồn chuẩn (dữ liệu, script, template)
+.claude/skills/ui-ux-pro-max/           # Nguồn chuẩn (dữ liệu, script, template)
 cli/                         # Trình cài đặt CLI (tạo tệp từ template)
 .claude/                     # Môi trường phát triển/kiểm thử cục bộ cho kỹ năng Claude Code
 .factory/                    # Môi trường phát triển/kiểm thử cục bộ cho kỹ năng Droid (Factory)
 
-# 3. Thực hiện thay đổi trong src/ui-ux-pro-max/
+# 3. Thực hiện thay đổi trong .claude/skills/ui-ux-pro-max/
 # - data/*.csv              → Tệp cơ sở dữ liệu
-# - scripts/*.py            → Bộ máy tìm kiếm & hệ thống thiết kế
+# - scripts/*.ts            → Bộ máy tìm kiếm & hệ thống thiết kế
 # - templates/              → Template riêng cho từng nền tảng
 
 # 4. Đồng bộ sang CLI và kiểm thử cục bộ
 cd cli
-npm run sync:assets
-npm run check:assets
-npm run verify:data
-npm run typecheck
+bun run verify
 
 # 5. Build và kiểm thử CLI
-# `npm run build` dùng Bun khi có, nếu không sẽ dùng đầu ra của trình biên dịch TypeScript sau `npm ci`.
-npm run build
-node dist/index.js init --ai claude --offline  # Kiểm thử trong thư mục tạm
+bun cli/src/index.ts init --ai claude --offline  # Kiểm thử trong thư mục tạm
 
 # 6. Tạo PR (không bao giờ push trực tiếp lên main)
 git checkout -b feat/your-feature
@@ -492,30 +488,30 @@ Bản tóm tắt danh mục đã commit hiện ghi nhận **1.934 Google Fonts �
 Quy trình phát triển thông thường và CI cho pull request không phụ thuộc mạng. Chạy toàn bộ cổng kiểm tra offline, bao gồm hash snapshot và xác thực số lượng đã tạo, bằng:
 
 ```bash
-npm --prefix cli run verify:data
+bun run verify
 # Hoặc chỉ kiểm tra bản tóm tắt danh mục đã tạo:
-npm --prefix cli run validate:catalog-summary
+bun run validate:catalog-summary
 ```
 
 Quy trình chuẩn hóa khi làm mới cũng có thể chạy hoàn toàn offline với các fixture đã commit. Kết quả được ghi vào một thư mục ứng viên tạm thời và không bao giờ thay thế dữ liệu chuẩn:
 
 ```bash
 candidate_dir="$(mktemp -d)"
-python3 scripts/refresh-google-fonts.py \
-  --api-input src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-api.json \
-  --metadata-input src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-metadata.json \
-  --existing-csv src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-existing.csv \
-  --overrides src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/google-overrides.json \
+bun scripts/refresh-google-fonts.ts \
+  --api-input tests/fixtures/catalogs/google-api.json \
+  --metadata-input tests/fixtures/catalogs/google-metadata.json \
+  --existing-csv tests/fixtures/catalogs/google-existing.csv \
+  --overrides tests/fixtures/catalogs/google-overrides.json \
   --output-csv "$candidate_dir/google-fonts.csv" \
   --license-output "$candidate_dir/google-font-licenses.json" \
   --metadata-revision fixture-catalogs-v1 \
   --verified-at 2026-08-13 --expected-count 2 --approve-changes
-python3 scripts/refresh-icon-catalog.py \
-  --input src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-core.json \
-  --package-json src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-package.json \
-  --react-package-json src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-react-package.json \
-  --react-exports-input src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/phosphor-react-exports.json \
-  --curated-csv src/ui-ux-pro-max/scripts/tests/fixtures/catalogs/icons-curated.csv \
+bun scripts/refresh-icon-catalog.ts \
+  --input tests/fixtures/catalogs/phosphor-core.json \
+  --package-json tests/fixtures/catalogs/phosphor-package.json \
+  --react-package-json tests/fixtures/catalogs/phosphor-react-package.json \
+  --react-exports-input tests/fixtures/catalogs/phosphor-react-exports.json \
+  --curated-csv tests/fixtures/catalogs/icons-curated.csv \
   --output "$candidate_dir/phosphor-icons-upstream.json" \
   --verified-at 2026-08-13 --expected-count 2
 ```
@@ -529,7 +525,7 @@ gh run watch "$run_id"
 gh run download "$run_id" --name "catalog-refresh-review-$run_id"
 ```
 
-Workflow đọc Google Fonts Developer API và các gói Phosphor chính thức đã được cố định phiên bản, ghi các tệp ứng viên cùng unified diff vào artifact và chỉ có quyền đọc repository. Workflow không bao giờ commit, push, mở PR hoặc merge. Hãy xem xét báo cáo thay đổi, mục loại trừ, giấy phép, chỉ số liên quan và cổng kiểm tra offline trước khi tự đưa các tệp ứng viên vào `src/ui-ux-pro-max/data/`.
+Workflow đọc Google Fonts Developer API và các gói Phosphor chính thức đã được cố định phiên bản, ghi các tệp ứng viên cùng unified diff vào artifact và chỉ có quyền đọc repository. Workflow không bao giờ commit, push, mở PR hoặc merge. Hãy xem xét báo cáo thay đổi, mục loại trừ, giấy phép, chỉ số liên quan và cổng kiểm tra offline trước khi tự đưa các tệp ứng viên vào `.claude/skills/ui-ux-pro-max/data/`.
 
 ## Phát hành tự động
 
@@ -555,7 +551,7 @@ Workflow phát hành sử dụng `GITHUB_TOKEN` mặc định để tạo bản 
 Phiên bản `ui-ux-pro-max-cli` đã cài của bạn đã cũ. Hãy cập nhật rồi thử lại:
 
 ```bash
-npm install -g ui-ux-pro-max-cli@latest
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill
 uipro uninstall
 ```
 
@@ -585,14 +581,14 @@ Không tải lên tệp ZIP chứa toàn bộ repository GitHub. Đây là bản
 Với Claude Code, hãy cài đặt qua Marketplace:
 
 ```bash
-/plugin marketplace add nextlevelbuilder/ui-ux-pro-max-skill
-/plugin install ui-ux-pro-max@ui-ux-pro-max-skill
+/plugin marketplace add aphrody-labs/ui-ux-pro-max-skill
+/plugin install ui-ux-pro-max@aphrody-ui-ux-pro-max
 ```
 
 Hoặc dùng trình cài đặt CLI:
 
 ```bash
-npx ui-ux-pro-max-cli init --ai claude
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill && uipro init --ai claude
 ```
 
 ### Cài đặt qua Claude Marketplace thất bại với lỗi "Zip file contains a symbolic link"
@@ -600,31 +596,30 @@ npx ui-ux-pro-max-cli init --ai claude
 Đây là lỗi đã biết ở các phiên bản trước v2.5.1. Repository từng sử dụng symlink nội bộ mà một số công cụ cài đặt không thể xử lý. **Cách khắc phục:** dùng trình cài đặt CLI:
 
 ```bash
-npm install -g ui-ux-pro-max-cli
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill
 uipro init --ai claude
 ```
 
 Hoặc chờ bản phát hành tiếp theo có bản sửa lỗi này.
 
-### `npm install -g ui-ux-pro-max-cli` thất bại do lỗi quyền truy cập
+### `bun install -g github:aphrody-labs/ui-ux-pro-max-skill` thất bại do lỗi quyền truy cập
 
 Hãy dùng trình quản lý phiên bản Node (khuyến nghị), hoặc bỏ qua bước cài đặt toàn hệ thống:
 
 ```bash
-# Dùng npx mà không cài đặt toàn hệ thống
-npx ui-ux-pro-max-cli init --ai claude
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill && uipro init --ai claude
 ```
 
-### Không tìm thấy Python khi chạy lệnh tạo hệ thống thiết kế
+### Không tìm thấy Bun khi chạy lệnh tạo hệ thống thiết kế
 
-Các script tìm kiếm yêu cầu Python 3.x. Hãy tự cài đặt từ [python.org](https://www.python.org/downloads/) hoặc bằng trình quản lý gói của hệ điều hành (Homebrew, apt, winget). AI agent không nên tự cài đặt thay bạn — chúng được hướng dẫn phải hỏi bạn trước.
+Các script tìm kiếm yêu cầu Bun 1.4.4+. Hãy tự cài đặt từ [bun.sh](https://bun.sh) hoặc bằng trình quản lý gói của hệ điều hành (Homebrew, apt, winget). AI agent không nên tự cài đặt thay bạn — chúng được hướng dẫn phải hỏi bạn trước.
 
 ### Đầu ra hệ thống thiết kế bị cắt hoặc thiếu trường
 
 Đầu ra dành cho người đọc sẽ cắt các trường dài ở mức 300 ký tự. Dùng `--json` để nhận dữ liệu đầy đủ, không bị cắt:
 
 ```bash
-python3 .claude/skills/ui-ux-pro-max/scripts/search.py "SaaS" --domain style --json
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "SaaS" --domain style --json
 ```
 
 ---

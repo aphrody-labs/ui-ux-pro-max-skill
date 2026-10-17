@@ -10,6 +10,6 @@ Target: $1
 Focus (optional): $2
 
 If no target was given, ask for the running dev-server URL (or a file path). If a browser
-cannot be opened, fall back to `node scripts/design-audit.mjs` and report only the heuristic
+cannot be opened, fall back to `bun scripts/design-audit.ts` and report only the heuristic
 findings, clearly labeled as such. Fix Blockers and High-severity findings before reporting the
 work as complete.

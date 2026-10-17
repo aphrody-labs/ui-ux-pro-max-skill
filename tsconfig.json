@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "Preserve",
+    "moduleResolution": "bundler",
+    "lib": ["ESNext", "DOM"],
+    "types": ["bun"],
+    "strict": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "skipLibCheck": true,
+    "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": false,
+    "resolveJsonModule": true,
+    "jsx": "react-jsx"
+  },
+  "include": ["cli/src", "scripts", "tests", ".claude/skills/**/*.ts"],
+  "exclude": ["gallery", "stack", "**/.tmp*"]
+}

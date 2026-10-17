@@ -1,0 +1,3 @@
+[install]
+# next-themes ships .d.ts files that resolve @types/react from the hoisted tree.
+linker = "hoisted"

@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
-import type { AIType, ConcreteAIType } from '../types/index.js';
+import type { AIType, ConcreteAIType } from '../types/index.ts';
 
 interface DetectionResult {
   detected: ConcreteAIType[];
@@ -95,7 +95,7 @@ export function detectAIType(cwd: string = process.cwd()): DetectionResult {
   // Suggest based on what's detected
   let suggested: AIType | null = null;
   if (detected.length === 1) {
-    suggested = detected[0];
+    suggested = detected[0] ?? null;
   } else if (
     (detected.length >= 2 && detected.length <= 4) &&
     detected.includes('antigravity') &&

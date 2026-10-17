@@ -49,15 +49,15 @@ Cloud, and MuAPI image generation.
 ### Logo: Generate Design Brief
 
 ```bash
-python3 scripts/logo/search.py "tech startup modern" --design-brief -p "BrandName"
+bun scripts/logo/search.ts "tech startup modern" --design-brief -p "BrandName"
 ```
 
 ### Logo: Search Styles/Colors/Industries
 
 ```bash
-python3 scripts/logo/search.py "minimalist clean" --domain style
-python3 scripts/logo/search.py "tech professional" --domain color
-python3 scripts/logo/search.py "healthcare medical" --domain industry
+bun scripts/logo/search.ts "minimalist clean" --domain style
+bun scripts/logo/search.ts "tech professional" --domain color
+bun scripts/logo/search.ts "healthcare medical" --domain industry
 ```
 
 ### Logo: Generate with AI
@@ -65,11 +65,11 @@ python3 scripts/logo/search.py "healthcare medical" --domain industry
 **ALWAYS** generate output logo images with white background.
 
 ```bash
-python3 scripts/logo/generate.py --brand "TechFlow" --style minimalist --industry tech
-python3 scripts/logo/generate.py --prompt "coffee shop vintage badge" --style vintage
-python3 scripts/logo/generate.py --brand "TechFlow" --provider atlas
-python3 scripts/logo/generate.py --brand "TechFlow" --provider muapi
-python3 scripts/logo/generate.py --brand "TechFlow" --provider muapi --muapi-model nano-banana-pro
+bun scripts/logo/generate.ts --brand "TechFlow" --style minimalist --industry tech
+bun scripts/logo/generate.ts --prompt "coffee shop vintage badge" --style vintage
+bun scripts/logo/generate.ts --brand "TechFlow" --provider atlas
+bun scripts/logo/generate.ts --brand "TechFlow" --provider muapi
+bun scripts/logo/generate.ts --brand "TechFlow" --provider muapi --muapi-model nano-banana-pro
 ```
 
 **IMPORTANT:** When scripts fail, try to fix them directly.
@@ -83,32 +83,32 @@ After generation, **ALWAYS** ask user about HTML preview via `AskUserQuestion`. 
 ### CIP: Generate Brief
 
 ```bash
-python3 scripts/cip/search.py "tech startup" --cip-brief -b "BrandName"
+bun scripts/cip/search.ts "tech startup" --cip-brief -b "BrandName"
 ```
 
 ### CIP: Search Domains
 
 ```bash
-python3 scripts/cip/search.py "business card letterhead" --domain deliverable
-python3 scripts/cip/search.py "luxury premium elegant" --domain style
-python3 scripts/cip/search.py "hospitality hotel" --domain industry
-python3 scripts/cip/search.py "office reception" --domain mockup
+bun scripts/cip/search.ts "business card letterhead" --domain deliverable
+bun scripts/cip/search.ts "luxury premium elegant" --domain style
+bun scripts/cip/search.ts "hospitality hotel" --domain industry
+bun scripts/cip/search.ts "office reception" --domain mockup
 ```
 
 ### CIP: Generate Mockups
 
 ```bash
 # With logo (RECOMMENDED)
-python3 scripts/cip/generate.py --brand "TopGroup" --logo /path/to/logo.png --deliverable "business card" --industry "consulting"
+bun scripts/cip/generate.ts --brand "TopGroup" --logo /path/to/logo.png --deliverable "business card" --industry "consulting"
 
 # Full CIP set
-python3 scripts/cip/generate.py --brand "TopGroup" --logo /path/to/logo.png --industry "consulting" --set
+bun scripts/cip/generate.ts --brand "TopGroup" --logo /path/to/logo.png --industry "consulting" --set
 
 # Pro model (4K text)
-python3 scripts/cip/generate.py --brand "TopGroup" --logo logo.png --deliverable "business card" --model pro
+bun scripts/cip/generate.ts --brand "TopGroup" --logo logo.png --deliverable "business card" --model pro
 
 # Without logo
-python3 scripts/cip/generate.py --brand "TechFlow" --deliverable "business card" --no-logo-prompt
+bun scripts/cip/generate.ts --brand "TechFlow" --deliverable "business card" --no-logo-prompt
 ```
 
 Models: `flash` (default, `gemini-2.5-flash-image`), `pro` (`gemini-3-pro-image`). Override the ids with `GEMINI_FLASH_IMAGE_MODEL` / `GEMINI_PRO_IMAGE_MODEL`.
@@ -116,7 +116,7 @@ Models: `flash` (default, `gemini-2.5-flash-image`), `pro` (`gemini-3-pro-image`
 ### CIP: Render HTML Presentation
 
 ```bash
-python3 scripts/cip/render-html.py --brand "TopGroup" --industry "consulting" --images /path/to/cip-output
+bun scripts/cip/render-html.ts --brand "TopGroup" --industry "consulting" --images /path/to/cip-output
 ```
 
 **Tip:** If no logo exists, use Logo Design section above first.
@@ -191,21 +191,21 @@ Load `references/banner-sizes-and-styles.md` for complete sizes and styles refer
 ### Icon: Generate Single Icon
 
 ```bash
-python3 scripts/icon/generate.py --prompt "settings gear" --style outlined
-python3 scripts/icon/generate.py --prompt "shopping cart" --style filled --color "#6366F1"
-python3 scripts/icon/generate.py --name "dashboard" --category navigation --style duotone
+bun scripts/icon/generate.ts --prompt "settings gear" --style outlined
+bun scripts/icon/generate.ts --prompt "shopping cart" --style filled --color "#6366F1"
+bun scripts/icon/generate.ts --name "dashboard" --category navigation --style duotone
 ```
 
 ### Icon: Generate Batch Variations
 
 ```bash
-python3 scripts/icon/generate.py --prompt "cloud upload" --batch 4 --output-dir ./icons
+bun scripts/icon/generate.ts --prompt "cloud upload" --batch 4 --output-dir ./icons
 ```
 
 ### Icon: Multi-size Export
 
 ```bash
-python3 scripts/icon/generate.py --prompt "user profile" --sizes "16,24,32,48" --output-dir ./icons
+bun scripts/icon/generate.ts --prompt "user profile" --sizes "16,24,32,48" --output-dir ./icons
 ```
 
 ### Icon: Top Styles
@@ -252,8 +252,8 @@ Load `references/social-photos-design.md` for sizes, templates, best practices.
 
 ### Complete Brand Package
 
-1. **Logo** → `scripts/logo/generate.py` → Generate logo variants
-2. **CIP** → `scripts/cip/generate.py --logo ...` → Create deliverable mockups
+1. **Logo** → `scripts/logo/generate.ts` → Generate logo variants
+2. **CIP** → `scripts/cip/generate.ts --logo ...` → Create deliverable mockups
 3. **Presentation** → Load `references/slides-create.md` → Build pitch deck
 
 ### New Design System
@@ -288,31 +288,33 @@ Load `references/social-photos-design.md` for sizes, templates, best practices.
 
 | Script | Purpose |
 |--------|---------|
-| `scripts/logo/search.py` | Search logo styles, colors, industries |
-| `scripts/logo/generate.py` | Generate logos with Gemini AI |
-| `scripts/logo/core.py` | BM25 search engine for logo data |
-| `scripts/cip/search.py` | Search CIP deliverables, styles, industries |
-| `scripts/cip/generate.py` | Generate CIP mockups with Gemini |
-| `scripts/cip/render-html.py` | Render HTML presentation from CIP mockups |
-| `scripts/cip/core.py` | BM25 search engine for CIP data |
-| `scripts/icon/generate.py` | Generate SVG icons with Gemini 3.1 Pro |
+| `scripts/logo/search.ts` | Search logo styles, colors, industries |
+| `scripts/logo/generate.ts` | Generate logos with Gemini AI |
+| `scripts/logo/core.ts` | BM25 search engine for logo data |
+| `scripts/cip/search.ts` | Search CIP deliverables, styles, industries |
+| `scripts/cip/generate.ts` | Generate CIP mockups with Gemini |
+| `scripts/cip/render-html.ts` | Render HTML presentation from CIP mockups |
+| `scripts/cip/core.ts` | BM25 search engine for CIP data |
+| `scripts/icon/generate.ts` | Generate SVG icons with Gemini 3.1 Pro |
 
 ## Prerequisites
 
-**Python:** This skill uses Python scripts. On Windows, use `python` instead of `python3` (e.g., `python scripts/logo/search.py` instead of `python3 scripts/logo/search.py`).
+**Bun:** every script is TypeScript run directly by `bun` (Bun 1.4+, the Aphrody runtime in Bun OS). No package install is needed: search, HTTP (Gemini REST API, Atlas Cloud, MuAPI) and file output use Bun built-ins.
 
-Check if Python is installed:
+Check that Bun is installed:
 ```bash
-python3 --version || python --version
+bun --version
 ```
 
 ## Setup
 
 ```bash
 export GEMINI_API_KEY="your-key"  # https://aistudio.google.com/apikey
-pip install google-genai pillow
 
-# Optional MuAPI provider (no extra Python package required)
+# Optional Atlas Cloud provider
+export ATLASCLOUD_API_KEY="your-key"
+
+# Optional MuAPI provider
 export MUAPI_API_KEY="your-key"
 ```
 
@@ -324,8 +326,6 @@ for the current model-specific schemas. The logo generator supports both documen
 model slugs and sends their shared required `prompt` plus optional `aspect_ratio`
 fields; the Pro model also accepts an optional `resolution` field that this focused
 logo workflow leaves at the provider default.
-
-> **Note for Windows:** Use `python` instead of `pip` where needed (e.g., `python -m pip install ...`).
 
 ## Integration
 

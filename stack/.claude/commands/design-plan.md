@@ -8,7 +8,7 @@ Before writing any markup, produce a design system for: **$ARGUMENTS**
 1. Run the `ui-ux-pro-max` design-system generator to get style + color tokens + typography +
    UX anti-patterns:
    ```bash
-   python3 <ui-ux-pro-max-skill-path>/scripts/search.py "$ARGUMENTS" --design-system -p "Project"
+   bun <ui-ux-pro-max-skill-path>/scripts/search.ts "$ARGUMENTS" --design-system -p "Project"
    ```
    (Resolve `<ui-ux-pro-max-skill-path>` from the installed skill — see CLAUDE.md.)
 

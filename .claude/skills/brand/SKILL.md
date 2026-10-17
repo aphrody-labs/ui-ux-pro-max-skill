@@ -28,19 +28,19 @@ Script paths in this skill and its `references/` are relative to the directory t
 
 **Inject brand context into prompts:**
 ```bash
-node scripts/inject-brand-context.cjs
-node scripts/inject-brand-context.cjs --json
+bun scripts/inject-brand-context.ts
+bun scripts/inject-brand-context.ts --json
 ```
 
 **Validate an asset:**
 ```bash
-node scripts/validate-asset.cjs <asset-path>
+bun scripts/validate-asset.ts <asset-path>
 ```
 
 **Extract/compare colors:**
 ```bash
-node scripts/extract-colors.cjs --palette
-node scripts/extract-colors.cjs <image-path>
+bun scripts/extract-colors.ts --palette
+bun scripts/extract-colors.ts <image-path>
 ```
 
 ## Brand Sync Workflow
@@ -48,9 +48,9 @@ node scripts/extract-colors.cjs <image-path>
 ```bash
 # 1. Edit docs/brand-guidelines.md (or use /brand update)
 # 2. Sync to design tokens
-node scripts/sync-brand-to-tokens.cjs
+bun scripts/sync-brand-to-tokens.ts
 # 3. Verify
-node scripts/inject-brand-context.cjs --json | head -20
+bun scripts/inject-brand-context.ts --json | head -20
 ```
 
 The sync stops when it detects existing token files, `:root` custom properties
@@ -90,10 +90,10 @@ intentional, re-run with `--force`.
 
 | Script | Purpose |
 |--------|---------|
-| `scripts/inject-brand-context.cjs` | Extract brand context for prompt injection |
-| `scripts/sync-brand-to-tokens.cjs` | Sync brand-guidelines.md → design-tokens.json/css |
-| `scripts/validate-asset.cjs` | Validate asset naming, size, format |
-| `scripts/extract-colors.cjs` | Extract and compare colors against palette |
+| `scripts/inject-brand-context.ts` | Extract brand context for prompt injection |
+| `scripts/sync-brand-to-tokens.ts` | Sync brand-guidelines.md → design-tokens.json/css |
+| `scripts/validate-asset.ts` | Validate asset naming, size, format |
+| `scripts/extract-colors.ts` | Extract and compare colors against palette |
 
 ## Templates
 

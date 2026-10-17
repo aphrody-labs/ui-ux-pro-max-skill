@@ -6,36 +6,36 @@ AI-powered SVG icon generation using Gemini 3.1 Pro Preview. 15 styles, 12 categ
 
 | Script | Purpose |
 |--------|---------|
-| `scripts/icon/generate.py` | Generate SVG icons with Gemini 3.1 Pro Preview |
+| `scripts/icon/generate.ts` | Generate SVG icons with Gemini 3.1 Pro Preview |
 
 ## Commands
 
 ### Generate Single Icon
 
 ```bash
-python3 scripts/icon/generate.py --prompt "settings gear" --style outlined
-python3 scripts/icon/generate.py --prompt "shopping cart" --style filled --color "#6366F1"
-python3 scripts/icon/generate.py --name "dashboard" --category navigation --style duotone
+bun scripts/icon/generate.ts --prompt "settings gear" --style outlined
+bun scripts/icon/generate.ts --prompt "shopping cart" --style filled --color "#6366F1"
+bun scripts/icon/generate.ts --name "dashboard" --category navigation --style duotone
 ```
 
 ### Generate Batch Variations
 
 ```bash
-python3 scripts/icon/generate.py --prompt "cloud upload" --batch 4 --output-dir ./icons
-python3 scripts/icon/generate.py --prompt "notification bell" --batch 6 --style outlined --output-dir ./icons
+bun scripts/icon/generate.ts --prompt "cloud upload" --batch 4 --output-dir ./icons
+bun scripts/icon/generate.ts --prompt "notification bell" --batch 6 --style outlined --output-dir ./icons
 ```
 
 ### Generate Multiple Sizes
 
 ```bash
-python3 scripts/icon/generate.py --prompt "user profile" --sizes "16,24,32,48" --output-dir ./icons
+bun scripts/icon/generate.ts --prompt "user profile" --sizes "16,24,32,48" --output-dir ./icons
 ```
 
 ### List Styles/Categories
 
 ```bash
-python3 scripts/icon/generate.py --list-styles
-python3 scripts/icon/generate.py --list-categories
+bun scripts/icon/generate.ts --list-styles
+bun scripts/icon/generate.ts --list-categories
 ```
 
 ## CLI Options
@@ -117,6 +117,5 @@ python3 scripts/icon/generate.py --list-categories
 ## Setup
 
 ```bash
-export GEMINI_API_KEY="your-key"
-pip install google-genai
+export GEMINI_API_KEY="your-key"  # scripts run with bun, no package install
 ```

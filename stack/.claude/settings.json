@@ -3,9 +3,9 @@
   "enableAllProjectMcpServers": true,
   "permissions": {
     "allow": [
-      "Bash(node scripts/design-audit.mjs:*)",
-      "Bash(npm run audit:*)",
-      "Bash(npx playwright:*)",
+      "Bash(bun scripts/design-audit.ts:*)",
+      "Bash(bun run audit:*)",
+      "Bash(bunx playwright:*)",
       "Read(//home/**)",
       "mcp__playwright",
       "mcp__chrome-devtools",

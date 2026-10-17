@@ -99,7 +99,7 @@ function contrastRatio(l1, l2) {
 ## Color Extraction
 
 ### From Images
-Use `extract-colors.cjs` script to:
+Use `extract-colors.ts` script to:
 1. Load image file
 2. Extract dominant colors using k-means clustering
 3. Map to nearest brand colors

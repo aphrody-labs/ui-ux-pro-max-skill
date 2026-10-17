@@ -1,6 +1,6 @@
 # Worked example — auditing a production marketing site
 
-This is a **real run** of `scripts/design-audit.mjs` against a live single-page marketing site
+This is a **real run** of `scripts/design-audit.ts` against a live single-page marketing site
 (a financial-services firm's homepage), captured to show what the heuristic layer of the stack
 produces before you wire it into your own project.
 
@@ -8,8 +8,8 @@ produces before you wire it into your own project.
 
 ```bash
 # serve the site, then audit it over HTTP (not file://, so asset/CORS noise is realistic)
-python3 -m http.server 8099          # in the site directory
-node scripts/design-audit.mjs --url http://localhost:8099/ --out examples/juniper-audit
+bunx serve -l 8099                   # in the site directory
+bun scripts/design-audit.ts --url http://localhost:8099/ --out examples/juniper-audit
 ```
 
 ## What's here

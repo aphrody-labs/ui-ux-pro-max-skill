@@ -18,8 +18,8 @@ plus a design-system generator that turns a product brief into concrete tokens. 
 answer to "what should this actually look like, and what are the anti-patterns?"
 
 - Repo: <https://github.com/nextlevelbuilder/ui-ux-pro-max-skill> · License: MIT
-- Install: `npx ui-ux-pro-max-cli init --ai claude`
-- Use: `python3 <skill>/scripts/search.py "<brief>" --design-system` and `--domain <domain>`
+- Install: `bun install -g github:aphrody-labs/ui-ux-pro-max-skill && uipro init --ai claude`
+- Use: `bun <skill>/scripts/search.ts "<brief>" --design-system` and `--domain <domain>`
 
 ## 🎨 Taste — `frontend-design` (official Anthropic)
 
@@ -37,7 +37,7 @@ three "AI-slop" defaults to avoid, and pushes boldness into a single signature e
 Browse, search, and install shadcn/ui components (and other registries) by natural language,
 instead of hand-rolling accessible primitives. Best for React/Next/Vue/Svelte projects.
 
-- Docs: <https://ui.shadcn.com/docs/mcp> · Command: `npx shadcn@latest mcp`
+- Docs: <https://ui.shadcn.com/docs/mcp> · Command: `bunx --bun shadcn@latest mcp`
 
 ## 👁️ Visual feedback — Playwright MCP + Chrome DevTools MCP
 
@@ -46,15 +46,15 @@ screenshots, reads the console, and takes an accessibility snapshot — so it ca
 its own z-index bugs, animation-timing errors, overflow, and layout shift. Chrome DevTools MCP
 adds deep performance/network/CLS profiling.
 
-- Playwright MCP: <https://github.com/microsoft/playwright-mcp> — `npx @playwright/mcp@latest`
-- Chrome DevTools MCP: <https://github.com/ChromeDevTools/chrome-devtools-mcp> — `npx chrome-devtools-mcp@latest`
+- Playwright MCP: <https://github.com/microsoft/playwright-mcp> — `bunx @playwright/mcp@latest`
+- Chrome DevTools MCP: <https://github.com/ChromeDevTools/chrome-devtools-mcp> — `bunx chrome-devtools-mcp@latest`
 
 ## ✅ Automated review — `design-review` subagent
 
 A senior-reviewer subagent (`.claude/agents/design-review.md`) that runs a 7-phase audit over a
 live page: interaction states, responsiveness across 6 viewport tiers, visual polish, WCAG 2.1
 AA, edge cases, and console health. Invoke with `/design-review <url>`. The heuristic subset
-also runs headless in CI via `scripts/design-audit.mjs`.
+also runs headless in CI via `scripts/design-audit.ts`.
 
 ## Optional add-ons (not in default `.mcp.json`)
 

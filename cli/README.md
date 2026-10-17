@@ -1,17 +1,18 @@
-# ui-ux-pro-max-cli
+# uipro — UI/UX Pro Max installer (Bun)
 
-CLI to install UI/UX Pro Max skill for AI coding assistants.
+The `uipro` CLI installs the UI/UX Pro Max skills for AI coding assistants. It runs on Bun with
+no dependencies and installs from the repository tree it runs from (`.claude/skills/` and
+`cli/templates/`), so there is no build step and no bundled copy of the skill.
 
 ## Installation
 
 ```bash
-npm install -g ui-ux-pro-max-cli
+bun install -g github:aphrody-labs/ui-ux-pro-max-skill
 ```
 
 ## Usage
 
 ```bash
-# Install for specific AI assistant
 uipro init --ai claude      # Claude Code
 uipro init --ai cursor      # Cursor
 uipro init --ai windsurf    # Windsurf
@@ -29,75 +30,27 @@ uipro init --ai openclaw    # OpenClaw (.agents/skills/)
 uipro init --ai universal   # Universal / Agent Standard (.agents/skills/)
 uipro init --ai all         # All assistants
 
-# Options
-uipro init --offline        # Compatibility flag; installs bundled templates
 uipro init --force          # Overwrite existing files
-uipro init --global         # Install globally to home directory (~/)
+uipro init --global         # Install to the home directory (~/)
+uipro init --dry-run        # Preview install actions without writing files
 
-# Other commands
-uipro versions              # List available versions
-uipro update                # Update the global CLI to the latest release
-uipro update --global       # Refresh globally installed skill files from this CLI package
+uipro versions              # List published versions (fork releases or tags)
+uipro update --ai claude    # bun install -g the latest CLI, then regenerate the skill files
+uipro uninstall             # Remove the skill (auto-detect platform)
+uipro uninstall --yes       # ... without the confirmation prompt
 ```
 
-## GitHub Authentication
+The generated skill files call the search engine with `bun <platform-root>/skills/ui-ux-pro-max/scripts/search.ts`.
 
-GitHub's unauthenticated API allows 60 requests/hour per IP. If you hit rate limits, you can provide a GitHub Personal Access Token (PAT) to raise the limit to 5,000 requests/hour.
+## GitHub rate limits
 
-**Options (in order of precedence):**
-
-```bash
-# 1. Pass directly as a flag (one-off use)
-uipro init --token ghp_yourtoken
-uipro versions --token ghp_yourtoken
-uipro update --token ghp_yourtoken
-
-# 2. Set as a project-scoped environment variable (recommended)
-export UI_PRO_MAX_GITHUB_TOKEN=ghp_yourtoken
-uipro init
-
-# 3. Fallback: GITHUB_TOKEN is also read if UI_PRO_MAX_GITHUB_TOKEN is not set
-export GITHUB_TOKEN=ghp_yourtoken
-uipro init
-```
-
-**Creating a token:** Go to <https://github.com/settings/tokens>, click **Generate new token (classic)**, and select **no scopes** — public repo access requires no permissions. Copy the token and store it as an environment secret; never hardcode it in source files.
-
-> **Warning:** `GITHUB_TOKEN` is automatically injected by GitHub Actions with broad repo permissions. Prefer `UI_PRO_MAX_GITHUB_TOKEN` in CI to avoid accidentally attaching workflow credentials to release download requests.
-
-## How It Works
-
-`uipro init` generates assistant-specific files from the templates bundled with the installed CLI package. To get newer templates and data, update the package, then regenerate:
-
-```bash
-uipro update                   # updates the global CLI to the latest release
-uipro init --ai codex --force  # regenerate skill files from the new package
-```
-
-`uipro update` runs `npm install -g ui-ux-pro-max-cli@latest` for you (it shells out to `npm` only on Windows, where `npm` is a `.cmd`). You can still run that command manually if you prefer. When the CLI is already current, `uipro update` just refreshes the installed skill files.
+`versions` and `update` read the fork's releases from the GitHub API (60 requests/hour
+unauthenticated). Pass `--token <pat>` or set `UI_PRO_MAX_GITHUB_TOKEN` (`GITHUB_TOKEN` is the
+fallback); a token without scopes is enough for public repositories.
 
 ## Development
 
 ```bash
-# Install dependencies
-bun install
-
-# Run locally
-bun run src/index.ts --help
-
-# Build
-bun run build
-
-# Sync bundled CLI assets from the source skill
-npm run sync:assets
-
-# Verify bundled assets are current before publishing
-npm run check:assets
-
-# Link for local testing
-bun link
+bun cli/src/index.ts --help
+bun test tests/cli.test.ts
 ```
-
-## License
-
-MIT

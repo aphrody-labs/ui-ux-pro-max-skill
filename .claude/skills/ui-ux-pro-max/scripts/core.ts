@@ -242,7 +242,7 @@ export const NO_THRESHOLD: Threshold = { min_score: 0, min_margin: 0, min_covera
 const STYLE_IDENTITY_FIELDS = ["Style ID", "Style Category", "Aliases"];
 const LANDING_IDENTITY_FIELDS = ["Pattern ID", "Pattern Name", "Aliases"];
 const BRAND_IDENTITY_FIELDS = ["Brand ID", "Brand", "Theme", "Aliases"];
-const DOMAIN_QUERY_REWRITES: Partial<Record<Domain, Record<string, string | null>>> = {
+export const DOMAIN_QUERY_REWRITES: Partial<Record<Domain, Record<string, string | null>>> = {
   color: Object.fromEntries(
     ["color", "palette", "hex", "rgb", "token", "semantic", "destructive", "muted", "foreground"].map((term) => [term, null]),
   ),
@@ -254,6 +254,7 @@ const DOMAIN_QUERY_REWRITES: Partial<Record<Domain, Record<string, string | null
   gsap: { gsap: "animation", quickto: null, scrolltrigger: "scroll", "flip plugin": null, splittext: null },
   react: { nextjs: "react", usecallback: "memoization", useeffect: "effects" },
   web: { aria: "accessibility", outline: "focus", semantic: null, autocomplete: "input", preconnect: null },
+  brand: { "brand palette": "theme", "brand tokens": "theme" },
 };
 
 // ============ TOKENIZATION ============
@@ -642,7 +643,7 @@ async function loadProductKeywords(): Promise<string[]> {
 
 let domainKeywordsCache: { signature: Signature | null; keywords: Record<Domain, string[]> } | null = null;
 
-async function domainKeywords(): Promise<Record<Domain, string[]>> {
+export async function domainKeywords(): Promise<Record<Domain, string[]>> {
   const productPath = join(DATA_DIR, CSV_CONFIG.product.file);
   const signature = (await Bun.file(productPath).exists()) ? await fileSignature(productPath) : null;
   if (domainKeywordsCache && domainKeywordsCache.signature === signature) return domainKeywordsCache.keywords;

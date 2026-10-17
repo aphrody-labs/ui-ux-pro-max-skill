@@ -21,20 +21,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v2
         with:
-          node-version: 20
+          bun-version: latest
 
       - name: Install deps + Chromium
         run: |
-          npm install
-          npx playwright install --with-deps chromium
+          bun install
+          bunx playwright install --with-deps chromium
 
       # Point --url at your preview/deploy URL, or --file at a built static entry point.
       # Replace the target below with how your app serves a page in CI.
       - name: Run design audit
         run: |
-          node scripts/design-audit.mjs --file ./index.html --out audit-output || true
+          bun scripts/design-audit.ts --file ./index.html --out audit-output || true
 
       - name: Upload audit report + screenshots
         if: always()
@@ -44,4 +44,4 @@ jobs:
           path: audit-output/
 
       - name: Fail on high-severity findings
-        run: node scripts/design-audit.mjs --file ./index.html --out audit-output
+        run: bun scripts/design-audit.ts --file ./index.html --out audit-output
