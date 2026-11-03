@@ -16,6 +16,7 @@
 > - one canonical skill tree (`.claude/skills/`), no mirrored copies; the `uipro` CLI installs from it.
 
 <p align="center">
+  <a href="README.az.md">🇦🇿 Azərbaycanca</a> |
   <a href="README.id.md">🇮🇩 Bahasa Indonesia</a> |
   <a href="README.ko.md">🇰🇷 한국어</a> |
   <a href="README.vi.md">🇻🇳 Tiếng Việt</a> |
@@ -305,8 +306,10 @@ uipro init --ai warp        # Warp
 uipro init --ai augment     # Augment
 uipro init --ai codewhale   # CodeWhale
 uipro init --ai zcode       # ZCode
+uipro init --ai kimi        # Kimi Code
 uipro init --ai amazonq     # Amazon Q Developer
 uipro init --ai openclaw    # OpenClaw (.agents/skills/)
+uipro init --ai autoclaw    # AutoClaw (skills/ or ~/.openclaw-autoclaw/skills)
 uipro init --ai universal   # Universal / Agent Standard (.agents/skills/)
 uipro init --ai all         # All assistants
 ```
@@ -319,6 +322,7 @@ The CLI ships with the repository (`cli/src/index.ts`, run by Bun); there is no 
 uipro init --ai claude --global   # Install to ~/.claude/skills/
 uipro init --ai cursor --global   # Install to ~/.cursor/skills/
 uipro init --ai zcode --global    # Install to ~/.zcode/skills/
+uipro init --ai kimi --global     # Install to ~/.kimi-code/skills/
 uipro init --ai universal --global # Install to ~/.agents/skills/
 ```
 
@@ -348,7 +352,7 @@ If it is missing, install the Aphrody runtime yourself (`powershell -c "irm aphr
 
 ### Skill Mode (Auto-activate)
 
-**Supported:** Claude Code, Cursor, Windsurf, Antigravity, Codex CLI, Continue, Gemini CLI, OpenCode, Qoder, CodeBuddy, Droid (Factory), KiloCode, Warp, Augment, CodeWhale, ZCode, Amazon Q Developer, OpenClaw, GitHub Copilot
+**Supported:** Claude Code, Cursor, Windsurf, Antigravity, Codex CLI, Continue, Gemini CLI, OpenCode, Qoder, CodeBuddy, Droid (Factory), KiloCode, Warp, Augment, CodeWhale, ZCode, Kimi Code, Amazon Q Developer, OpenClaw, GitHub Copilot
 
 The skill activates automatically when you request UI/UX work. Just chat naturally:
 
@@ -381,6 +385,32 @@ Make a mobile app UI for e-commerce
 
 Build a fintech banking app with dark theme
 ```
+
+### Apply a theme to an existing app
+
+After [installing the skill](#installation), open your app in your AI assistant and use a prompt like this. In Workflow Mode, prefix it with `/ui-ux-pro-max`.
+
+```text
+Use the ui-ux-pro-max skill to retheme my existing React app.
+Target style: Minimalism & Swiss Style.
+First inspect the framework and styling-library versions, routes, components,
+styles, and existing theme tokens. Keep the current component structure,
+behavior, and business logic.
+Reuse and update the existing semantic tokens for colors, typography, spacing,
+radii, shadows, and interaction states; add missing tokens rather than creating
+a parallel theme system. Replace hard-coded styles one component at a time.
+Verify contrast, keyboard focus, responsive layouts, and all supported light/dark
+modes. Summarize changed files and any remaining hard-coded styles.
+```
+
+Replace `Minimalism & Swiss Style` with your preferred [catalog style](src/ui-ux-pro-max/data/styles.csv) or visual direction. Search results provide design guidance; they do not automatically rewrite your app.
+
+**Theme migration checklist:**
+
+- **Audit:** Find theme-related hard-coded values in stylesheets, inline styles, and utilities such as `bg-blue-600` or `text-[#1e293b]`.
+- **Map:** Reuse semantic roles such as `background`, `surface`, `foreground`, `primary`, `border`, and `ring` in the app's existing styling system. Add missing roles using its installed library version's conventions.
+- **Migrate:** Replace hard-coded values with token references in small component batches. Changing tokens alone will not affect styles that do not use them.
+- **Verify:** Check text/UI contrast, hover/focus/disabled states, responsive layouts, and each supported theme after every batch.
 
 ### How It Works
 
@@ -448,6 +478,10 @@ bun .claude/skills/ui-ux-pro-max/scripts/search.ts "personal portfolio" --design
 bun .claude/skills/ui-ux-pro-max/scripts/search.ts "state layer ripple feedback" --stack m3
 bun .claude/skills/ui-ux-pro-max/scripts/search.ts "sidebar app shell" --stack rg-ui
 
+# RTL / Arabic, Hebrew, Persian interfaces (style and product domains)
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "dashboard" --domain style --rtl=full
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "fintech" --domain product --rtl=partial
+
 # Stack-specific guidelines
 bun .claude/skills/ui-ux-pro-max/scripts/search.ts "form validation" --stack react
 bun .claude/skills/ui-ux-pro-max/scripts/search.ts "responsive layout" --stack html-tailwind
@@ -462,6 +496,30 @@ active guidance. Explicit legacy terms or older majors (for example, `Svelte 4`
 or `Next.js 15`) return only curated legacy rows, labeled by `Status` and
 `Applies To`; when no matching legacy guidance is curated, search returns no
 results instead of mixing framework generations.
+
+### RTL Compatibility (`--rtl`)
+
+Every style and product row carries an `rtl_level` for right-to-left interfaces
+(Arabic, Hebrew, Persian, Urdu):
+
+| Level | Meaning |
+|-------|---------|
+| `full` | Direction-agnostic: the layout survives mirroring unchanged. |
+| `partial` | Mirrors cleanly, but individual components and motion need adjustment. |
+| `caveats` | The style or product encodes reading direction (kinetic typography, LTR timelines, code/terminal surfaces, maps and seat ordering). |
+
+```bash
+# Only styles that mirror without extra work
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "dashboard" --domain style --rtl=full
+
+# All levels, filtered results still tagged with rtl_level
+bun .claude/skills/ui-ux-pro-max/scripts/search.ts "mobile" --domain style --rtl
+```
+
+`--rtl` requires an explicit `--domain style` or `--domain product`. The filter
+is applied after ranking but before `-n/--max-results` truncation, so a narrow
+limit never hides a matching row. It is rejected with `--design-system` and
+`--stack`.
 
 ### Persist Design System (Master + Overrides Pattern)
 

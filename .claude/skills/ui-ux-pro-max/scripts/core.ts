@@ -15,6 +15,18 @@ export type { Row } from "./csv.ts";
 export const DATA_DIR = Bun.env.UIPRO_DATA_DIR ?? join(import.meta.dir, "..", "data");
 export const MAX_RESULTS = 3;
 
+/**
+ * RTL compatibility levels carried by styles.csv and products.csv.
+ *   full    - direction-agnostic: survives mirroring unchanged
+ *   partial - mirrorable, but layout/motion needs per-component adjustments
+ *   caveats - the style or product encodes reading direction (kinetic
+ *             typography, LTR timelines, code/terminal surfaces, seat maps...)
+ */
+export const RTL_LEVELS = ["full", "partial", "caveats"] as const;
+export const RTL_LEVEL_CHOICES = ["all", ...RTL_LEVELS] as const;
+export type RtlLevel = (typeof RTL_LEVEL_CHOICES)[number];
+export const RTL_DOMAINS: ReadonlySet<string> = new Set(["style", "product"]);
+
 export interface DomainConfig {
   file: string;
   searchCols: readonly string[];
@@ -25,7 +37,7 @@ export const CSV_CONFIG = {
   style: {
     file: "styles.csv",
     searchCols: ["Style ID", "Style Category", "Aliases", "Keywords", "Best For", "Type", "AI Prompt Keywords"],
-    outputCols: ["Style ID", "Style Category", "Aliases", "Status", "Parent Style ID", "Preferred Mode", "Type", "Keywords", "Primary Colors", "Effects & Animation", "Best For", "Light Mode ✓", "Dark Mode ✓", "Performance", "Accessibility", "Framework Compatibility", "Complexity", "AI Prompt Keywords", "CSS/Technical Keywords", "Implementation Checklist", "Design System Variables"],
+    outputCols: ["Style ID", "Style Category", "Aliases", "Status", "Parent Style ID", "Preferred Mode", "Type", "Keywords", "Primary Colors", "Effects & Animation", "Best For", "Light Mode ✓", "Dark Mode ✓", "Performance", "Accessibility", "Framework Compatibility", "Complexity", "AI Prompt Keywords", "CSS/Technical Keywords", "Implementation Checklist", "Design System Variables", "rtl_level"],
   },
   color: {
     file: "colors.csv",
@@ -45,7 +57,7 @@ export const CSV_CONFIG = {
   product: {
     file: "products.csv",
     searchCols: ["Product Type", "Keywords", "Primary Style Recommendation", "Key Considerations"],
-    outputCols: ["Product Type", "Keywords", "Primary Style Recommendation", "Secondary Styles", "Landing Page Pattern", "Dashboard Style (if applicable)", "Color Palette Focus"],
+    outputCols: ["Product Type", "Keywords", "Primary Style Recommendation", "Secondary Styles", "Landing Page Pattern", "Dashboard Style (if applicable)", "Color Palette Focus", "rtl_level"],
   },
   ux: {
     file: "ux-guidelines.csv",
@@ -175,7 +187,7 @@ export const STACK_CURRENT_APPLICABILITY: Readonly<Record<string, string>> = {
   m3: "m3 1.4.4",
   "rg-ui": "rg-ui 1.4.4",
   nuxtjs: "nuxtjs 4.5",
-  "nuxt-ui": "nuxt-ui 4.11.1",
+  "nuxt-ui": "nuxt-ui 4.12.0",
   "react-native": "react-native 0.86.x",
   flutter: "flutter 3.44.x",
   swiftui: "swiftui current",
@@ -486,6 +498,7 @@ export async function searchCsvDetailed(
   routingDomain: Domain | null = null,
   rowFilter: RowFilter | null = null,
   cacheVariant = "",
+  rankedFilter: RowFilter | null = null,
 ): Promise<{ results: Row[]; index: BM25 | null; diagnostic: Diagnostic }> {
   if (!(await Bun.file(path).exists())) return { results: [], index: null, diagnostic: { reason: "missing-file" } };
 
@@ -505,7 +518,11 @@ export async function searchCsvDetailed(
 
   const bm25 = await getBm25(path, searchCols, data, signature, cacheVariant);
   const [searchQuery, rewrites] = await rewriteQueryForDomain(query, routingDomain, bm25);
-  const ranked = bm25.score(searchQuery);
+  let ranked = bm25.score(searchQuery);
+  // rowFilter drops rows before the index is fitted (corpus-level exclusion, e.g. inactive styles);
+  // rankedFilter drops rows after scoring but before maxResults truncation, so a metadata filter
+  // cannot mask matching rows or shift the fitted corpus.
+  if (rankedFilter) ranked = ranked.filter(([index]) => rankedFilter(data[index]!));
   const limits = threshold ?? NO_THRESHOLD;
   const topScore = ranked[0]?.[1] ?? 0;
   const runnerUpScore = ranked[1]?.[1] ?? 0;
@@ -825,6 +842,25 @@ function styleSearchDestination(rows: readonly Row[], matched: Row | null): [Row
   return [null, null];
 }
 
+/** Validates an rtl request; null means RTL filtering is off. Throws on an invalid level or domain. */
+export function normalizeRtlLevel(rtl: string | null | undefined, domain: string | null): RtlLevel | null {
+  if (rtl === null || rtl === undefined) return null;
+  const level = String(rtl).trim().toLowerCase();
+  if (!(RTL_LEVEL_CHOICES as readonly string[]).includes(level))
+    throw new RangeError(`unsupported rtl level '${rtl}'; expected one of ${RTL_LEVEL_CHOICES.join(", ")}`);
+  if (domain === null || !RTL_DOMAINS.has(domain))
+    throw new RangeError(
+      `--rtl is only supported with --domain style or --domain product; got ${domain || "no explicit domain"}`,
+    );
+  return level as RtlLevel;
+}
+
+/** Row predicate for a validated rtl level ('all' accepts every level). */
+function rtlRowFilter(level: RtlLevel): RowFilter {
+  if (level === "all") return row => (RTL_LEVELS as readonly string[]).includes(row["rtl_level"] ?? "");
+  return row => row["rtl_level"] === level;
+}
+
 function isDomain(value: unknown): value is Domain {
   return typeof value === "string" && value in CSV_CONFIG;
 }
@@ -835,8 +871,10 @@ export async function search(
   domain: string | null = null,
   maxResults: number = MAX_RESULTS,
   diagnostics = false,
+  rtl: string | null = null,
 ): Promise<SearchResult> {
   if (!validMaxResults(maxResults)) return { error: "max_results must be an integer from 1 to 20", domain };
+  const rtlLevel = normalizeRtlLevel(rtl, domain);
   const autoDetected = domain === null;
   let runnerUp: Domain | null = null;
   let styleRows: Row[] | null = null;
@@ -871,6 +909,10 @@ export async function search(
     exact = exactRowIdentity(brandRows, query, BRAND_IDENTITY_FIELDS);
   }
 
+  // An explicit identity lookup still has to respect the RTL filter; otherwise --rtl=full could
+  // return a caveats row.
+  if (rtlLevel !== null && exact && !rtlRowFilter(rtlLevel)(exact)) exact = null;
+
   let results: Row[];
   let bm25: BM25 | null = null;
   let diagnostic: Diagnostic;
@@ -898,6 +940,9 @@ export async function search(
       searchDomain,
       searchDomain === "style" ? (row) => (row["Status"] ?? "active") === "active" : null,
       searchDomain === "style" ? "active-only" : "",
+      // RTL is metadata, not a ranking signal: score the full corpus, then drop non-matching rows
+      // before maxResults truncation.
+      rtlLevel !== null ? rtlRowFilter(rtlLevel) : null,
     ));
   }
 
@@ -932,7 +977,7 @@ function stackQueryRequestsLegacy(query: string, stack: string): boolean {
   const stackName = STACK_QUERY_NAMES[stack];
   if (currentVersion && stackName) {
     const pattern = new RegExp(
-      `${B_START}(?:${stackName})\\s*(?:sdk|ui)?\\s*(?:[@(]\\s*)?(?:v(?:ersion)?\\s*)?(\\d+)(?:\\.(\\d+))?\\s*\\)?`,
+      `${B_START}(?:${stackName})\\s*(?:sdk|ui)?\\s*(?:[@(]\\s*)?(?:v(?:ersion)?\\s*)?(\\d+)(?:\\.(\\d+))?(?!${WORD})\\s*\\)?`,
       "gu",
     );
     const requested: number[][] = [];

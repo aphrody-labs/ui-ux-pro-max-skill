@@ -1,4 +1,4 @@
-export type AIType = 'claude' | 'cursor' | 'windsurf' | 'antigravity' | 'copilot' | 'kiro' | 'roocode' | 'codex' | 'qoder' | 'gemini' | 'trae' | 'opencode' | 'continue' | 'codebuddy' | 'droid' | 'kilocode' | 'warp' | 'augment' | 'codewhale' | 'zcode' | 'amazonq' | 'openclaw' | 'universal' | 'all';
+export type AIType = 'claude' | 'cursor' | 'windsurf' | 'antigravity' | 'copilot' | 'kiro' | 'roocode' | 'codex' | 'qoder' | 'gemini' | 'trae' | 'opencode' | 'continue' | 'codebuddy' | 'droid' | 'kilocode' | 'warp' | 'augment' | 'codewhale' | 'zcode' | 'kimi' | 'amazonq' | 'openclaw' | 'autoclaw' | 'universal' | 'all';
 export type ConcreteAIType = Exclude<AIType, 'all'>;
 
 export type InstallType = 'full' | 'reference';
@@ -31,7 +31,7 @@ export interface PlatformConfig {
   skillOrWorkflow: string;
 }
 
-export const AI_TYPES: AIType[] = ['claude', 'cursor', 'windsurf', 'antigravity', 'copilot', 'roocode', 'kiro', 'codex', 'qoder', 'gemini', 'trae', 'opencode', 'continue', 'codebuddy', 'droid', 'kilocode', 'warp', 'augment', 'codewhale', 'zcode', 'amazonq', 'openclaw', 'universal', 'all'];
+export const AI_TYPES: AIType[] = ['claude', 'cursor', 'windsurf', 'antigravity', 'copilot', 'roocode', 'kiro', 'codex', 'qoder', 'gemini', 'trae', 'opencode', 'continue', 'codebuddy', 'droid', 'kilocode', 'warp', 'augment', 'codewhale', 'zcode', 'kimi', 'amazonq', 'openclaw', 'autoclaw', 'universal', 'all'];
 
 // Folders that earlier installs used per platform; uninstall also cleans their skills/ dirs.
 export const AI_FOLDERS: Record<ConcreteAIType, string[]> = {
@@ -55,7 +55,9 @@ export const AI_FOLDERS: Record<ConcreteAIType, string[]> = {
   augment: ['.augment', '.shared'],
   codewhale: ['.codewhale', '.shared'],
   zcode: ['.zcode', '.shared'],
+  kimi: ['.kimi-code', '.shared'],
   amazonq: ['.amazonq', '.shared'],
   openclaw: ['.agents', '.shared'],
+  autoclaw: ['.autoclaw', '.shared'],
   universal: ['.agents', '.shared'],
 };

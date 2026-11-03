@@ -39,7 +39,8 @@
     "warp",
     "augment",
     "antigravity",
-    "openclaw"
+    "openclaw",
+    "autoclaw"
   ],
   "install": "bun install -g github:aphrody-labs/ui-ux-pro-max-skill && uipro init --ai {{platform}}",
   "upstream": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill"

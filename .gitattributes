@@ -5,3 +5,11 @@
 .claude/skills/ui-ux-pro-max/data/*.csv         text eol=lf
 .claude/skills/ui-ux-pro-max/data/stacks/*.csv  text eol=lf
 .claude/skills/ui-ux-pro-max/data/*.json        text eol=lf
+
+# scripts/evaluate-relevance.ts fingerprints the raw bytes of the engine and the
+# relevance cases, and tests/fixtures/relevance-thresholds.json records that
+# hash. Pin them to LF so a core.autocrlf=true checkout stays reproducible.
+.claude/skills/ui-ux-pro-max/scripts/*.ts      text eol=lf
+tests/fixtures/relevance-*.json                text eol=lf
+scripts/evaluate-relevance.ts                  text eol=lf
+scripts/lib/relevance-metrics.ts               text eol=lf

@@ -7,13 +7,14 @@
  *   bun scripts/search.ts "<query>" --design-system --brand rose-griffon-roy
  *   bun scripts/search.ts "<query>" --design-system --persist -p "Project" --output-dir "<project-root>" [--page dashboard] [--force]
  *   bun scripts/search.ts "<query>" --design-system --variance 8 --motion 9 --density 7
+ *   bun scripts/search.ts "<query>" --domain style --rtl[=full|partial|caveats]
  *
  * Domains: style, color, chart, landing, product, ux, typography, google-fonts, icons, gsap, react, web, brand
  * Stacks: see --help (includes m3 and rg-ui for the Bun OS / Aphrody workspace)
  */
 
 import { parseArgs } from "node:util";
-import { AVAILABLE_STACKS, CSV_CONFIG, MAX_RESULTS, UNTRUNCATED_COLS, search, searchStack, type SearchResult } from "./core.ts";
+import { AVAILABLE_STACKS, CSV_CONFIG, MAX_RESULTS, RTL_LEVEL_CHOICES, UNTRUNCATED_COLS, search, searchStack, type SearchResult } from "./core.ts";
 import { generateDesignSystem } from "./design-system.ts";
 
 const TRUNCATE_AT = 300;
@@ -70,7 +71,7 @@ export function formatOutput(result: SearchResult, full = false): string {
   return output.join("\n");
 }
 
-const USAGE = `usage: search.ts [-h] [--domain DOMAIN] [--stack STACK] [--max-results 1-20] [--json] [--full]
+const USAGE = `usage: search.ts [-h] [--domain DOMAIN] [--rtl [LEVEL]] [--stack STACK] [--max-results 1-20] [--json] [--full]
                  [--design-system] [--project-name PROJECT_NAME] [--format {ascii,markdown}]
                  [--brand BRAND] [--persist] [--page PAGE] [--output-dir OUTPUT_DIR] [--force]
                  [--variance 1-10] [--motion 1-10] [--density 1-10]
@@ -86,6 +87,9 @@ positional arguments:
 options:
   -h, --help            show this help message and exit
   -d, --domain DOMAIN   Search domain: ${Object.keys(CSV_CONFIG).join(", ")}
+  --rtl [LEVEL]         Filter style/product results by RTL compatibility: full (mirrors without work),
+                        partial (mirrors with per-component work), caveats (layout depends on reading
+                        direction); omit the value for all levels. Requires --domain style or product
   -s, --stack STACK     Stack-specific search. Available: ${AVAILABLE_STACKS.join(", ")}
   -n, --max-results N   Max results, 1-20 (default: ${MAX_RESULTS})
   --json                Output as JSON
@@ -121,8 +125,29 @@ function choice(name: string, value: string | undefined, choices: readonly strin
   return value;
 }
 
+/**
+ * `--rtl` takes an optional value (argparse `nargs="?"`, `const="all"`): `--rtl`, `--rtl full` and
+ * `--rtl=full` all work. util.parseArgs has no optional values, so the bare and spaced forms are
+ * rewritten to `--rtl=<value>` first.
+ */
+function normalizeArgv(argv: string[]): string[] {
+  const out: string[] = [];
+  for (let i = 0; i < argv.length; i++) {
+    const arg = argv[i]!;
+    if (arg === "-ds") out.push("--design-system");
+    else if (arg === "--rtl") {
+      const next = argv[i + 1];
+      if (next !== undefined && !next.startsWith("-")) {
+        out.push(`--rtl=${next}`);
+        i++;
+      } else out.push("--rtl=all");
+    } else out.push(arg);
+  }
+  return out;
+}
+
 export async function main(argv: string[]): Promise<number> {
-  const args = argv.map((arg) => (arg === "-ds" ? "--design-system" : arg));
+  const args = normalizeArgv(argv);
   let parsed;
   try {
     parsed = parseArgs({
@@ -132,6 +157,7 @@ export async function main(argv: string[]): Promise<number> {
       options: {
         help: { type: "boolean", short: "h" },
         domain: { type: "string", short: "d" },
+        rtl: { type: "string" },
         stack: { type: "string", short: "s" },
         "max-results": { type: "string", short: "n" },
         json: { type: "boolean" },
@@ -167,8 +193,11 @@ export async function main(argv: string[]): Promise<number> {
   const variance = intInRange("--variance", values.variance, 1, 10);
   const motion = intInRange("--motion", values.motion, 1, 10);
   const density = intInRange("--density", values.density, 1, 10);
+  const rtl = choice("--rtl", values.rtl, RTL_LEVEL_CHOICES);
 
   if (values["design-system"]) {
+    if (rtl !== null)
+      fail("--rtl is not supported with --design-system; run a separate --domain style or --domain product query");
     if (stack) {
       console.error(`note: --stack ${stack} is ignored in --design-system mode; run a separate --stack query for stack-specific guidelines`);
     }
@@ -213,7 +242,17 @@ export async function main(argv: string[]): Promise<number> {
     return 0;
   }
 
-  const result = stack ? await searchStack(query, stack, maxResults) : await search(query, domain, maxResults);
+  if (stack && rtl !== null) fail("--rtl cannot be combined with --stack; use --domain style or --domain product");
+  let result: SearchResult;
+  if (stack) result = await searchStack(query, stack, maxResults);
+  else {
+    try {
+      result = await search(query, domain, maxResults, false, rtl);
+    } catch (error) {
+      if (error instanceof RangeError) fail(error.message);
+      throw error;
+    }
+  }
   console.log(values.json ? JSON.stringify(result, null, 2) : formatOutput(result, values.full ?? false));
   return 0;
 }

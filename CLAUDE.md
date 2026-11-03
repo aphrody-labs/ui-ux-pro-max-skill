@@ -8,7 +8,7 @@ nextlevelbuilder/ui-ux-pro-max-skill, MIT).
 UI UX Pro Max is a design-intelligence toolkit: searchable local catalogs of UI styles, palettes,
 font pairings, charts, UX guidelines, icons, GSAP presets, stack guidelines and Aphrody brand
 themes, plus a reasoning engine that generates design systems. It ships as Claude Code / Codex
-plugins and as a `uipro` CLI that installs the skills for 23 assistants.
+plugins and as a `uipro` CLI that installs the skills for 25 assistants.
 
 Everything runs with **Bun 1.4.4+** and Bun built-ins only — no Python, Node or npm packages.
 
@@ -44,8 +44,17 @@ Domains: style, color, chart, landing, product, ux, typography, google-fonts, ic
 Stacks: html-tailwind, react, nextjs, astro, vue, nuxtjs, nuxt-ui, svelte, swiftui, react-native,
 flutter, shadcn, m3, rg-ui, jetpack-compose, threejs, angular, laravel, javafx, wpf, winui, avalonia, uno, uwp.
 
+RTL filter (`style` and `product` only): `--rtl[=full|partial|caveats]`. `styles.csv` and
+`products.csv` carry an `rtl_level` column describing how well the layout survives mirroring for
+Arabic, Hebrew, Persian and Urdu interfaces. `--rtl` alone accepts every level; with a value it keeps
+only that level. The filter runs after BM25 scoring and before `-n` truncation, so a small limit
+cannot hide a matching row. It is rejected with `--design-system`, `--stack` and other domains.
+
 ## Data rules
 
+- Upstream merges: take the upstream side of a conflicting catalog, then run
+  `bun run bunify:catalogs` to restore the Bun commands (`bun add`, `bunx`, `bun create`).
+  `bun run verify` fails while a catalog still carries npm/pnpm/yarn commands.
 - Keep `No` columns contiguous and CSVs LF/UTF-8 (`.gitattributes` pins the hashed catalogs).
 - `products.csv`, `colors.csv` and `ui-reasoning.csv` must stay aligned (192 product types).
 - Brand rows (`brands.csv`) are extracted from real Bun OS CSS; colors as `#RRGGBB` via `Bun.color`.

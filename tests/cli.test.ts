@@ -38,6 +38,24 @@ describe("detect", () => {
   test("openclaw has a platform description", () => {
     expect(getAITypeDescription("openclaw")).toBe("OpenClaw (.agents/skills/)");
   });
+
+  test("a sole .autoclaw directory or an installed skills/ui-ux-pro-max detects autoclaw", async () => {
+    const dotDir = await scratchDir("detect-autoclaw");
+    await mkdir(join(dotDir, ".autoclaw"));
+    expect(detectAIType(dotDir)).toEqual({ detected: ["autoclaw"], suggested: "autoclaw" });
+    const installed = await scratchDir("detect-autoclaw-skills");
+    await mkdir(join(installed, "skills", "ui-ux-pro-max"), { recursive: true });
+    await Bun.write(join(installed, "skills", "ui-ux-pro-max", "SKILL.md"), "---\nname: ui-ux-pro-max\n---\n");
+    expect(detectAIType(installed)).toEqual({ detected: ["autoclaw"], suggested: "autoclaw" });
+    expect(getAITypeDescription("autoclaw")).toBe("AutoClaw (skills/ locally, ~/.openclaw-autoclaw/skills/ globally)");
+  });
+
+  test("a .kimi-code directory is detected as kimi", async () => {
+    const scratch = await scratchDir("detect-kimi");
+    await mkdir(join(scratch, ".kimi-code"));
+    expect(detectAIType(scratch)).toEqual({ detected: ["kimi"], suggested: "kimi" });
+    expect(getAITypeDescription("kimi")).toBe("Kimi Code (.kimi-code/skills/)");
+  });
 });
 
 describe("dry run", () => {
@@ -54,6 +72,7 @@ describe("dry run", () => {
   test("zcode and openclaw layouts", async () => {
     for (const [platform, root] of [
       ["zcode", ".zcode"],
+      ["kimi", ".kimi-code"],
       ["openclaw", ".agents"],
     ] as const) {
       const scratch = await scratchDir(`dry-run-${platform}`);
@@ -83,7 +102,7 @@ describe("agent query contract", () => {
   test("all platform metadata uses one accurate activation description", async () => {
     const description = await expectedDescription();
     const configs = await loadAllPlatformConfigs();
-    expect(configs.size).toBe(23);
+    expect(configs.size).toBe(25);
     for (const [platform, config] of configs) {
       expect([platform, config.description]).toEqual([platform, description]);
       if (config.frontmatter?.description) expect([platform, config.frontmatter.description]).toEqual([platform, description]);
@@ -169,6 +188,7 @@ describe("template script paths", () => {
     ["kiro", ".kiro/steering/ui-ux-pro-max/scripts/search.ts"],
     ["droid", ".factory/skills/ui-ux-pro-max/scripts/search.ts"],
     ["zcode", ".zcode/skills/ui-ux-pro-max/scripts/search.ts"],
+    ["kimi", ".kimi-code/skills/ui-ux-pro-max/scripts/search.ts"],
     ["amazonq", ".amazonq/skills/ui-ux-pro-max/scripts/search.ts"],
     ["openclaw", ".agents/skills/ui-ux-pro-max/scripts/search.ts"],
   ] as const;
@@ -184,6 +204,27 @@ describe("template script paths", () => {
       expect(new Set(searchScriptPaths(global))).toEqual(new Set([`~/${localPath}`]));
     });
   }
+
+  test("autoclaw renders workspace skills locally and ~/.openclaw-autoclaw/skills globally", async () => {
+    const config = await loadPlatformConfig("autoclaw");
+    const local = await renderSkillFile(config);
+    expect(searchScriptPaths(local)).toHaveLength(SEARCH_COMMAND_COUNT);
+    expect(new Set(searchScriptPaths(local))).toEqual(new Set(["skills/ui-ux-pro-max/scripts/search.ts"]));
+    expect(local).not.toContain("{{SCRIPT_PATH}}");
+    const global = await renderSkillFile(config, true);
+    expect(new Set(searchScriptPaths(global))).toEqual(new Set(["~/.openclaw-autoclaw/skills/ui-ux-pro-max/scripts/search.ts"]));
+  });
+
+  test("kimi installs the skill, its data and the sub-skills under .kimi-code/skills", async () => {
+    const scratch = await scratchDir("install-kimi");
+    await generatePlatformFiles(scratch, "kimi");
+    const skills = join(scratch, ".kimi-code", "skills");
+    const rendered = await Bun.file(join(skills, "ui-ux-pro-max", "SKILL.md")).text();
+    expect(rendered).toMatch(/^---\nname: ui-ux-pro-max\ndescription: "UI\/UX design intelligence/);
+    expect(existsSync(join(skills, "ui-ux-pro-max", "scripts", "search.ts"))).toBe(true);
+    expect(existsSync(join(skills, "ui-ux-pro-max", "data"))).toBe(true);
+    for (const name of await listBundledSubSkills()) expect([name, existsSync(join(skills, name, "SKILL.md"))]).toEqual([name, true]);
+  });
 
   test("copilot renders .github/skills paths locally and ~/.copilot/skills globally", async () => {
     const config = await loadPlatformConfig("copilot");

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "provisional-baseline-regression-gate",
   "baselineRevision": "97eb2a2",
-  "runtimeFingerprint": "1d028fd37d3c751f2ac9a14e5f5edc883765c904ae02dab7d2e6e0e05b1a645d",
+  "runtimeFingerprint": "db477d34052678e395c06cc25caf2353de6807456b88587fd3c8c1e5d03df22a",
   "oracleFingerprint": "e86c284448a5940cf2706ab44f926abcce62b93b57ec719e1b1bf15350a6b26a",
   "approvingMaintainer": "aphrody-labs fork: provisional regression gate re-bound to the Bun runtime (core.ts/design-system.ts) and the Bun OS catalogs (brand, m3, rg-ui); floors kept from upstream Phase 1",
   "units": "All metrics are ratios in [0,1]. Precision treats missing ranks as non-relevant. Negative abstention is measured across the hard-negative by domain/stack cross-product.",

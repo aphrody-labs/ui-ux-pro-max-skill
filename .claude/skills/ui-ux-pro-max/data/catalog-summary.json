@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "verifiedAt": "2026-10-17",
+  "verifiedAt": "2026-11-03",
   "counts": {
     "styles": {
       "total": 88,
@@ -20,7 +20,7 @@
     "motionPresets": 17,
     "chartTypes": 25,
     "stacks": 24,
-    "stackGuidelines": 1387,
+    "stackGuidelines": 1394,
     "brands": 9
   },
   "snapshots": {

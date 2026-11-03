@@ -39,7 +39,9 @@
     "smoke:stacks": "bun scripts/smoke-stacks.ts",
     "test": "bun test ./tests ./.claude/skills",
     "check": "bun check",
-    "verify": "bun run validate:csv && bun run validate:data && bun run validate:agent-guide && bun run validate:catalog-summary && bun run test && bun run evaluate:relevance && bun run smoke:domains && bun run smoke:stacks"
+    "verify": "bun run validate:csv && bun run validate:bun-commands && bun run validate:data && bun run validate:agent-guide && bun run validate:catalog-summary && bun run test && bun run evaluate:relevance && bun run smoke:domains && bun run smoke:stacks",
+    "bunify:catalogs": "bun scripts/bunify-catalogs.ts",
+    "validate:bun-commands": "bun scripts/bunify-catalogs.ts --check"
   },
   "keywords": [
     "ui",

@@ -30,7 +30,7 @@ const CURRENT_APPLICABILITY: Record<string, string> = {
   "html-tailwind": "html-tailwind 4.3",
   shadcn: "shadcn cli 4",
   nuxtjs: "nuxtjs 4.5",
-  "nuxt-ui": "nuxt-ui 4.11.1",
+  "nuxt-ui": "nuxt-ui 4.12.0",
   m3: "m3 1.4.4",
   "rg-ui": "rg-ui 1.4.4",
 };
@@ -102,6 +102,18 @@ describe("web stack freshness", () => {
     expect(result.count).toBeGreaterThan(0);
     expect(result.results![0]!.Guideline).toBe("Use render for Base UI composition");
     expect(result.results!.every((row) => !row["Applies To"]!.includes("base=radix"))).toBe(true);
+  });
+
+  test("a number starting a word after the stack name is not a version", async () => {
+    for (const [stack, query] of [
+      ["react", "react 3d canvas effect cleanup"],
+      ["html-tailwind", "tailwind 2xl breakpoint"],
+      ["angular", "angular 2fa login form"],
+    ] as const) {
+      const result = await searchStack(query, stack);
+      expect([stack, (result.count ?? 0) > 0]).toEqual([stack, true]);
+      expect([stack, statuses(result).includes("deprecated")]).toEqual([stack, false]);
+    }
   });
 
   test("old major without curated legacy guidance abstains", async () => {

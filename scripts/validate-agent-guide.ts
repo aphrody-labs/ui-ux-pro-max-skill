@@ -18,7 +18,7 @@ export const FLAGS: ReadonlySet<string> = new Set([
   "-f", "--persist", "--page", "--output-dir", "-o", "--force",
   "--variance", "--motion", "--density", "--brand", "-b",
 ]);
-export const PLATFORM_COUNT = 23;
+export const PLATFORM_COUNT = 25;
 const GUIDE_REQUIREMENTS = [
   "## Query Contract", "one dominant intent", "Retry once",
   "Do not persist unverified output", "explicit accessibility outcome terms",
